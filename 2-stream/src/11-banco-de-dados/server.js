@@ -32,8 +32,9 @@ const server = http.createServer(async (req,res) => {
     })
 
     if(route) {
+        //executa a regex na rota para extrair os route paramns
         const routeParams = req.url.match(route.path)
-        console.log(routeParams)
+        req.params = {...routeParams.groups}
 
         return route.handler(req, res)
     }
