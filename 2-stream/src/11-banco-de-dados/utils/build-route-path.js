@@ -18,7 +18,7 @@ export function buildRoutePath(path) {
     // test = Array.from(pathTwoRouteParams.matchAll(regexTwoRouteParams))
     // console.log("regexTwoRouteParams")
     // console.log(test)
-    const pathRegex = new RegExp(`^${pathWithParams}`)
+    const pathRegex = new RegExp(`^${pathWithParams}(?<query>\\?(.*))?$`) 
     
     return pathRegex
 }
