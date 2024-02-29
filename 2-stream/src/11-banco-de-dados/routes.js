@@ -50,7 +50,7 @@ export const routes = [
                 email
             })
 
-            res.writeHead(204).end()
+            return res.writeHead(204).end()
         }
     },
     {
