@@ -44,10 +44,6 @@ const server = http.createServer(async (req,res) => {
 
         return route.handler(req, res)
     }
-
-    if(route){
-        route.handler(req,res)
-    }
     
     return res.writeHead(404).end('ERROR 404')
 })
