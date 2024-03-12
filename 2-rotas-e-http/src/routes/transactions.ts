@@ -5,6 +5,10 @@ import { z } from 'zod'
 import { checkSessionIdExists } from '../middleware/check-session-id_exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
+  app.addHook('preHandler', async (request, reply) => {
+    console.log(`Sou um hook de rota aninha global.`)
+  })
+
   app.get(
     '/',
     {
@@ -83,7 +87,10 @@ export async function transactionsRoutes(app: FastifyInstance) {
     if (!sessionId) {
       sessionId = randomUUID()
 
-      reply.cookie('sessionId', sessionId)
+      reply.cookie('sessionId', sessionId, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      })
     }
 
     await knex('transactions').insert({

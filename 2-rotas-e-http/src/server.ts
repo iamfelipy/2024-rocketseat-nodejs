@@ -7,6 +7,11 @@ const app = fastify()
 
 app.register(cookie)
 
+// exemplo de hook global para todas as rotas
+app.addHook('preHandler', async (request, reply) => {
+  console.log(`Sou um hook global para todas as rotas.`)
+})
+
 // plugin
 // uma forma de criar rotas em outros arquivos
 app.register(transactionsRoutes, {
