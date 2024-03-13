@@ -6,7 +6,7 @@ import { checkSessionIdExists } from '../middleware/check-session-id_exists'
 
 export async function transactionsRoutes(app: FastifyInstance) {
   app.addHook('preHandler', async (request, reply) => {
-    console.log(`Sou um hook de rota aninha global.`)
+    console.log(`Sou um hook de rota aninhada global.`)
   })
 
   app.get(
