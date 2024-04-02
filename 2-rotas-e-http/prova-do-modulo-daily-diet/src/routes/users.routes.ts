@@ -1,11 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
-
-const users = [
-  { id: '1', name: 'maik', email: 'maik@gmail.com' },
-  { id: '2', name: 'paulo', email: 'paulo@gmail.com' },
-]
+import { users } from '../datatmp/datatmp'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/', async (request, reply) => {
@@ -44,8 +40,11 @@ export async function usersRoutes(app: FastifyInstance) {
 
     users.push({
       id: randomUUID(),
+      session_id: sessionId,
       name,
       email,
+      created_at: String(new Date().getTime()),
+      update_at: String(new Date().getTime()),
     })
 
     return reply.status(201).send()
