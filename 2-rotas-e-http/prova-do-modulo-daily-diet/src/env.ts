@@ -4,9 +4,9 @@ import { z } from 'zod'
 config()
 
 const envSchema = z.object({
-  DEVELOPMENT: z
-    .enum(['delopment', 'production', 'test'])
-    .default('production'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
+  DATABASE_CLIENT: z.enum(['sqlite3', 'pg']).default('sqlite3'),
+  DATABASE_URL: z.string(),
   PORT: z.coerce.number().default(3333),
 })
 

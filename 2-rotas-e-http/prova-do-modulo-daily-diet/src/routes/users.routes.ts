@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
-import { users } from '../datatmp/datatmp'
+import { knex } from '../database'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/', async (request, reply) => {
@@ -32,19 +32,17 @@ export async function usersRoutes(app: FastifyInstance) {
 
     const { name, email } = createUserSchema.parse(request.body)
 
-    const userExists = users.findIndex((user) => user.email.includes(email))
+    const userByEmail = await knex('users').where('email', email).first()
 
-    if (userExists >= 0) {
+    if (userByEmail) {
       return reply.status(400).send({ message: 'User already exists.' })
     }
 
-    users.push({
+    await knex('users').insert({
       id: randomUUID(),
-      session_id: sessionId,
       name,
       email,
-      created_at: String(new Date().getTime()),
-      update_at: String(new Date().getTime()),
+      session_id: sessionId,
     })
 
     return reply.status(201).send()
