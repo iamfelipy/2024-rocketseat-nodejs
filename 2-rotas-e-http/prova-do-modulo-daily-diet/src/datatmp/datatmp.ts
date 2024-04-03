@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto'
+
 export interface IUSer {
   id: string
   session_id: string
@@ -26,4 +28,56 @@ export const users: IUSer[] = [
   },
 ]
 
-export const meals = [{}]
+interface Meal {
+  id: string
+  user_id: string
+  name: string
+  description: string
+  is_on_diet: boolean
+  date: number
+  created_at: string
+  updated_at: string
+}
+
+export const meals: Meal[] = [
+  {
+    id: randomUUID(),
+    user_id: '1',
+    name: 'café da manha',
+    description: 'saladinha',
+    is_on_diet: true,
+    date: new Date().getTime(),
+    created_at: String(new Date().getTime()),
+    updated_at: String(new Date().getTime()),
+  },
+  {
+    id: randomUUID(),
+    user_id: '1',
+    name: 'almo',
+    description: 'mc donalds',
+    is_on_diet: false,
+    date: new Date().getTime(),
+    created_at: String(new Date().getTime()),
+    updated_at: String(new Date().getTime()),
+  },
+  {
+    id: randomUUID(),
+    user_id: '1',
+    name: 'cafe da tarde',
+    description: 'pao',
+    is_on_diet: true,
+    date: new Date().getTime(),
+    created_at: String(new Date().getTime()),
+    updated_at: String(new Date().getTime()),
+  },
+  {
+    id: randomUUID(),
+    user_id: '1',
+    name: 'jantar',
+    description: 'banana',
+    is_on_diet: true,
+    date: new Date().getTime(),
+    created_at: String(new Date().getTime()),
+    updated_at: String(new Date().getTime()),
+  },
+]
