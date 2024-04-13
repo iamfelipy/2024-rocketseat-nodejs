@@ -20,9 +20,10 @@ model User {
   password_hash String
   created_at    DateTime @default(now())
 
-  checkIns CheckIn[] //posso usar camelcase aqui, isso não é uma coluna no banco
+  //posso usar camelcase aqui, isso não é uma coluna no banco
+  checkIns CheckIn[]
 
-  // renomeiei o nome  da tabela
+  // posso definir o nome da tabela manualmente
   @@map("users")
 }
 
@@ -36,6 +37,7 @@ model CheckIn {
   gym     Gym    @relation(fields: [gym_id], references: [id])
   gym_id  String
 
+  // posso definir o nome da tabela manualmente
   @@map("check_ins")
 }
 
@@ -47,7 +49,9 @@ model Gym {
   latitude    Decimal
   longitude   Decimal
 
-  checkIns CheckIn[] //posso usar camelcase aqui, isso não é uma coluna no banco
+  //posso usar camelcase aqui, isso não é uma coluna no banco
+  checkIns CheckIn[]
 
+  // posso definir o nome da tabela manualmente
   @@map("gyms")
 }
