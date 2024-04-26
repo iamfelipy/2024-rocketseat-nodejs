@@ -90,13 +90,13 @@ describe('Check-in Use Case', () => {
   it('should not be able to check in on distant gym', async () => {
     // defino a data especifica aqui
 
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: 'gym-02',
       title: 'Mega Gym',
       description: '',
       phone: '',
-      latitude: new Decimal(-26.998629212191226),
-      longitude: new Decimal(-48.62539882426489),
+      latitude: -26.998629212191226,
+      longitude: -48.62539882426489,
     })
 
     await expect(() =>
