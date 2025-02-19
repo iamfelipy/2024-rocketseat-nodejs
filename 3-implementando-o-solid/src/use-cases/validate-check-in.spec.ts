@@ -13,12 +13,12 @@ describe('Validate Check-in Use Case', () => {
     sut = new ValidateCheckInUseCase(checkInsRepository)
 
     // libero a funcionalidade de definir uma data especifica para usar nos testes
-    // vi.useFakeTimers()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
     // volta ao estado original
-    // vi.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('should be able to validate the check-in', async () => {
