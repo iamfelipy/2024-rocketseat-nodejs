@@ -37,9 +37,6 @@ describe('Create Check-in (e2e)', () => {
       .post(`/gyms/${gym.id}/check-ins`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Javascript Gym',
-        description: 'Some description',
-        phone: '11999999999',
         latitude: -26.99875078708264,
         longitude: -48.63171675406097,
       })
