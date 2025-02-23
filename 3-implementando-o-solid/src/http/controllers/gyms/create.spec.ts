@@ -10,7 +10,7 @@ describe('Create Gym (e2e)', () => {
   afterAll(async () => {
     await app.close()
   })
-  it('should be able ro create a gym', async () => {
+  it('should be able to create a gym', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     const gymResponse = await request(app.server)
