@@ -1,14 +1,3 @@
-/*
-  - criar grupo de teste
-  - criar teste isolado
-  - carregar os plugins do fastify
-  - criar o checkin
-  - buscar o checkin
-  - teste o conteudo do body e o status code
-    app.post('/gyms/:gymId/check-ins', create)
-  
-*/
-
 import { app } from '@/app'
 import { prisma } from '@/lib/prisma'
 import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
