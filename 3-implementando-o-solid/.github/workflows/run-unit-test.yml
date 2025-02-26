@@ -13,16 +13,25 @@ jobs:
     steps:
       # Coloca o código do projeto no ambiente
       - uses: actions/checkout@v3
+
+      # Garante que o diretório correto existe antes de continuar
       - run: ls -la ./3-implementando-o-solid
-      # Instala o Node no ambiente
+        continue-on-error: true
+
+      # Muda para o diretório do projeto
+      - name: Set working directory
+        run: cd 3-implementando-o-solid
+
+      # Instala o Node no ambiente no diretório correto
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      # Garante que o diretório correto seja usado para instalar as dependências
+
+      # Instala as dependências no diretório correto
       - run: npm ci
         working-directory: ./3-implementando-o-solid
+
       # Executa os testes no diretório correto
       - run: npm run test
         working-directory: ./3-implementando-o-solid
-
