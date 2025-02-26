@@ -1,0 +1,21 @@
+name: Run Unit Test
+
+on: [push]
+
+jobs:
+  run-unit-test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # coloca o codigo do projeto no ambiente
+      - uses: actions/checkout@v3
+      # instala o node no ambiente
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      # nao faz interação com o usuario, não mexe o no package.json, so instala as depedencias
+      - run: npm ci
+      - run: npm run test
+        
