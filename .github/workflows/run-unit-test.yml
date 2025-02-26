@@ -13,12 +13,12 @@ jobs:
     steps:
       # Coloca o código do projeto no ambiente
       - uses: actions/checkout@v3
+      - run: ls -la ./3-implementando-o-solid
       # Instala o Node no ambiente
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      - run: ls -la ./3-implementando-o-solid
       # Garante que o diretório correto seja usado para instalar as dependências
       - run: npm ci
         working-directory: ./3-implementando-o-solid
