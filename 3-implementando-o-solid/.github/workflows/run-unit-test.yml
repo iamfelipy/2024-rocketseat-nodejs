@@ -24,3 +24,5 @@ jobs:
       # Executa os testes no diretório correto
       - run: npm run test
         working-directory: ./3-implementando-o-solid
+      - run: ls -la ./3-implementando-o-solid
+
