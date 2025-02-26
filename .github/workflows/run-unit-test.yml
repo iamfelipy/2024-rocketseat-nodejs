@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+      - run: ls -la ./3-implementando-o-solid
       # Garante que o diretório correto seja usado para instalar as dependências
       - run: npm ci
         working-directory: ./3-implementando-o-solid
       # Executa os testes no diretório correto
       - run: npm run test
         working-directory: ./3-implementando-o-solid
-      - run: ls -la ./3-implementando-o-solid
 
