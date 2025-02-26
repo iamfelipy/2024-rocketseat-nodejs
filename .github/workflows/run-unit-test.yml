@@ -14,24 +14,33 @@ jobs:
       # Coloca o código do projeto no ambiente
       - uses: actions/checkout@v3
 
-      # Garante que o diretório correto existe antes de continuar
-      - run: ls -la ./3-implementando-o-solid
-        continue-on-error: true
+      # Cria uma pasta de backup
+      # Copia as pastas e o .gitignore para a pasta backup
+      - name: Copy code to backup folder
+        run: |
+          mkdir backup
+          cp -r ./1-fundamentos ./backup/
+          cp -r ./2-rotas-e-http ./backup/
+          cp -r ./3-implementando-o-solid ./backup/
+          cp ./.gitignore ./backup/
+      
+      # Copia o conteúdo da pasta 3-implementando-o-solid de backup para a raiz
+      - name: Copy content from backup to root
+        run: |
+            cp -r ./backup/3-implementando-o-solid/* ./
 
-      # Muda para o diretório do projeto
-      - name: Set working directory
-        run: cd 3-implementando-o-solid
+      # Apaga o conteúdo da pasta backup (antes do uso do setup-node)
+      - name: Clean backup folder
+        run: rm -rf backup/*
 
-      # Instala o Node no ambiente no diretório correto
+      # Instala o Node no ambiente
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-
-      # Instala as dependências no diretório correto
+      
+      # Instala as dependências no diretório raiz
       - run: npm ci
-        working-directory: ./3-implementando-o-solid
 
-      # Executa os testes no diretório correto
+      # Executa os testes no diretório raiz
       - run: npm run test
-        working-directory: ./3-implementando-o-solid
