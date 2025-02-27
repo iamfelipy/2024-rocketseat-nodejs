@@ -29,7 +29,8 @@ jobs:
       - name: Copy code to backup folder
         run: |
           mkdir backup
-          mv ./* ./backup/
+          shopt -s dotglob
+          mv -- * backup/
       
       # Copia o conteúdo da pasta 3-implementando-o-solid de backup para a raiz
       - name: Copy content from backup to root
