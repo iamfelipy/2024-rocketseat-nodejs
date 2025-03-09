@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 
 export class PrismaGymsRepository implements GymsRepository {
   async findById(id: string): Promise<Gym | null> {
-    const gym = prisma.gym.findUnique({
+    const gym = await prisma.gym.findUnique({
       where: {
         id,
       },
