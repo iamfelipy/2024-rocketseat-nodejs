@@ -1,0 +1,13 @@
+{
+  "name": "desafio-do-modulo-api-find-a-friend",
+  "version": "1.0.0",
+  "description": "https://efficient-sloth-d85.notion.site/Desafio-03-0b927eb32dbd4f21ab40224ffdf6cf19",
+  "main": "index.js",
+  "engines": {"node":">=20.11.1 <21"},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
