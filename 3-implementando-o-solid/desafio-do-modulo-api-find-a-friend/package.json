@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "https://efficient-sloth-d85.notion.site/Desafio-03-0b927eb32dbd4f21ab40224ffdf6cf19",
   "main": "index.js",
-  "engines": {"node":">=20.11.1 <21"},
+  "engines": {
+    "node": ">=20.11.1 <21"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.5",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.4"
+  }
 }
