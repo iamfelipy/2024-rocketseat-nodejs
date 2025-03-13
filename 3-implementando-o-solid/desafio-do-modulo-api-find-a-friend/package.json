@@ -16,7 +16,11 @@
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^20.12.5",
     "eslint": "^8.57.0",
+    "prisma": "^5.12.1",
     "tsx": "^4.7.2",
     "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1"
   }
 }
