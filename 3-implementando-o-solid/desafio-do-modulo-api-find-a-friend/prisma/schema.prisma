@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Org {
-  id           String   @id @default(uuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  address      String
-  whatsapp     String
-  pets         Pet[]    @relation("OrgPets")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  address       String
+  whatsapp      String
+  pets          Pet[]    @relation("OrgPets")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 
   @@map("orgs")
 }
@@ -37,8 +37,8 @@ model Pet {
   description String?
   org         Org      @relation("OrgPets", fields: [orgId], references: [id])
   orgId       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 
   @@map("pets")
 }
