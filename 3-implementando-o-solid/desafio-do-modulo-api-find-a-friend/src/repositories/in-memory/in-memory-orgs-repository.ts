@@ -3,11 +3,11 @@ import { Prisma, Org } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 
 export class InMemoryOrgsRepository implements OrgsRepository {
-  private items: Org[] = []
+  public items: Org[] = []
 
   async create(data: Prisma.OrgUncheckedCreateInput): Promise<Org> {
     const org: Org = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,
