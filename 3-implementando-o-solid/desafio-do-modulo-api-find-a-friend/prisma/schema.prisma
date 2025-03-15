@@ -35,8 +35,8 @@ model Pet {
   size        String
   city        String
   description String?
-  org         Org      @relation("OrgPets", fields: [orgId], references: [id])
-  orgId       String
+  org         Org      @relation("OrgPets", fields: [org_id], references: [id])
+  org_id      String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
