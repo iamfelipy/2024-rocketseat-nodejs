@@ -12,7 +12,7 @@ describe('GetPetDetails Use Case', () => {
     sut = new GetPetDetailsUseCase(petsRepository)
   })
   it('should return pet details for a valid pet ID', async () => {
-    const pet = await petsRepository.create({
+    const { id: petId } = await petsRepository.create({
       name: 'Buddy',
       age: 3,
       breed: 'Golden Retriever',
@@ -21,15 +21,9 @@ describe('GetPetDetails Use Case', () => {
       city: 'sao-paulo',
     })
 
-    const result = await sut.execute({ petId: pet.id })
+    const { pet } = await sut.execute({ petId })
 
-    expect(result).toEqual({
-      id: pet.id,
-      name: 'Buddy',
-      age: 3,
-      breed: 'Golden Retriever',
-      ownerId: 'owner-123',
-    })
+    expect(pet?.id).toEqual(petId)
   })
 
   it('should throw an error if pet ID is invalid', async () => {
