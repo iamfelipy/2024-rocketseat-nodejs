@@ -13,6 +13,7 @@ export class InMemoryOrgsRepository implements OrgsRepository {
       password_hash: data.password_hash,
       address: data.address,
       whatsapp: data.whatsapp,
+      role: data.role ?? 'ADMIN',
       created_at: new Date(),
       updated_at: new Date(),
     }
