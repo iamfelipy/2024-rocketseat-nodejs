@@ -1,7 +1,7 @@
 import { app } from '@/app'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
-import { prisma } from 'prisma/vitest-environment-prisma/prisma-test-environment'
 import request from 'supertest'
+import { prisma } from '@/lib/prisma'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Create Pet (e2e)', () => {
