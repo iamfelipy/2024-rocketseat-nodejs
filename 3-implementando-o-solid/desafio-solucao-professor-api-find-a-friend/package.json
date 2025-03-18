@@ -1,0 +1,14 @@
+{
+  "name": "desafio-solucao-professor-api-find-a-friend",
+  "version": "1.0.0",
+  "description": "FindAFriend API",
+  "engines": {
+    "node": "20.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
