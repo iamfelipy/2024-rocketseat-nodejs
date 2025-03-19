@@ -16,7 +16,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "8.3.1",
     "@rocketseat/eslint-config": "2.2.2",
+    "@types/bcryptjs": "2.4.6",
     "@types/node": "20.10.0",
     "eslint": "8.57.0",
     "prisma": "5.12.1",
@@ -27,6 +29,7 @@
     "vitest": "1.5.0"
   },
   "dependencies": {
-    "@prisma/client": "5.12.1"
+    "@prisma/client": "5.12.1",
+    "bcryptjs": "2.4.3"
   }
 }
