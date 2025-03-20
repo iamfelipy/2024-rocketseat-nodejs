@@ -2,13 +2,16 @@ import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets.
 import { GetPetUseCase } from './get-pet.use-case'
 import { makePet } from 'test/factories/make-pet.factory'
 import { PetNotFoundError } from './errors/pet-not-found.error'
+import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
 
 describe('Get Pet Use Case', () => {
+  let orgsRepository: InMemoryOrgsRepository
   let petsRepository: InMemoryPetsRepository
   let sut: GetPetUseCase
 
   beforeEach(() => {
-    petsRepository = new InMemoryPetsRepository()
+    orgsRepository = new InMemoryOrgsRepository()
+    petsRepository = new InMemoryPetsRepository(orgsRepository)
     sut = new GetPetUseCase(petsRepository)
   })
   it('should be able to get a new pet', async () => {
