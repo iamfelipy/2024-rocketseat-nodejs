@@ -1,7 +1,7 @@
 import request from 'supertest'
 
 import { app } from '@/app'
-import { makeOrg } from 'test/factories/make-org.factory'
+import { makeOrg } from '@tests/factories/make-org.factory'
 
 describe('Authenticate Org (E2E)', () => {
   beforeAll(async () => {

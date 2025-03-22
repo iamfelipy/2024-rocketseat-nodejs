@@ -1,6 +1,6 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
 import { CreateOrgUseCase } from './create-org.use-case'
-import { makeOrg } from 'test/factories/make-org.factory'
+import { makeOrg } from '@tests/factories/make-org.factory'
 import { OrgAlreadyExistsError } from './errors/org-already-exists.error'
 import { compare } from 'bcryptjs'
 

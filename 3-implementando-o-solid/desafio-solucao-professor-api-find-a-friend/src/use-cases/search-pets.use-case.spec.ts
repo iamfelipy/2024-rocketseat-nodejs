@@ -1,8 +1,8 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets.repository'
 import { SearchPetsUseCase } from './search-pets.use-case'
-import { makeOrg } from 'test/factories/make-org.factory'
-import { makePet } from 'test/factories/make-pet.factory'
+import { makeOrg } from '@tests/factories/make-org.factory'
+import { makePet } from '@tests/factories/make-pet.factory'
 
 describe('Search Pets Use Case', () => {
   let orgsRepository: InMemoryOrgsRepository

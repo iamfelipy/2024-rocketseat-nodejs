@@ -1,7 +1,7 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets.repository'
-import { makeOrg } from 'test/factories/make-org.factory'
-import { makePet } from 'test/factories/make-pet.factory'
+import { makeOrg } from '@tests/factories/make-org.factory'
+import { makePet } from '@tests/factories/make-pet.factory'
 import { CreatePetUseCase } from './create-pet.use-case'
 import { OrgNotFoundError } from './errors/org-not-found.error'
 

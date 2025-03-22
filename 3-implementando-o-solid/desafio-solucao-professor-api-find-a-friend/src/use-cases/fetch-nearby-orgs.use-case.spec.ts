@@ -1,5 +1,5 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
-import { makeOrg } from 'test/factories/make-org.factory'
+import { makeOrg } from '@tests/factories/make-org.factory'
 import { FetchNearbyOrgsUseCase } from './fetch-nearby-orgs.use-case'
 
 describe('Fetch Nearby Orgs Use Case', () => {

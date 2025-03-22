@@ -1,6 +1,6 @@
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets.repository'
 import { GetPetUseCase } from './get-pet.use-case'
-import { makePet } from 'test/factories/make-pet.factory'
+import { makePet } from '@tests/factories/make-pet.factory'
 import { PetNotFoundError } from './errors/pet-not-found.error'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs.repository'
 
