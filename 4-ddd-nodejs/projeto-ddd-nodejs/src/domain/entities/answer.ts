@@ -23,6 +23,11 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.content
   }
 
+  set content(content) {
+    this.props.content = content
+    this.touch()
+  }
+
   get createdAt() {
     return this.props.createdAt
   }
@@ -37,11 +42,6 @@ export class Answer extends Entity<AnswerProps> {
 
   private touch() {
     this.props.updatedAt = new Date()
-  }
-
-  set content(content) {
-    this.props.content = content
-    this.touch()
   }
 
   static create(
