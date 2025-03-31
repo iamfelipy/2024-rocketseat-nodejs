@@ -7,3 +7,4 @@ Clean Architecture
 - perguntas e respostas podem ter comentarios
 - as perguntas feitas por alunos podem ser respondidas por alunos ou instrutores
 - só o dono da pergunta pode deletar a propria pergunta
+- só o dono da pergunta pode escolher a melhor resposta
