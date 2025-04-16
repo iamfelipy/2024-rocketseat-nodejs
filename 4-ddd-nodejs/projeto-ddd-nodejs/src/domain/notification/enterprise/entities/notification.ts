@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-interface NotificationProps {
+export interface NotificationProps {
   // essa propriedade faz parte da regra do DDD
   // de não nomear de forma generica e usar a linguagem do dominio
   recipientId: UniqueEntityID
@@ -31,6 +31,10 @@ export class Notification extends Entity<NotificationProps> {
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  read() {
+    this.props.readAt = new Date()
   }
 
   static create(
