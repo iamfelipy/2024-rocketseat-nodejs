@@ -29,7 +29,7 @@ describe('Edit Question', () => {
       { authorId: new UniqueEntityID('author-1') },
       new UniqueEntityID('question-1'),
     )
-    await inMemoryQuestionsRepository.create(newQuestion)
+    inMemoryQuestionsRepository.create(newQuestion)
 
     inMemoryQuestionAttachmentsRepository.items.push(
       makeQuestionAttachment({
@@ -74,7 +74,7 @@ describe('Edit Question', () => {
       { authorId: new UniqueEntityID('author-1') },
       new UniqueEntityID('question-1'),
     )
-    await inMemoryQuestionsRepository.create(newQuestion)
+    inMemoryQuestionsRepository.create(newQuestion)
 
     const result = await sut.execute({
       authorId: 'author-2',

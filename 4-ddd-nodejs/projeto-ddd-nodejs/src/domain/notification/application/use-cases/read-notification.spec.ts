@@ -17,7 +17,7 @@ describe('Read Notification', () => {
   it('should be able to read a notification', async () => {
     const notification = makeNotification()
 
-    await inMemoryNotificationsRepository.create(notification)
+    inMemoryNotificationsRepository.create(notification)
 
     const result = await sut.execute({
       recipientId: notification.recipientId.toString(),
@@ -34,7 +34,7 @@ describe('Read Notification', () => {
     const notification = makeNotification({
       recipientId: new UniqueEntityID('recipient-1'),
     })
-    await inMemoryNotificationsRepository.create(notification)
+    inMemoryNotificationsRepository.create(notification)
 
     const result = await sut.execute({
       notificationId: notification.id.toString(),

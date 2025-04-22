@@ -16,7 +16,7 @@ describe('Delete Answer Comment', () => {
   it('should be able to delete a answer comment', async () => {
     const answerComment = makeAnswerComment()
 
-    await inMemoryAnswerCommentsRepository.create(answerComment)
+    inMemoryAnswerCommentsRepository.create(answerComment)
 
     await sut.execute({
       answerCommentId: answerComment.id.toString(),
@@ -30,7 +30,7 @@ describe('Delete Answer Comment', () => {
       authorId: new UniqueEntityID('author-1'),
     })
 
-    await inMemoryAnswerCommentsRepository.create(answerComment)
+    inMemoryAnswerCommentsRepository.create(answerComment)
 
     const result = await sut.execute({
       answerCommentId: answerComment.id.toString(),

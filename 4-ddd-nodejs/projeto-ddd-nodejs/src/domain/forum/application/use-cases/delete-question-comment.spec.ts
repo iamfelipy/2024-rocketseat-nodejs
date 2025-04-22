@@ -17,7 +17,7 @@ describe('Delete Question Comment', () => {
   it('should be able to delete a question comment', async () => {
     const questionComment = makeQuestionComment()
 
-    await inMemoryQuestionCommentsRepository.create(questionComment)
+    inMemoryQuestionCommentsRepository.create(questionComment)
 
     await sut.execute({
       questionCommentId: questionComment.id.toString(),
@@ -31,7 +31,7 @@ describe('Delete Question Comment', () => {
       authorId: new UniqueEntityID('author-1'),
     })
 
-    await inMemoryQuestionCommentsRepository.create(questionComment)
+    inMemoryQuestionCommentsRepository.create(questionComment)
 
     const result = await sut.execute({
       questionCommentId: questionComment.id.toString(),

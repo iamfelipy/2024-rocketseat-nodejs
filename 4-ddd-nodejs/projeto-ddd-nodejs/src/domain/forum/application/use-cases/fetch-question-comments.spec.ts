@@ -15,17 +15,17 @@ describe('Fetch Question Comments', () => {
   })
 
   it('should be able to fetch question comments', async () => {
-    await inMemoryQuestionCommentsRepository.create(
+    inMemoryQuestionCommentsRepository.create(
       makeQuestionComment({
         questionId: new UniqueEntityID('question-1'),
       }),
     )
-    await inMemoryQuestionCommentsRepository.create(
+    inMemoryQuestionCommentsRepository.create(
       makeQuestionComment({
         questionId: new UniqueEntityID('question-1'),
       }),
     )
-    await inMemoryQuestionCommentsRepository.create(
+    inMemoryQuestionCommentsRepository.create(
       makeQuestionComment({
         questionId: new UniqueEntityID('question-1'),
       }),
@@ -40,7 +40,7 @@ describe('Fetch Question Comments', () => {
   })
   it('should be able to fetch paginated question comments', async () => {
     for (let i = 1; i <= 22; i++) {
-      await inMemoryQuestionCommentsRepository.create(
+      inMemoryQuestionCommentsRepository.create(
         makeQuestionComment({
           questionId: new UniqueEntityID('question-1'),
         }),

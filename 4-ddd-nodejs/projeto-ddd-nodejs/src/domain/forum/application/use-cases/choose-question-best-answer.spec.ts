@@ -39,8 +39,8 @@ describe('Choose Question Best Anwser', () => {
       questionId: question.id,
     })
 
-    await inMemoryQuestionsRepository.create(question)
-    await inMemoryAnswersRepository.create(answer)
+    inMemoryQuestionsRepository.create(question)
+    inMemoryAnswersRepository.create(answer)
 
     const result = await sut.execute({
       answerId: answer.id.toString(),
@@ -59,8 +59,8 @@ describe('Choose Question Best Anwser', () => {
       questionId: question.id,
     })
 
-    await inMemoryQuestionsRepository.create(question)
-    await inMemoryAnswersRepository.create(answer)
+    inMemoryQuestionsRepository.create(question)
+    inMemoryAnswersRepository.create(answer)
 
     const result = await sut.execute({
       answerId: answer.id.toString(),

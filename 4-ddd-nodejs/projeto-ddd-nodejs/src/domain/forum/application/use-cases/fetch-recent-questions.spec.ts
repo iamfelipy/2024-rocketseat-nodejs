@@ -19,17 +19,17 @@ describe('Fetch Recent Questions', () => {
   })
 
   it('should be able to fetch recent questions', async () => {
-    await inMemoryQuestionsRepository.create(
+    inMemoryQuestionsRepository.create(
       makeQuestion({
         createdAt: new Date(2022, 0, 20),
       }),
     )
-    await inMemoryQuestionsRepository.create(
+    inMemoryQuestionsRepository.create(
       makeQuestion({
         createdAt: new Date(2022, 0, 18),
       }),
     )
-    await inMemoryQuestionsRepository.create(
+    inMemoryQuestionsRepository.create(
       makeQuestion({
         createdAt: new Date(2022, 0, 23),
       }),
@@ -51,7 +51,7 @@ describe('Fetch Recent Questions', () => {
   })
   it('should be able to fetch paginated recent questions', async () => {
     for (let i = 1; i <= 22; i++) {
-      await inMemoryQuestionsRepository.create(makeQuestion())
+      inMemoryQuestionsRepository.create(makeQuestion())
     }
 
     const result = await sut.execute({ page: 2 })

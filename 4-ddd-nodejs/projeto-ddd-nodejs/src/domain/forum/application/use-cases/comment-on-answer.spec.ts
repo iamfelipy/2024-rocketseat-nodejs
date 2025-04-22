@@ -26,7 +26,7 @@ describe('Comment on Answer', () => {
   it('should be able to comment on answer', async () => {
     const answer = makeAnswer()
 
-    await inMemoryAnswersRepository.create(answer)
+    inMemoryAnswersRepository.create(answer)
 
     await sut.execute({
       answerId: answer.id.toString(),

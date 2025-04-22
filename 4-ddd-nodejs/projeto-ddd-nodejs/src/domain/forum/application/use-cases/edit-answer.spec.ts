@@ -29,7 +29,7 @@ describe('Edit Answer', () => {
       { authorId: new UniqueEntityID('author-1') },
       new UniqueEntityID('answer-1'),
     )
-    await inMemoryAnswersRepository.create(newAnswer)
+    inMemoryAnswersRepository.create(newAnswer)
 
     inMemoryAnswerAttachmentsRepository.items.push(
       makeAnswerAttachment({
@@ -72,7 +72,7 @@ describe('Edit Answer', () => {
       { authorId: new UniqueEntityID('author-1') },
       new UniqueEntityID('answer-1'),
     )
-    await inMemoryAnswersRepository.create(newAnswer)
+    inMemoryAnswersRepository.create(newAnswer)
 
     const result = await sut.execute({
       authorId: 'author-2',

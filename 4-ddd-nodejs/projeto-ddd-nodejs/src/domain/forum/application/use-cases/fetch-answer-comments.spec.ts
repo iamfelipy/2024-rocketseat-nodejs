@@ -14,17 +14,17 @@ describe('Fetch Answer Comments', () => {
   })
 
   it('should be able to fetch answer comments', async () => {
-    await inMemoryAnswerCommentsRepository.create(
+    inMemoryAnswerCommentsRepository.create(
       makeAnswerComment({
         answerId: new UniqueEntityID('answer-1'),
       }),
     )
-    await inMemoryAnswerCommentsRepository.create(
+    inMemoryAnswerCommentsRepository.create(
       makeAnswerComment({
         answerId: new UniqueEntityID('answer-1'),
       }),
     )
-    await inMemoryAnswerCommentsRepository.create(
+    inMemoryAnswerCommentsRepository.create(
       makeAnswerComment({
         answerId: new UniqueEntityID('answer-1'),
       }),
@@ -39,7 +39,7 @@ describe('Fetch Answer Comments', () => {
   })
   it('should be able to fetch paginated answer comments', async () => {
     for (let i = 1; i <= 22; i++) {
-      await inMemoryAnswerCommentsRepository.create(
+      inMemoryAnswerCommentsRepository.create(
         makeAnswerComment({
           answerId: new UniqueEntityID('answer-1'),
         }),
