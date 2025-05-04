@@ -18,15 +18,18 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "name": "John Doe",
   "email": "johndoe@example.com",
   "password": "securepassword"
 }
 
 ###
 
-# @name create_questions
+# @name create_question
 POST {{baseUrl}}/questions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
+{
+  "title": "Nova pergunta",
+  "content": "Conteúdo da pergunta"
+}
