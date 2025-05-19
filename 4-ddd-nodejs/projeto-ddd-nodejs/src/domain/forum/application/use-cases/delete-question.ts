@@ -10,7 +10,7 @@ interface DeleteQuestionUseCaseRequest {
 
 type DeleteQuestionUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
-  Record<string, never>
+  null
 >
 
 export class DeleteQuestionUseCase {
@@ -31,6 +31,6 @@ export class DeleteQuestionUseCase {
 
     this.questionsRepository.delete(question)
 
-    return right({})
+    return right(null)
   }
 }
