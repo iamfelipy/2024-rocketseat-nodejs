@@ -23,7 +23,7 @@ model User {
   role     UserRole @default(STUDENT)
 
   questions Question[]
-  Answer    Answer[]
+  answers   Answer[]
   comments  Comment[]
 
   @@map("users")
