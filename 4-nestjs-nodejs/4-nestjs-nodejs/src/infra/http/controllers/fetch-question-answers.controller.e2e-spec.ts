@@ -30,7 +30,7 @@ describe('Fetch question answers (E2E)', () => {
     await app.init()
   })
 
-  test('[GET] /questions/:id/answers', async () => {
+  test('[GET] /questions/:questionId/answers', async () => {
     const user = await studentFactory.makePrismaStudent({})
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
