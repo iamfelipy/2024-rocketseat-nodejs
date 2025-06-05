@@ -54,3 +54,4 @@ O projeto segue os princípios da **Clean Architecture**, separando responsabili
 ## Licença
 
 Este projeto está sob a licença **UNLICENSED**.  
+
