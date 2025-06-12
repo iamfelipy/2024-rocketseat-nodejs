@@ -14,6 +14,10 @@ export class InMemoryAnswerAttachmentsRepository
     return answerAttachments
   }
 
+  async createMany(attachments: AnswerAttachment[]): Promise<void> {
+    this.items.push(...attachments)
+  }
+
   async deleteManyByAnswerId(answerId: string) {
     const answerAttachments = this.items.filter(
       (item) => item.answerId.toString() !== answerId,
