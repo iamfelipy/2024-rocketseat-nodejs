@@ -64,7 +64,7 @@ export class EditAnswerUseCase {
     answer.content = content
     answer.attachments = answerAttachmentList
 
-    this.answersRepository.save(answer)
+    await this.answersRepository.save(answer)
 
     return right({
       answer,
