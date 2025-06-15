@@ -57,7 +57,7 @@ export class PrismaQuestionCommentsRepository
     questionId: string,
     { page }: PaginationParams,
   ): Promise<CommentWithAuthor[]> {
-    const comments = await this.prisma.comment.findMany({
+    const questionComments = await this.prisma.comment.findMany({
       where: {
         questionId,
       },
@@ -71,7 +71,7 @@ export class PrismaQuestionCommentsRepository
       skip: (page - 1) * 20,
     })
 
-    return comments.map(PrismaCommentWithAuthorMapper.toDomain)
+    return questionComments.map(PrismaCommentWithAuthorMapper.toDomain)
   }
 
   async delete(questionComment: QuestionComment): Promise<void> {
