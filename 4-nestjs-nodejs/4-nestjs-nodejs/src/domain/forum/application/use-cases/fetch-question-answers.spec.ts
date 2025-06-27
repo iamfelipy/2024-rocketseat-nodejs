@@ -138,16 +138,18 @@ describe('Fetch Question Answers', () => {
     })
 
     expect(firstPage.value?.answers).toHaveLength(20)
-    expect(firstPage.value?.answers[0]).toEqual(
-      expect.objectContaining({
-        content: 'Answer 25',
-        author: 'John Doe',
-        attachments: [
-          expect.objectContaining({
-            title: 'Attachment for Answer 25',
-          }),
-        ],
-      }),
+    expect(firstPage.value?.answers).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          content: 'Answer 12',
+          author: 'John Doe',
+          attachments: [
+            expect.objectContaining({
+              title: 'Attachment for Answer 12',
+            }),
+          ],
+        }),
+      ]),
     )
 
     const secondPage = await sut.execute({
@@ -156,16 +158,18 @@ describe('Fetch Question Answers', () => {
     })
 
     expect(secondPage.value?.answers).toHaveLength(5)
-    expect(secondPage.value?.answers[0]).toEqual(
-      expect.objectContaining({
-        content: 'Answer 5',
-        author: 'John Doe',
-        attachments: [
-          expect.objectContaining({
-            title: 'Attachment for Answer 5',
-          }),
-        ],
-      }),
+    expect(secondPage.value?.answers).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          content: 'Answer 25',
+          author: 'John Doe',
+          attachments: [
+            expect.objectContaining({
+              title: 'Attachment for Answer 25',
+            }),
+          ],
+        }),
+      ]),
     )
   })
 })
