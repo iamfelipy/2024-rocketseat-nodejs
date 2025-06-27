@@ -9,7 +9,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: nest-clean
-      PGDATA: /data/postgres
     volumes:
-      - ./data/pg:/data/postgres
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
