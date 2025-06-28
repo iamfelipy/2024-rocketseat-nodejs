@@ -8,7 +8,7 @@ export interface NotificationProps {
   recipientId: UniqueEntityID
   title: string
   content: string
-  readAt?: Date
+  readAt?: Date | null
   createdAt: Date
 }
 
