@@ -12,5 +12,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  redis:
+    container_name: nest-clean-redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redisdata:/data
+
 volumes:
   pgdata:
+  redisdata:
