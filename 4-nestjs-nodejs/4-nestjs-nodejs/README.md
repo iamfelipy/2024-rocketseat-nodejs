@@ -2,6 +2,25 @@
 
 Uma API robusta de fórum desenvolvida seguindo os princípios de **Clean Architecture**, **Domain-Driven Design (DDD)** e **SOLID**, construída com NestJS e TypeScript.
 
+## 📋 Sumário
+
+- [📋 Sobre o Projeto](#-sobre-o-projeto)
+- [🏗️ Arquitetura](#️-arquitetura)
+- [🎯 Funcionalidades Principais](#-funcionalidades-principais)
+- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
+- [📊 Cobertura de Testes](#-cobertura-de-testes)
+- [🚀 Como Executar](#-como-executar)
+- [🐳 Docker Local](#-docker-local)
+- [📚 Documentação da API](#-documentação-da-api)
+- [🔧 Scripts Disponíveis](#-scripts-disponíveis)
+- [🏛️ Princípios SOLID Aplicados](#️-princípios-solid-aplicados)
+- [🎨 Domain-Driven Design](#-domain-driven-design)
+- [🔐 Segurança](#-segurança)
+- [📈 Performance](#-performance)
+- [🧪 Testes](#-testes)
+- [🚀 Deploy](#-deploy)
+- [🎯 Pontos Fortes para Entrevistas](#-pontos-fortes-para-entrevistas)
+
 ## 📋 Sobre o Projeto
 
 Esta aplicação implementa um sistema completo de fórum com funcionalidades avançadas como:
@@ -129,9 +148,27 @@ npm run test:e2e:watch
 
 ### Pré-requisitos
 - Node.js 18.16.0+
-- PostgreSQL
-- Redis
+- Docker e Docker Compose
 - Conta CloudFlare (para storage)
+
+### 🐳 Docker Local
+
+Para facilitar o desenvolvimento, você pode usar os containers Docker para PostgreSQL e Redis:
+
+```bash
+# Inicie os containers de banco de dados
+docker-compose up -d
+
+# Verifique se os containers estão rodando
+docker-compose ps
+
+# Para parar os containers
+docker-compose down
+```
+
+Os containers disponíveis:
+- **PostgreSQL**: `localhost:5432` (usuário: `postgres`, senha: `docker`)
+- **Redis**: `localhost:6379`
 
 ### 1. Clone o Repositório
 ```bash
@@ -148,8 +185,8 @@ npm install
 Crie um arquivo `.env` baseado no `.env.example`:
 
 ```env
-# Database
-DATABASE_URL="postgresql://user:password@localhost:5432/forum_db"
+# Database (Docker)
+DATABASE_URL="postgresql://postgres:docker@localhost:5432/forum_db"
 
 # JWT Keys (RS256)
 JWT_PRIVATE_KEY="sua_chave_privada_base64"
@@ -161,7 +198,7 @@ CLOUDFLARE_ACCESS_KEY_ID="sua_access_key"
 CLOUDFLARE_SECRET_ACCESS_KEY="sua_secret_key"
 CLOUDFLARE_BUCKET_NAME="seu-bucket"
 
-# Redis
+# Redis (Docker)
 REDIS_HOST="127.0.0.1"
 REDIS_PORT=6379
 REDIS_DB=0
@@ -170,6 +207,8 @@ REDIS_DB=0
 PORT=3333
 ```
 
+**Nota**: Se estiver usando Docker, as configurações de banco e Redis já estão prontas. Caso contrário, ajuste as URLs conforme sua instalação local.
+
 ### 4. Configure o Banco de Dados
 ```bash
 # Execute as migrações
@@ -177,6 +216,9 @@ npx prisma migrate dev
 
 # Gere o cliente Prisma
 npx prisma generate
+
+# (Opcional) Visualize o banco com Prisma Studio
+npx prisma studio
 ```
 
 ### 5. Inicie a Aplicação
@@ -187,6 +229,25 @@ npm run start:dev
 # Produção
 npm run build
 npm run start:prod
+```
+
+### 🎯 Resumo Rápido (Docker)
+```bash
+# 1. Clone e instale dependências
+git clone <url-do-repositorio>
+cd 4-nestjs-nodejs
+npm install
+
+# 2. Configure .env com as credenciais do Cloudflare
+
+# 3. Inicie os containers
+docker-compose up -d
+
+# 4. Execute migrações
+npx prisma migrate dev
+
+# 5. Inicie a aplicação
+npm run start:dev
 ```
 
 ## 📚 Documentação da API
