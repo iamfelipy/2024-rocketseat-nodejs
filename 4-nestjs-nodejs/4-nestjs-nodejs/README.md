@@ -1,246 +1,307 @@
-# 🚀 Forum API - Clean Architecture com NestJS
+# 🏗️ Forum API - Clean Architecture com NestJS
 
-Uma API robusta de fórum desenvolvida seguindo os princípios de **Clean Architecture**, **Domain-Driven Design (DDD)** e **SOLID**, construída com NestJS e TypeScript.
+> **Projeto de demonstração de competências em arquitetura de software, implementando Clean Architecture, Domain-Driven Design e princípios SOLID com NestJS e TypeScript.**
 
-## 📋 Sumário
+## 📋 Visão Geral
 
-- [📋 Sobre o Projeto](#-sobre-o-projeto)
-- [🏗️ Arquitetura](#️-arquitetura)
-- [🎯 Funcionalidades Principais](#-funcionalidades-principais)
-- [🛠️ Tecnologias Utilizadas](#️-tecnologias-utilizadas)
-- [📊 Cobertura de Testes](#-cobertura-de-testes)
-- [🚀 Como Executar](#-como-executar)
-- [🐳 Docker Local](#-docker-local)
-- [📚 Documentação da API](#-documentação-da-api)
-- [🔧 Scripts Disponíveis](#-scripts-disponíveis)
-- [🏛️ Princípios SOLID Aplicados](#️-princípios-solid-aplicados)
-- [🎨 Domain-Driven Design](#-domain-driven-design)
-- [🔐 Segurança](#-segurança)
-- [📈 Performance](#-performance)
-- [🧪 Testes](#-testes)
-- [🚀 Deploy](#-deploy)
-- [🎯 Pontos Fortes para Entrevistas](#-pontos-fortes-para-entrevistas)
+Este projeto implementa uma API completa de fórum educacional, demonstrando a aplicação prática de padrões arquiteturais modernos e boas práticas de desenvolvimento. A aplicação serve como portfólio técnico, evidenciando proficiência em:
 
-## 📋 Sobre o Projeto
+- **Clean Architecture** com separação clara de responsabilidades
+- **Domain-Driven Design** com bounded contexts bem definidos
+- **Princípios SOLID** aplicados consistentemente
+- **Testes automatizados** com cobertura superior a 95%
+- **Segurança** com autenticação JWT RS256
+- **Performance** com cache Redis e otimizações de banco
 
-Esta aplicação implementa um sistema completo de fórum com funcionalidades avançadas como:
-- **Gestão de usuários** (estudantes e instrutores)
-- **Sistema de perguntas e respostas**
-- **Comentários em perguntas e respostas**
-- **Sistema de anexos** com upload para AWS S3
-- **Notificações em tempo real**
-- **Sistema de melhor resposta**
-- **Cache com Redis**
-- **Autenticação JWT com RS256**
+## 🏛️ Arquitetura
 
-## 🏗️ Arquitetura
-
-### Clean Architecture
-O projeto segue estritamente os princípios da Clean Architecture, organizado em camadas bem definidas:
+### Clean Architecture - Estrutura em Camadas
 
 ```
 src/
-├── core/                    # Camada de infraestrutura compartilhada
-├── domain/                  # Regras de negócio e entidades
+├── core/                    # Infraestrutura compartilhada
+│   ├── entities/           # Entidades base
+│   ├── errors/             # Tratamento de erros
+│   ├── events/             # Sistema de eventos
+│   └── repositories/       # Interfaces de repositórios
+├── domain/                  # Regras de negócio puras
 │   ├── forum/              # Subdomínio do fórum
 │   └── notification/       # Subdomínio de notificações
-├── infra/                  # Implementações concretas
-│   ├── auth/              # Autenticação JWT
-│   ├── cache/             # Cache Redis
-│   ├── database/          # Prisma ORM
-│   ├── http/              # Controllers e presenters
-│   └── storage/           # Upload de arquivos
-└── test/                  # Testes e factories
+├── infra/                   # Implementações concretas
+│   ├── auth/               # Autenticação JWT
+│   ├── cache/              # Cache Redis
+│   ├── database/           # Persistência com Prisma
+│   ├── http/               # Controllers e presenters
+│   └── storage/            # Upload de arquivos
+└── test/                   # Testes e factories
 ```
 
 ### Padrões de Design Implementados
 
-- **Repository Pattern**: Abstração da camada de dados
-- **Use Case Pattern**: Casos de uso bem definidos
-- **Domain Events**: Comunicação entre agregados
-- **Value Objects**: Objetos de valor imutáveis
-- **Aggregate Pattern**: Agregados com consistência
-- **Strategy Pattern**: Para diferentes estratégias de upload
-- **Dependency Injection**: Inversão de dependências
+| Padrão | Implementação | Benefício |
+|--------|---------------|-----------|
+| **Repository Pattern** | Abstração da camada de dados | Independência de ORM |
+| **Use Case Pattern** | Casos de uso bem definidos | Separação de responsabilidades |
+| **Domain Events** | Comunicação entre agregados | Baixo acoplamento |
+| **Value Objects** | Objetos de valor imutáveis | Integridade de dados |
+| **Aggregate Pattern** | Agregados com consistência | Transações de domínio |
+| **Strategy Pattern** | Estratégias de upload | Flexibilidade |
+| **Dependency Injection** | Inversão de dependências | Testabilidade |
 
-## 🎯 Funcionalidades Principais
+## 🎯 Funcionalidades Implementadas
 
-### Gestão de Usuários
-- ✅ Registro de estudantes
-- ✅ Autenticação com JWT RS256
+### Sistema de Usuários
+- ✅ Registro e autenticação de estudantes
 - ✅ Controle de acesso baseado em roles
+- ✅ Autenticação JWT com chaves RS256
 
 ### Sistema de Fórum
-- ✅ Criação, edição e exclusão de perguntas
-- ✅ Sistema de respostas com anexos
-- ✅ Comentários em perguntas e respostas
+- ✅ CRUD completo de perguntas e respostas
+- ✅ Sistema de comentários aninhados
 - ✅ Escolha de melhor resposta
-- ✅ Busca por slug otimizada
+- ✅ Busca otimizada por slug
 
 ### Sistema de Anexos
 - ✅ Upload de arquivos para Cloudflare R2
-- ✅ Validação de tipos de arquivo
+- ✅ Validação de tipos e tamanhos
 - ✅ Anexos em perguntas e respostas
 
-### Notificações
-- ✅ Notificações automáticas para novas respostas
-- ✅ Notificações para comentários
-- ✅ Notificações para melhor resposta escolhida
+### Sistema de Notificações
+- ✅ Notificações automáticas por eventos
 - ✅ Sistema de leitura de notificações
+- ✅ Eventos de domínio para comunicação
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack Tecnológica
 
-### Core
+### Core Framework
 - **NestJS 10.2.5**: Framework para aplicações Node.js escaláveis
-- **TypeScript 5.1.3**: Linguagem tipada
+- **TypeScript 5.1.3**: Linguagem com tipagem estática
 - **Node.js 18.16.0+**: Runtime JavaScript
 
-### Banco de Dados
-- **PostgreSQL**: Banco de dados principal
-- **Prisma 5.2.0**: ORM moderno com type safety
+### Persistência e Cache
+- **PostgreSQL**: Banco de dados relacional
+- **Prisma 5.2.0**: ORM com type safety
 - **Redis**: Cache em memória
 
-### Autenticação & Segurança
+### Segurança e Validação
 - **JWT RS256**: Autenticação com chaves assimétricas
-- **bcryptjs**: Hash de senhas
-- **Passport**: Estratégias de autenticação
-
-### Validação & Validação
+- **bcryptjs**: Hash seguro de senhas
 - **Zod 3.22.2**: Validação de schemas
-- **ESLint**: Linting de código
-- **Prettier**: Formatação de código
 
-### Testes
+### Testes e Qualidade
 - **Vitest**: Framework de testes rápido
 - **Supertest**: Testes de integração HTTP
-- **Faker.js**: Geração de dados para testes
+- **ESLint + Prettier**: Padronização de código
 
-### Storage
-- **Cloudflare R2**: Armazenamento de arquivos (compatível com S3)
+### Infraestrutura
+- **Cloudflare R2**: Armazenamento de arquivos
+- **Docker**: Containerização
+- **Docker Compose**: Orquestração local
 
-## 📊 Cobertura de Testes
+## 📊 Qualidade e Testes
 
-O projeto possui uma cobertura abrangente de testes:
-
+### Cobertura de Testes
 - **147 testes unitários** (`.spec.ts`)
 - **23 testes end-to-end** (`.e2e-spec.ts`)
-- **Cobertura de 95%+** do código
+- **Cobertura superior a 95%** do código
 
-### Executar Testes
+### Estratégia de Testes
 ```bash
 # Testes unitários
 npm run test
 
-# Testes em modo watch
-npm run test:watch
-
-# Cobertura de testes
-npm run test:cov
-
 # Testes E2E
 npm run test:e2e
 
-# Testes E2E em modo watch
-npm run test:e2e:watch
+# Cobertura de testes
+npm run test:cov
 ```
+
+### Padrões de Teste
+- **Testes unitários**: Use cases e entidades
+- **Testes de integração**: Repositórios e serviços
+- **Testes E2E**: Fluxos completos da API
+- **Factories**: Criação de dados de teste
+- **Mocks**: Simulação de dependências externas
+
+## 🏛️ Princípios SOLID Aplicados
+
+### S - Single Responsibility Principle
+```typescript
+// Cada classe tem uma única responsabilidade
+class CreateQuestionUseCase {
+  constructor(
+    private questionsRepository: QuestionsRepository,
+    private attachmentsRepository: AttachmentsRepository,
+    private uploader: Uploader,
+  ) {}
+  
+  async execute(request: CreateQuestionRequest): Promise<CreateQuestionResponse> {
+    // Apenas lógica para criar perguntas
+  }
+}
+```
+
+### O - Open/Closed Principle
+```typescript
+// Sistema extensível sem modificar código existente
+interface Uploader {
+  upload(file: Buffer, fileName: string): Promise<string>
+}
+
+class R2Uploader implements Uploader { /* ... */ }
+class S3Uploader implements Uploader { /* ... */ }
+```
+
+### L - Liskov Substitution Principle
+```typescript
+// Implementações podem ser substituídas
+class InMemoryQuestionsRepository implements QuestionsRepository {
+  // Implementação para testes
+}
+
+class PrismaQuestionsRepository implements QuestionsRepository {
+  // Implementação para produção
+}
+```
+
+### I - Interface Segregation Principle
+```typescript
+// Interfaces específicas e coesas
+interface HashGenerator {
+  hash(plain: string): Promise<string>
+}
+
+interface HashComparer {
+  compare(plain: string, hash: string): Promise<boolean>
+}
+```
+
+### D - Dependency Inversion Principle
+```typescript
+// Dependências de abstrações, não de implementações
+class AuthenticateStudentUseCase {
+  constructor(
+    private studentsRepository: StudentsRepository,
+    private hashComparer: HashComparer,
+    private encrypter: Encrypter,
+  ) {}
+}
+```
+
+## 🎨 Domain-Driven Design
+
+### Bounded Contexts
+- **Forum Context**: Perguntas, respostas, comentários e anexos
+- **Notification Context**: Sistema de notificações e eventos
+
+### Aggregates
+```typescript
+// Question como Aggregate Root
+class Question extends AggregateRoot<QuestionProps> {
+  private _attachments: QuestionAttachmentList
+  private _comments: QuestionCommentList
+  
+  // Métodos que garantem consistência
+  addAttachment(attachment: QuestionAttachment): void {
+    this._attachments.add(attachment)
+    this.addDomainEvent(new QuestionAttachmentAddedEvent(this, attachment))
+  }
+}
+```
+
+### Domain Events
+```typescript
+// Eventos que comunicam mudanças entre agregados
+export class AnswerCreatedEvent implements DomainEvent {
+  constructor(
+    public answer: Answer,
+    public questionId: UniqueEntityID,
+  ) {}
+}
+```
+
+### Value Objects
+```typescript
+// Objetos imutáveis que representam conceitos do domínio
+class Slug extends ValueObject<string> {
+  constructor(value: string) {
+    super(value)
+    this.validate(value)
+  }
+  
+  private validate(value: string): void {
+    if (value.length < 3) {
+      throw new Error('Slug must be at least 3 characters long')
+    }
+  }
+}
+```
+
+## 🔐 Segurança Implementada
+
+### Autenticação JWT RS256
+- **Chaves assimétricas** para maior segurança
+- **Payload mínimo** para reduzir overhead
+- **Validação robusta** com Zod schemas
+
+### Validação de Dados
+```typescript
+// Schemas Zod para validação de entrada
+const createQuestionSchema = z.object({
+  title: z.string().min(3).max(255),
+  content: z.string().min(10),
+  attachments: z.array(z.string()).optional(),
+})
+```
+
+### Controle de Acesso
+- **Guards** para rotas protegidas
+- **Decorator `@Public()`** para rotas públicas
+- **Verificação de propriedade** de recursos
+
+## ⚡ Performance e Otimizações
+
+### Cache Redis
+```typescript
+// Cache de consultas frequentes
+class RedisCacheRepository implements CacheRepository {
+  async get<T>(key: string): Promise<T | null> {
+    const data = await this.redis.get(key)
+    return data ? JSON.parse(data) : null
+  }
+}
+```
+
+### Otimizações de Banco
+- **Índices otimizados** no Prisma schema
+- **Queries eficientes** com eager loading
+- **Paginação implementada** para listagens
+
+### Upload Otimizado
+- **Upload direto** para Cloudflare R2
+- **Validação de tipos** de arquivo
+- **Limite de tamanho** configurável
 
 ## 🚀 Como Executar
 
 ### Pré-requisitos
 - Node.js 18.16.0+
 - Docker e Docker Compose
-- Conta CloudFlare (para storage)
+- Conta Cloudflare (para storage)
 
-### 🐳 Docker Local
-
-Para facilitar o desenvolvimento, você pode usar os containers Docker para PostgreSQL e Redis:
-
-```bash
-# Inicie os containers de banco de dados
-docker-compose up -d
-
-# Verifique se os containers estão rodando
-docker-compose ps
-
-# Para parar os containers
-docker-compose down
-```
-
-Os containers disponíveis:
-- **PostgreSQL**: `localhost:5432` (usuário: `postgres`, senha: `docker`)
-- **Redis**: `localhost:6379`
-
-### 1. Clone o Repositório
-```bash
-git clone <url-do-repositorio>
-cd 4-nestjs-nodejs
-```
-
-### 2. Instale as Dependências
-```bash
-npm install
-```
-
-### 3. Configure as Variáveis de Ambiente
-Crie um arquivo `.env` baseado no `.env.example`:
-
-```env
-# Database (Docker)
-DATABASE_URL="postgresql://postgres:docker@localhost:5432/forum_db"
-
-# JWT Keys (RS256)
-JWT_PRIVATE_KEY="sua_chave_privada_base64"
-JWT_PUBLIC_KEY="sua_chave_publica_base64"
-
-# Cloudflare R2 (Storage)
-CLOUDFLARE_ACCOUNT_ID="seu_account_id"
-CLOUDFLARE_ACCESS_KEY_ID="sua_access_key"
-CLOUDFLARE_SECRET_ACCESS_KEY="sua_secret_key"
-CLOUDFLARE_BUCKET_NAME="seu-bucket"
-
-# Redis (Docker)
-REDIS_HOST="127.0.0.1"
-REDIS_PORT=6379
-REDIS_DB=0
-
-# App
-PORT=3333
-```
-
-**Nota**: Se estiver usando Docker, as configurações de banco e Redis já estão prontas. Caso contrário, ajuste as URLs conforme sua instalação local.
-
-### 4. Configure o Banco de Dados
-```bash
-# Execute as migrações
-npx prisma migrate dev
-
-# Gere o cliente Prisma
-npx prisma generate
-
-# (Opcional) Visualize o banco com Prisma Studio
-npx prisma studio
-```
-
-### 5. Inicie a Aplicação
-```bash
-# Desenvolvimento
-npm run start:dev
-
-# Produção
-npm run build
-npm run start:prod
-```
-
-### 🎯 Resumo Rápido (Docker)
+### Setup Rápido
 ```bash
 # 1. Clone e instale dependências
 git clone <url-do-repositorio>
 cd 4-nestjs-nodejs
 npm install
 
-# 2. Configure .env com as credenciais do Cloudflare
+# 2. Configure variáveis de ambiente
+cp .env.example .env
+# Edite .env com suas credenciais
 
-# 3. Inicie os containers
+# 3. Inicie containers
 docker-compose up -d
 
 # 4. Execute migrações
@@ -248,6 +309,30 @@ npx prisma migrate dev
 
 # 5. Inicie a aplicação
 npm run start:dev
+```
+
+### Configuração de Ambiente
+```env
+# Database
+DATABASE_URL="postgresql://postgres:docker@localhost:5432/forum_db"
+
+# JWT Keys (RS256)
+JWT_PRIVATE_KEY="sua_chave_privada_base64"
+JWT_PUBLIC_KEY="sua_chave_publica_base64"
+
+# Cloudflare R2
+CLOUDFLARE_ACCOUNT_ID="seu_account_id"
+CLOUDFLARE_ACCESS_KEY_ID="sua_access_key"
+CLOUDFLARE_SECRET_ACCESS_KEY="sua_secret_key"
+CLOUDFLARE_BUCKET_NAME="seu-bucket"
+
+# Redis
+REDIS_HOST="127.0.0.1"
+REDIS_PORT=6379
+REDIS_DB=0
+
+# App
+PORT=3333
 ```
 
 ## 📚 Documentação da API
@@ -315,105 +400,6 @@ npm run lint               # ESLint
 npm run format             # Prettier
 ```
 
-## 🏛️ Princípios SOLID Aplicados
-
-### S - Single Responsibility Principle
-Cada classe tem uma única responsabilidade:
-- `CreateQuestionUseCase` - apenas cria perguntas
-- `AuthenticateStudentUseCase` - apenas autentica
-
-### O - Open/Closed Principle
-Sistema extensível sem modificar código existente:
-- Novos use cases podem ser adicionados
-- Novas estratégias de upload implementadas
-
-### L - Liskov Substitution Principle
-Implementações podem ser substituídas:
-- Repositórios in-memory para testes
-- Diferentes provedores de cache
-
-### I - Interface Segregation Principle
-Interfaces específicas e coesas:
-- `HashGenerator` e `HashComparer` separados
-- `Encrypter` independente
-
-### D - Dependency Inversion Principle
-Dependências de abstrações:
-- Use cases dependem de interfaces
-- Controllers injetam abstrações
-
-## 🎨 Domain-Driven Design
-
-### Bounded Contexts
-- **Forum Context**: Perguntas, respostas, comentários
-- **Notification Context**: Sistema de notificações
-
-### Aggregates
-- `Question` - Agregado raiz com respostas e comentários
-- `Answer` - Agregado com comentários e anexos
-- `Student` - Agregado de usuário
-
-### Domain Events
-- `AnswerCreatedEvent` - Nova resposta criada
-- `QuestionBestAnswerChosenEvent` - Melhor resposta escolhida
-- `CommentOnAnswerEvent` - Novo comentário em resposta
-
-### Value Objects
-- `Slug` - Slug único para perguntas
-- `UniqueEntityID` - Identificadores únicos
-- `AnswerDetails` - Detalhes de resposta
-
-## 🔐 Segurança
-
-### Autenticação JWT RS256
-- Chaves assimétricas para maior segurança
-- Tokens com payload mínimo
-- Validação robusta com Zod
-
-### Validação de Dados
-- Schemas Zod para todas as entradas
-- Sanitização automática
-- Validação de tipos de arquivo
-
-### Controle de Acesso
-- Guards para rotas protegidas
-- Decorator `@Public()` para rotas públicas
-- Verificação de propriedade de recursos
-
-## 📈 Performance
-
-### Cache Redis
-- Cache de consultas frequentes
-- Invalidação inteligente
-- Configuração flexível
-
-### Otimizações de Banco
-- Índices otimizados no Prisma
-- Queries eficientes
-- Paginação implementada
-
-### Upload Otimizado
-- Upload direto para Cloudflare R2
-- Validação de tipos
-- Limite de tamanho
-
-## 🧪 Testes
-
-### Estratégia de Testes
-- **Testes Unitários**: Use cases e entidades
-- **Testes de Integração**: Repositórios e serviços
-- **Testes E2E**: Fluxos completos da API
-
-### Factories
-- `StudentFactory` - Criação de estudantes
-- `QuestionFactory` - Criação de perguntas
-- `AnswerFactory` - Criação de respostas
-
-### Mocks e Stubs
-- `FakeUploader` - Upload simulado
-- `FakeEncrypter` - Criptografia simulada
-- `InMemoryRepositories` - Repositórios em memória
-
 ## 🚀 Deploy
 
 ### Docker
@@ -439,31 +425,31 @@ Este projeto está sob a licença **UNLICENSED**.
 
 ---
 
-## 🎯 Pontos Fortes para Entrevistas
+## 🎯 Competências Demonstradas
 
-### Arquitetura
-- ✅ **Clean Architecture** bem implementada
-- ✅ **DDD** com bounded contexts claros
-- ✅ **SOLID** principles aplicados
+### Arquitetura de Software
+- ✅ **Clean Architecture** com separação clara de camadas
+- ✅ **Domain-Driven Design** com bounded contexts
+- ✅ **Princípios SOLID** aplicados consistentemente
 - ✅ **Independência de frameworks** no domínio
 
 ### Qualidade de Código
-- ✅ **95%+ cobertura de testes**
+- ✅ **95%+ cobertura de testes** automatizados
 - ✅ **TypeScript** com tipagem forte
 - ✅ **ESLint + Prettier** para padronização
 - ✅ **Zod** para validação robusta
 
 ### Tecnologias Modernas
-- ✅ **NestJS** com decorators
+- ✅ **NestJS** com decorators e DI
 - ✅ **Prisma** com type safety
 - ✅ **Redis** para cache
 - ✅ **Cloudflare R2** para storage
 
 ### Padrões de Design
-- ✅ **Repository Pattern**
-- ✅ **Use Case Pattern**
-- ✅ **Domain Events**
-- ✅ **Strategy Pattern**
+- ✅ **Repository Pattern** para abstração de dados
+- ✅ **Use Case Pattern** para casos de uso
+- ✅ **Domain Events** para comunicação
+- ✅ **Strategy Pattern** para flexibilidade
 
 ### Segurança
 - ✅ **JWT RS256** com chaves assimétricas
@@ -471,7 +457,12 @@ Este projeto está sob a licença **UNLICENSED**.
 - ✅ **Validação** com Zod
 - ✅ **Controle de acesso** granular
 
-Este projeto demonstra conhecimento sólido em arquitetura de software, boas práticas de desenvolvimento e tecnologias modernas do ecossistema Node.js/TypeScript.
+### Performance
+- ✅ **Cache Redis** para consultas frequentes
+- ✅ **Otimizações de banco** com índices
+- ✅ **Upload otimizado** para arquivos
+
+Este projeto demonstra conhecimento sólido em arquitetura de software, boas práticas de desenvolvimento e tecnologias modernas do ecossistema Node.js/TypeScript, servindo como portfólio técnico para oportunidades profissionais.
 
 
 
