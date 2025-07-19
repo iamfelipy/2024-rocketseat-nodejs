@@ -2,7 +2,7 @@
 # Projeto DDD Node.js
 
 
-Este projeto implementa os princípios da **Clean Architecture** e do **Domain-Driven Design (DDD)**, com foco na criação de um fórum de perguntas e respostas, incluindo funcionalidades de notificação. Desenvolvido com **Node.js** e **TypeScript**, a aplicação adota padrões como **Repository Pattern**, **Pub/Sub** para comunicação assíncrona e **Error Handling** utilizando o padrão **Either**. Os testes unitários são realizados com **Vitest**.
+Este projeto implementa os princípios do **Domain-Driven Design (DDD)**, com foco na criação de um fórum de perguntas e respostas, incluindo funcionalidades de notificação. Desenvolvido com **Node.js** e **TypeScript**, a aplicação adota padrões como **Repository Pattern**, **Pub/Sub** para comunicação assíncrona e **Error Handling** utilizando o padrão **Either**. Os testes unitários são realizados com **Vitest**.
 
 ## Arquitetura do Projeto
 
@@ -19,7 +19,6 @@ A arquitetura segue o conceito de **Clean Architecture**, promovendo a separaç�
 
 - **Node.js** e **TypeScript** para desenvolvimento.
 - **DDD (Domain-Driven Design)** para modelagem do domínio.
-- **Clean Architecture** para organização do código.
 - **Vitest** para testes unitários.
 - **Pub/Sub** para comunicação assíncrona.
 - **Either** para tratamento funcional de erros.
