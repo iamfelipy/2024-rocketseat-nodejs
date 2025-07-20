@@ -13,6 +13,7 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - **Segurança** com autenticação JWT RS256
 - **Performance** com cache Redis e otimizações de banco
 
+
 ## 🏛️ Arquitetura
 
 ### Clean Architecture - Estrutura em Camadas
