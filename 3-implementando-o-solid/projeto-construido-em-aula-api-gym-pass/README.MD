@@ -29,3 +29,17 @@ GymPass style app
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [x] Todas as listas de dados precisam estar paginadas com 20 itens por página;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token);
+
+🧱 Stack do projeto
+Linguagem e Transpiladores: TypeScript, tsx, tsup
+Servidor e Backend: Fastify, @fastify/jwt, @fastify/cookie
+ORM e Banco: Prisma, @prisma/client
+Segurança e Hash: bcryptjs
+Validação: Zod
+Datas: Day.js
+Ambiente: dotenv
+Testes: Vitest, @vitest/ui, @vitest/coverage-v8, supertest
+Scripts e automação: npm-run-all
+Lint: ESLint, @rocketseat/eslint-config
+Tipos e utilitários: @types/node, @types/bcryptjs, @types/supertest
+Outros: vite-tsconfig-paths
