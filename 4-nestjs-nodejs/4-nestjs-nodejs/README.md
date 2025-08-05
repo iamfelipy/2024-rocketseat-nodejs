@@ -2,6 +2,33 @@
 
 > **Projeto de demonstração de competências em arquitetura de software, implementando Clean Architecture, Domain-Driven Design e princípios SOLID com NestJS e TypeScript.**
 
+## Sumário
+
+1. [Visão Geral](#visao-geral)
+2. [Requisitos e Regras de Negócio](#requisitos-e-regras-de-negocio)
+   - [Requisitos Funcionais](#requisitos-funcionais)
+   - [Regras de Negócio](#regras-de-negocio)
+   - [Requisitos Não-Funcionais](#requisitos-nao-funcionais)
+3. [Arquitetura](#arquitetura)
+   - [Estrutura de Pastas](#estrutura-de-pastas)
+   - [Padrões de Design Implementados](#padroes-de-design-implementados)
+4. [Stack Tecnológica](#stack-tecnologica)
+5. [Qualidade e Testes](#qualidade-e-testes)
+6. [Princípios SOLID Aplicados](#principios-solid-aplicados)
+7. [Domain-Driven Design](#domain-driven-design)
+8. [Segurança Implementada](#seguranca-implementada)
+9. [Performance e Otimizações](#performance-e-otimizacoes)
+10. [Como Executar](#como-executar)
+    - [Pré-requisitos](#pre-requisitos)
+    - [Setup Rápido](#setup-rapido)
+    - [Configuração de Ambiente](#configuracao-de-ambiente)
+11. [Documentação da API](#documentacao-da-api)
+12. [Scripts Disponíveis](#scripts-disponiveis)
+13. [Deploy](#deploy)
+14. [Licença](#licenca)
+15. [Competências Demonstradas](#competencias-demonstradas)
+
+
 ## 📋 Visão Geral
 
 Este projeto implementa uma API completa de fórum educacional, demonstrando a aplicação prática de padrões arquiteturais modernos e boas práticas de desenvolvimento. A aplicação serve como portfólio técnico, evidenciando proficiência em:
@@ -12,6 +39,141 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - **Testes automatizados** com cobertura superior a 95%
 - **Segurança** com autenticação JWT RS256
 - **Performance** com cache Redis e otimizações de banco
+
+## 📋 Requisitos e Regras de Negócio
+
+### RFs (Requisitos Funcionais)
+
+#### **Gestão de Usuários**
+- [x] Deve ser possível se cadastrar com nome, email e senha;
+- [x] Deve ser possível se autenticar com email e senha;
+- [x] Deve ser possível obter o perfil de um usuário logado;
+- [x] Deve ser possível validar credenciais de forma segura;
+- [ ] Deve ser possível controlar acesso baseado em roles (não implementado);
+
+#### **Sistema de Fórum - Perguntas**
+- [x] Deve ser possível criar perguntas com título e conteúdo;
+- [x] Deve ser possível editar perguntas (apenas o autor);
+- [x] Deve ser possível excluir perguntas (apenas o autor);
+- [x] Deve ser possível buscar perguntas por slug;
+- [x] Deve ser possível listar perguntas recentes com paginação;
+- [x] Deve ser possível anexar arquivos às perguntas;
+- [x] Deve ser possível gerar slug automático do título;
+
+#### **Sistema de Fórum - Respostas**
+- [x] Deve ser possível responder perguntas;
+- [x] Deve ser possível editar respostas (apenas o autor);
+- [x] Deve ser possível excluir respostas (apenas o autor);
+- [x] Deve ser possível listar respostas de uma pergunta;
+- [x] Deve ser possível anexar arquivos às respostas;
+- [x] Deve ser possível marcar melhor resposta;
+
+#### **Sistema de Fórum - Comentários**
+- [x] Deve ser possível comentar em perguntas;
+- [x] Deve ser possível comentar em respostas;
+- [x] Deve ser possível listar comentários de perguntas;
+- [x] Deve ser possível listar comentários de respostas;
+
+#### **Sistema de Anexos**
+- [x] Deve ser possível fazer upload de arquivos;
+- [x] Deve ser possível validar tipos de arquivo permitidos;
+- [x] Deve ser possível limitar tamanho de arquivos;
+- [x] Deve ser possível armazenar arquivos em storage externo;
+
+#### **Sistema de Notificações**
+- [x] Deve ser possível enviar notificações automáticas para novas respostas;
+- [x] Deve ser possível marcar notificações como lidas;
+- [x] Deve ser possível listar notificações do usuário;
+- [x] Deve ser possível disparar eventos de domínio;
+
+### RNs (Regras de Negócio)
+
+#### **Validação de Dados**
+- [x] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [x] O nome do usuário deve ser obrigatório;
+- [x] O email do usuário deve ter formato válido;
+- [x] A senha do usuário deve ser obrigatória;
+- [x] O título da pergunta deve ser obrigatório;
+- [x] O conteúdo da pergunta deve ser obrigatório;
+- [x] O conteúdo da resposta deve ser obrigatório;
+- [x] O conteúdo do comentário deve ser obrigatório;
+- [x] A página para paginação deve ser no mínimo 1;
+
+#### **Regras de Arquivos**
+- [x] O arquivo não deve exceder 2MB de tamanho;
+- [x] O arquivo deve ser do tipo PNG, JPG, JPEG ou PDF;
+- [x] O tipo MIME do arquivo deve ser validado;
+- [x] O ID do anexo deve ser um UUID válido;
+
+#### **Regras de Acesso**
+- [x] Apenas usuários autenticados podem criar perguntas;
+- [x] Apenas o autor pode editar suas perguntas;
+- [x] Apenas o autor pode excluir suas perguntas;
+- [x] Apenas usuários autenticados podem responder perguntas;
+- [x] Apenas o autor pode editar suas respostas;
+- [x] Apenas o autor pode excluir suas respostas;
+- [x] Apenas usuários autenticados podem comentar;
+- [x] Apenas usuários autenticados podem fazer upload;
+- [ ] Apenas administradores podem realizar ações administrativas (não implementado);
+
+#### **Regras de Domínio**
+- [x] A pergunta deve ter slug gerado automaticamente do título;
+- [x] A pergunta deve ter excerpt dos primeiros 120 caracteres;
+- [x] A pergunta deve ser marcada como "nova" se criada há menos de 3 dias;
+- [x] A resposta deve ter excerpt dos primeiros 120 caracteres;
+- [x] O email deve ser único no sistema;
+- [x] Os anexos devem ter tipos de arquivo restritos;
+
+#### **Regras de Paginação**
+- [x] Todas as listas devem ter no máximo 20 itens por página;
+- [x] A página mínima deve ser 1;
+- [x] O cálculo de skip deve ser (página - 1) * 20;
+
+#### **Regras de Notificações**
+- [x] Uma notificação deve ser enviada quando uma resposta é criada;
+- [x] A notificação deve ser enviada para o autor da pergunta;
+- [x] A notificação deve conter título e conteúdo da resposta;
+
+### RNFs (Requisitos Não-Funcionais)
+
+#### **Segurança**
+- [x] A senha do usuário precisa estar criptografada;
+- [x] O usuário deve ser identificado por um JWT (JSON Web Token);
+- [x] O JWT deve usar algoritmo RS256 para maior segurança;
+- [x] As chaves JWT devem ser assimétricas (privada e pública);
+- [x] A validação de dados deve ser feita com schemas Zod;
+- [x] O controle de acesso deve ser granular;
+
+#### **Persistência**
+- [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [x] O ORM deve ter type safety (Prisma);
+- [x] As migrações devem ser versionadas;
+- [x] Os relacionamentos devem ser bem definidos;
+
+#### **Performance**
+- [x] Todas as listas de dados precisam estar paginadas com 20 itens por página;
+- [x] As consultas devem ser otimizadas com índices;
+- [x] O cache Redis deve ser utilizado para consultas frequentes;
+- [x] O upload de arquivos deve ser otimizado;
+
+#### **Arquitetura**
+- [x] A aplicação deve seguir Clean Architecture;
+- [x] Os princípios SOLID devem ser aplicados;
+- [x] A separação de responsabilidades deve ser clara;
+- [x] A independência de frameworks deve ser mantida;
+- [x] Os testes devem ter cobertura superior a 95%;
+
+#### **Qualidade**
+- [x] O código deve ser padronizado com ESLint;
+- [x] Os testes devem ser automatizados;
+- [x] A validação deve ser robusta;
+- [x] O tratamento de erros deve ser consistente;
+
+#### **Infraestrutura**
+- [x] Os arquivos devem ser armazenados em Cloudflare R2;
+- [x] A aplicação deve ser containerizada com Docker;
+- [x] As variáveis de ambiente devem ser configuráveis;
+- [x] A aplicação deve ser escalável;
 
 ## 🏛️ Arquitetura
 
@@ -47,29 +209,6 @@ src/
 | **Aggregate Pattern** | Agregados com consistência | Transações de domínio |
 | **Strategy Pattern** | Estratégias de upload | Flexibilidade |
 | **Dependency Injection** | Inversão de dependências | Testabilidade |
-
-## 🎯 Funcionalidades Implementadas
-
-### Sistema de Usuários
-- ✅ Registro e autenticação de estudantes
-- ✅ Controle de acesso baseado em roles
-- ✅ Autenticação JWT com chaves RS256
-
-### Sistema de Fórum
-- ✅ CRUD completo de perguntas e respostas
-- ✅ Sistema de comentários aninhados
-- ✅ Escolha de melhor resposta
-- ✅ Busca otimizada por slug
-
-### Sistema de Anexos
-- ✅ Upload de arquivos para Cloudflare R2
-- ✅ Validação de tipos e tamanhos
-- ✅ Anexos em perguntas e respostas
-
-### Sistema de Notificações
-- ✅ Notificações automáticas por eventos
-- ✅ Sistema de leitura de notificações
-- ✅ Eventos de domínio para comunicação
 
 ## 🛠️ Stack Tecnológica
 
@@ -175,9 +314,7 @@ interface HashGenerator {
 interface HashComparer {
   compare(plain: string, hash: string): Promise<boolean>
 }
-```
-
-### D - Dependency Inversion Principle
+```### D - Dependency Inversion Principle
 ```typescript
 // Dependências de abstrações, não de implementações
 class AuthenticateStudentUseCase {
@@ -188,7 +325,6 @@ class AuthenticateStudentUseCase {
   ) {}
 }
 ```
-
 ## 🎨 Domain-Driven Design
 
 ### Bounded Contexts
@@ -209,7 +345,6 @@ class Question extends AggregateRoot<QuestionProps> {
   }
 }
 ```
-
 ### Domain Events
 ```typescript
 // Eventos que comunicam mudanças entre agregados
@@ -220,7 +355,6 @@ export class AnswerCreatedEvent implements DomainEvent {
   ) {}
 }
 ```
-
 ### Value Objects
 ```typescript
 // Objetos imutáveis que representam conceitos do domínio
@@ -237,7 +371,6 @@ class Slug extends ValueObject<string> {
   }
 }
 ```
-
 ## 🔐 Segurança Implementada
 
 ### Autenticação JWT RS256
@@ -309,9 +442,7 @@ npx prisma migrate dev
 
 # 5. Inicie a aplicação
 npm run start:dev
-```
-
-### Configuração de Ambiente
+```### Configuração de Ambiente
 ```env
 # Database
 DATABASE_URL="postgresql://postgres:docker@localhost:5432/forum_db"
@@ -333,9 +464,7 @@ REDIS_DB=0
 
 # App
 PORT=3333
-```
-
-## 📚 Documentação da API
+```## 📚 Documentação da API
 
 ### Autenticação
 ```http
@@ -347,7 +476,6 @@ Content-Type: application/json
   "password": "123456"
 }
 ```
-
 ### Endpoints Principais
 
 #### Usuários
@@ -398,9 +526,7 @@ npm run test:cov           # Cobertura de testes
 # Qualidade de Código
 npm run lint               # ESLint
 npm run format             # Prettier
-```
-
-## 🚀 Deploy
+```## 🚀 Deploy
 
 ### Docker
 ```dockerfile
@@ -463,6 +589,24 @@ Este projeto está sob a licença **UNLICENSED**.
 - ✅ **Upload otimizado** para arquivos
 
 Este projeto demonstra conhecimento sólido em arquitetura de software, boas práticas de desenvolvimento e tecnologias modernas do ecossistema Node.js/TypeScript, servindo como portfólio técnico para oportunidades profissionais.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
