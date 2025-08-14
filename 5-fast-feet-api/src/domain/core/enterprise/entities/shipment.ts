@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
 import { Optional } from '@/core/types/optional'
-import { PhotoAttachment } from './photoAttachment'
+import { ShipmentPhotoAttachment } from './shipment-photo-attachment'
 
 export interface ShipmentProps {
   id: UniqueEntityID
@@ -14,7 +14,7 @@ export interface ShipmentProps {
   pickupDate?: Date | null
   deliveryDate?: Date | null
   returnedDate?: Date | null
-  photo?: PhotoAttachment | null
+  photo?: ShipmentPhotoAttachment | null
   assignedCourierId?: UniqueEntityID | null
   createdAt: Date
   updatedAt?: Date | null
@@ -119,7 +119,7 @@ export class Shipment extends Entity<ShipmentProps> {
     this.props.updatedAt = new Date()
   }
 
-  markAsDelivered(photo: PhotoAttachment, courierId: UniqueEntityID) {
+  markAsDelivered(photo: ShipmentPhotoAttachment, courierId: UniqueEntityID) {
     if (this.assignedCourierId !== courierId) {
       throw new Error('Você não pode entregar essa encomenda.')
     }
