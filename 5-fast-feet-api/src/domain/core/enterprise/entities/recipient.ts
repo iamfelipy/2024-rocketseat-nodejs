@@ -6,6 +6,7 @@ import { Optional } from '@/core/types/optional'
 export interface RecipientProps extends UserProps {}
 
 export class Recipient extends User<RecipientProps> {
+
   isRecipient() {
     return this.props.roles.includes(UserRole.RECIPIENT)
   }
