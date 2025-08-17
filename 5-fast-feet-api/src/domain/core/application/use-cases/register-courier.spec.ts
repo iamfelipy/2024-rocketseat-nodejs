@@ -4,6 +4,7 @@ import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-courie
 import { RegisterCourierUseCase } from "./register-courier";
 import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
 import { makeAdmin } from "@/test/factories/make-admin";
+import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository
@@ -53,5 +54,22 @@ describe('Register Courier', () => {
     expect(inMemoryCouriersRepository.items[0].password).toEqual(
       '123456-hashed'
     )
+  })
+  it('should not allow non-admin to register a courier', async () => {
+    const fakeAdmin = makeAdmin()
+
+    const result = await sut.execute({
+      name: 'Jane Doe',
+      password: '654321',
+      cpf: '12345678900',
+      address: 'Rua Teste',
+      latitude: 10,
+      longitude: 20,
+      adminId: fakeAdmin.id.toString()
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAuthorizedError)
+    expect(inMemoryCouriersRepository.items.length).toBe(0)
   })
 })

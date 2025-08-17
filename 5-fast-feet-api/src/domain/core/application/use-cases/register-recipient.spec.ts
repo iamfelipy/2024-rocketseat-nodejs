@@ -4,6 +4,7 @@ import { RegisterRecipientUsecase } from "./register-recipient";
 import { FakeHasher } from "@/test/cryptography/fake-hasher";
 import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
 import { makeAdmin } from "@/test/factories/make-admin";
+import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository
@@ -52,5 +53,22 @@ describe('Register Recipient', () => {
     expect(inMemoryRecipientsRepository.items[0].password).toEqual(
       '123456-hashed'
     )
+  })
+  it('should not allow non-admin to register a recipient', async () => {
+    const fakeAdmin = makeAdmin()
+
+    const result = await sut.execute({
+      name: 'Jane Doe',
+      password: '654321',
+      cpf: '12345678900',
+      address: 'Rua Teste',
+      latitude: 10,
+      longitude: 20,
+      adminId: fakeAdmin.id.toString()
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAuthorizedError)
+    expect(inMemoryRecipientsRepository.items.length).toBe(0)
   })
 })
