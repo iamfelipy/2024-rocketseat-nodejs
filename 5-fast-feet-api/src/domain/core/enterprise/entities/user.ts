@@ -1,11 +1,13 @@
 import { Entity } from '@/core/entities/entity'
 import { UserRole } from '@/core/enums/enum-user-role'
+import { Location } from './value-objects/location'
 
 export interface UserProps {
   cpf: string
   password: string
   roles: UserRole[]
   name: string
+  location: Location
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -30,6 +32,10 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
 
   get name() {
     return this.props.name
+  }
+
+  get location() {
+    return this.props.location
   }
 
   get createdAt() {
