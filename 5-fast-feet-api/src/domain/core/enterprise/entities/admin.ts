@@ -17,7 +17,7 @@ export class Admin extends User<AdminProps> {
     const admin = new Admin(
       {
         ...props,
-        roles: props.roles ?? [UserRole.ADMIN],
+        roles: [UserRole.ADMIN],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
