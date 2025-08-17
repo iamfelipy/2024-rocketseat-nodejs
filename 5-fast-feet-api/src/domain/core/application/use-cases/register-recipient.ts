@@ -16,7 +16,7 @@ interface RegisterRecipientUseCaseRequest {
   longitude: number
   adminId: string
 }
-type RegisterRecipientUseCaseResponse = Either<RecipientAlreadyExistsError, {
+type RegisterRecipientUseCaseResponse = Either<NotAuthorizedError | RecipientAlreadyExistsError, {
   recipient: Recipient
 }>
 

@@ -16,7 +16,7 @@ interface RegisterCourierUseCaseRequest {
   longitude: number
   adminId: string
 }
-type RegisterCourierUseCaseResponse = Either<CourierAlreadyExistsError, {
+type RegisterCourierUseCaseResponse = Either<NotAuthorizedError | CourierAlreadyExistsError, {
   courier: Courier
 }>
 
