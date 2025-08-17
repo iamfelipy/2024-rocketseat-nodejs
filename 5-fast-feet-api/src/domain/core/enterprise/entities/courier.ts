@@ -17,7 +17,7 @@ export class Courier extends User<CourierProps> {
     const courier = new Courier(
       {
         ...props,
-        roles: props.roles ?? [UserRole.COURIER],
+        roles: [UserRole.COURIER],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
