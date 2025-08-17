@@ -5,12 +5,8 @@ import { Optional } from '@/core/types/optional'
 import { ShipmentPhotoAttachment } from './shipment-photo-attachment'
 
 export interface ShipmentProps {
-  id: UniqueEntityID
   statusShipment: ShipmentStatus
   recipientId: UniqueEntityID
-  deliveryAddress: string
-  deliveryLatitude: number
-  deliveryLongitude: number
   pickupDate?: Date | null
   deliveryDate?: Date | null
   returnedDate?: Date | null
@@ -33,33 +29,6 @@ export class Shipment extends Entity<ShipmentProps> {
 
   get recipientId() {
     return this.props.recipientId
-  }
-
-  get deliveryAddress() {
-    return this.props.deliveryAddress
-  }
-
-  set deliveryAddress(address: string) {
-    this.props.deliveryAddress = address
-    this.touch()
-  }
-
-  get deliveryLatitude() {
-    return this.props.deliveryLatitude
-  }
-
-  set deliveryLatitude(latitude: number) {
-    this.props.deliveryLatitude = latitude
-    this.touch()
-  }
-
-  get deliveryLongitude() {
-    return this.props.deliveryLongitude
-  }
-
-  set deliveryLongitude(longitude: number) {
-    this.props.deliveryLongitude = longitude
-    this.touch()
   }
 
   get pickupDate() {
@@ -133,14 +102,13 @@ export class Shipment extends Entity<ShipmentProps> {
   }
 
   static create(
-    props: Optional<ShipmentProps, 'createdAt'>,
+    props: Optional<ShipmentProps, 'createdAt' | 'statusShipment'>,
     id?: UniqueEntityID,
   ) {
     const shipment = new Shipment(
       {
         ...props,
-        statusShipment:
-          props.statusShipment ?? ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
+        statusShipment: ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
         createdAt: new Date(),
       },
       id,
