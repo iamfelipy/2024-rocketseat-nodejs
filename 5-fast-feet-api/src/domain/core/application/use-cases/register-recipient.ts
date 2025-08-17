@@ -4,21 +4,24 @@ import { Recipient } from "../../enterprise/entities/recipient";
 import { Location } from "../../enterprise/entities/value-objects/location";
 import { RecipientAlreadyExistsError } from "./erros/recipient-already-exists-error";
 import { HashGenerator } from "../cryptography/hash-generator";
+import { AdminsRepository } from "../repositories/admins-repository";
+import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 
-interface RegisterRecipientUsecaseRequest {
+interface RegisterRecipientUseCaseRequest {
   name: string
   cpf: string
   password: string
   address: string
   latitude: number
   longitude: number
+  adminId: string
 }
-type RegisterRecipientUsecaseResponse = Either<RecipientAlreadyExistsError, {
+type RegisterRecipientUseCaseResponse = Either<RecipientAlreadyExistsError, {
   recipient: Recipient
 }>
 
 export class RegisterRecipientUsecase {
-  constructor(private recipientRepository: RecipientsRepository, private hashGenerator: HashGenerator){}
+  constructor(private recipientsRepository: RecipientsRepository,private adminsRepository: AdminsRepository, private hashGenerator: HashGenerator){}
   async execute({
     name,
     cpf,
@@ -26,8 +29,15 @@ export class RegisterRecipientUsecase {
     address,
     latitude,
     longitude,
-  }:RegisterRecipientUsecaseRequest): Promise<RegisterRecipientUsecaseResponse>{
-    const recipientWithSameCpf = await this.recipientRepository.findByCPF(cpf)
+    adminId
+  }:RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse>{
+    const admin = await this.adminsRepository.findById(adminId)
+    
+    if (!admin || !admin.isAdmin()) {
+      return left(new NotAuthorizedError())
+    }
+    
+    const recipientWithSameCpf = await this.recipientsRepository.findByCPF(cpf)
 
     if(recipientWithSameCpf) {
       return left(new RecipientAlreadyExistsError(cpf))
@@ -46,7 +56,7 @@ export class RegisterRecipientUsecase {
       })
     })
 
-    await this.recipientRepository.create(recipient)
+    await this.recipientsRepository.create(recipient)
 
     return right({
       recipient

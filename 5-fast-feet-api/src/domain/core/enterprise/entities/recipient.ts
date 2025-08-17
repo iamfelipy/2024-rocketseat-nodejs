@@ -18,7 +18,7 @@ export class Recipient extends User<RecipientProps> {
     const recipient = new Recipient(
       {
         ...props,
-        roles: props.roles ?? [UserRole.RECIPIENT],
+        roles: [UserRole.RECIPIENT],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
