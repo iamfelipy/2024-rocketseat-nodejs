@@ -5,6 +5,7 @@ import { Shipment } from '@/domain/core/enterprise/entities/shipment'
 import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinate'
 import { InMemoryRecipientsRepository } from './in-memory-recipients'
 import { PaginationParams } from '@/core/repositories/pagination-params'
+import { ShipmentStatus } from '@/core/enums/shipment-status'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
@@ -13,15 +14,17 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     private inMemoryRecipientsRepository: InMemoryRecipientsRepository,
   ) {}
 
-  async findManyNearbyShipmentsForCourier(
+  async findManyNearbyAssignedShipmentsForCourier(
+    courierId: string,
+    maxDistanceInKm: number,
     courierLatitude: number,
     courierLongitude: number,
     {page}: PaginationParams,
   ) {
 
-    const MAX_DISTANCE_IN_KILOMETERS = 10
+    const MAX_DISTANCE_IN_KILOMETERS = maxDistanceInKm
 
-    const nearbyShipments: Shipment[] = []
+    let filteredShipments: Shipment[] = []
 
     for (const item of this.items) {
       const recipient = await this.inMemoryRecipientsRepository.findById(
@@ -43,20 +46,22 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
         },
       )
 
-      if (distance < MAX_DISTANCE_IN_KILOMETERS) {
-        nearbyShipments.push(item)
+      if (
+        distance <= MAX_DISTANCE_IN_KILOMETERS &&
+        item.assignedCourierId?.toString() === courierId &&
+        item.statusShipment === ShipmentStatus.PICKED_UP
+      ) {
+        filteredShipments.push(item)
       }
     }
-    
-    const offset = (page - 1)  * 20
-    const limit = page * 20
 
-    const nearbyShipmentsPaginated = nearbyShipments.slice(offset, limit)
+    filteredShipments = filteredShipments.slice((page - 1)  * 20, page * 20)
 
-    return nearbyShipmentsPaginated
+    return filteredShipments
   }
 
   async create(shipment: Shipment) {
     this.items.push(shipment)
   }
 }
+ 

@@ -108,7 +108,7 @@ export class Shipment extends Entity<ShipmentProps> {
     const shipment = new Shipment(
       {
         ...props,
-        statusShipment: ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
+        statusShipment: props.statusShipment ?? ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
         createdAt: new Date(),
       },
       id,
