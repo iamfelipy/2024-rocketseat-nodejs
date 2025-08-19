@@ -28,5 +28,10 @@ export class InMemoryCouriersRepository implements CouriersRepository {
     this.items.push(courier)
   }
 
+  async save(courier: Courier) {
+    const itemsIndex = this.items.findIndex(item => item.id.toString() === courier.id.toString())
+
+    this.items[itemsIndex] = courier
+  }
 
 }

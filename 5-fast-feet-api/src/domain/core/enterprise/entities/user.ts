@@ -17,6 +17,11 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
     return this.props.cpf
   }
 
+  set cpf(newCpf: string) {
+    this.props.cpf = newCpf
+    this.touch()
+  }
+
   get password() {
     return this.props.password
   }
@@ -30,12 +35,27 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
     return this.props.roles
   }
 
+  set roles(newRoles: UserRole[]) {
+    this.props.roles = newRoles
+    this.touch()
+  }
+
   get name() {
     return this.props.name
   }
 
+  set name(newName: string) {
+    this.props.name = newName
+    this.touch()
+  }
+
   get location() {
     return this.props.location
+  }
+
+  set location(newLocation: Location) {
+    this.props.location = newLocation
+    this.touch()
   }
 
   get createdAt() {
@@ -48,5 +68,10 @@ export abstract class User<Props extends UserProps> extends Entity<Props> {
 
   protected touch() {
     this.props.updatedAt = new Date()
+  }
+
+  public static areRolesValid(roles: string[]): boolean {
+    const validRoles = Object.values(UserRole)
+    return roles.every(role => validRoles.includes(role as UserRole))
   }
 }
