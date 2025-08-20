@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { CouriersRepository } from '@/domain/core/application/repositories/courier-repository'
 import { Courier } from '@/domain/core/enterprise/entities/courier'
 
@@ -38,6 +39,14 @@ export class InMemoryCouriersRepository implements CouriersRepository {
     const itemsIndex = this.items.findIndex(item => item.id.toString() === courier.id.toString())
     
     this.items.splice(itemsIndex, 1)
+  }
+
+  async findMany({page}: PaginationParams) {
+    const couriers = this.items
+      // .sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .splice((page - 1) * 20, page * 20)
+
+    return couriers
   }
 
 }
