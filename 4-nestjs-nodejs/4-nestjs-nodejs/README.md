@@ -1,6 +1,4 @@
-# 🏗️ Forum API - Clean Architecture com NestJS
-
-> **Projeto de demonstração de competências em arquitetura de software, implementando Clean Architecture, Domain-Driven Design e princípios SOLID com NestJS e TypeScript.**
+# 🏗️ Forum API — Clean Architecture, DDD, NestJS, Monolito, REST, Typescript & Prisma
 
 ## Sumário
 
@@ -14,6 +12,7 @@
    - [Padrões de Design Implementados](#padroes-de-design-implementados)
 4. [Stack Tecnológica](#stack-tecnologica)
 5. [Qualidade e Testes](#qualidade-e-testes)
+X. [Clean Code Aplicado](#clean-code-aplicado)
 6. [Princípios SOLID Aplicados](#principios-solid-aplicados)
 7. [Domain-Driven Design](#domain-driven-design)
 8. [Segurança Implementada](#seguranca-implementada)
@@ -22,7 +21,7 @@
     - [Pré-requisitos](#pre-requisitos)
     - [Setup Rápido](#setup-rapido)
     - [Configuração de Ambiente](#configuracao-de-ambiente)
-11. [Documentação da API](#documentacao-da-api)
+11. [Rotas Públicas (Não precisam de autenticação)](#rotas-publicas-nao-precisam-de-autenticacao)
 12. [Scripts Disponíveis](#scripts-disponiveis)
 13. [Deploy](#deploy)
 14. [Licença](#licenca)
@@ -31,34 +30,36 @@
 
 ## 📋 Visão Geral
 
-Este projeto implementa uma API completa de fórum educacional, demonstrando a aplicação prática de padrões arquiteturais modernos e boas práticas de desenvolvimento. A aplicação serve como portfólio técnico, evidenciando proficiência em:
+A aplicação monolítica expõe uma API REST para um fórum, permitindo cadastro e autenticação de usuários, criação e gestão de perguntas, respostas, comentários e anexos, além de notificações automáticas. 
 
-- **Clean Architecture** com separação clara de responsabilidades
-- **Domain-Driven Design** com bounded contexts bem definidos
+- **Clean Architecture**: define uma estrutura de camadas separando regras de negócio, interface e infraestrutura, facilitando manutenção, testes e evolução do sistema.
+- **Domain-Driven Design**: foca em modelar o domínio do negócio de forma fiel, organizando o código em "bounded contexts" para refletir limites claros entre diferentes áreas do sistema.
+- **ORM**: utiliza ORM para abstração e manipulação eficiente do banco de dados, facilitando queries, migrations e integridade dos dados.
+- **Tratamento de exceções e error handler funcional**: adota padrão Either para tratamento funcional de erros, centralizando o fluxo de exceções e facilitando o controle de falhas em toda a aplicação.
 - **Princípios SOLID** aplicados consistentemente
 - **Testes automatizados** com cobertura superior a 95%
 - **Segurança** com autenticação JWT RS256
-- **Performance** com cache Redis e otimizações de banco
+- **Performance** com cache Redis, otimizações de banco (índices), prevenção de underfetching/overfetching
 
 ## 📋 Requisitos e Regras de Negócio
 
 ### RFs (Requisitos Funcionais)
 
 #### **Gestão de Usuários**
-- [x] Deve ser possível se cadastrar com nome, email e senha;
+- [x] Deve ser possível criar estudante com nome, email e senha;
+- [ ] Deve ser possível criar instrutor com nome, email e senha;
 - [x] Deve ser possível se autenticar com email e senha;
-- [x] Deve ser possível obter o perfil de um usuário logado;
-- [x] Deve ser possível validar credenciais de forma segura;
-- [ ] Deve ser possível controlar acesso baseado em roles (não implementado);
+- [ ] Deve ser possível obter o perfil de um usuário logado;
+- [ ] Deve ser possível controlar acesso baseado em roles;
 
 #### **Sistema de Fórum - Perguntas**
 - [x] Deve ser possível criar perguntas com título e conteúdo;
 - [x] Deve ser possível editar perguntas (apenas o autor);
 - [x] Deve ser possível excluir perguntas (apenas o autor);
-- [x] Deve ser possível buscar perguntas por slug;
+- [x] Deve ser possível buscar pergunta por slug;
 - [x] Deve ser possível listar perguntas recentes com paginação;
 - [x] Deve ser possível anexar arquivos às perguntas;
-- [x] Deve ser possível gerar slug automático do título;
+- [x] Deve ser possível gerar slug do título;
 
 #### **Sistema de Fórum - Respostas**
 - [x] Deve ser possível responder perguntas;
@@ -81,10 +82,9 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] Deve ser possível armazenar arquivos em storage externo;
 
 #### **Sistema de Notificações**
-- [x] Deve ser possível enviar notificações automáticas para novas respostas;
-- [x] Deve ser possível marcar notificações como lidas;
 - [x] Deve ser possível listar notificações do usuário;
-- [x] Deve ser possível disparar eventos de domínio;
+- [x] Deve ser possível marcar notificações como lidas;
+- [x] Deve ser possível receber notificações automáticas de eventos relevantes (ex: novas respostas, comentários, melhor resposta);
 
 ### RNs (Regras de Negócio)
 
@@ -97,13 +97,6 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] O conteúdo da pergunta deve ser obrigatório;
 - [x] O conteúdo da resposta deve ser obrigatório;
 - [x] O conteúdo do comentário deve ser obrigatório;
-- [x] A página para paginação deve ser no mínimo 1;
-
-#### **Regras de Arquivos**
-- [x] O arquivo não deve exceder 2MB de tamanho;
-- [x] O arquivo deve ser do tipo PNG, JPG, JPEG ou PDF;
-- [x] O tipo MIME do arquivo deve ser validado;
-- [x] O ID do anexo deve ser um UUID válido;
 
 #### **Regras de Acesso**
 - [x] Apenas usuários autenticados podem criar perguntas;
@@ -114,25 +107,24 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] Apenas o autor pode excluir suas respostas;
 - [x] Apenas usuários autenticados podem comentar;
 - [x] Apenas usuários autenticados podem fazer upload;
-- [ ] Apenas administradores podem realizar ações administrativas (não implementado);
 
 #### **Regras de Domínio**
+- [x] Deve ser possível disparar eventos de domínio;
 - [x] A pergunta deve ter slug gerado automaticamente do título;
 - [x] A pergunta deve ter excerpt dos primeiros 120 caracteres;
 - [x] A pergunta deve ser marcada como "nova" se criada há menos de 3 dias;
 - [x] A resposta deve ter excerpt dos primeiros 120 caracteres;
 - [x] O email deve ser único no sistema;
-- [x] Os anexos devem ter tipos de arquivo restritos;
 
 #### **Regras de Paginação**
 - [x] Todas as listas devem ter no máximo 20 itens por página;
-- [x] A página mínima deve ser 1;
-- [x] O cálculo de skip deve ser (página - 1) * 20;
 
 #### **Regras de Notificações**
 - [x] Uma notificação deve ser enviada quando uma resposta é criada;
-- [x] A notificação deve ser enviada para o autor da pergunta;
-- [x] A notificação deve conter título e conteúdo da resposta;
+- [x] Uma notificação deve ser enviada quando um comentário é feito em uma resposta;
+- [x] Uma notificação deve ser enviada quando uma resposta é escolhida como a melhor de uma questão;
+- [x] A notificação deve ser enviada para o autor da pergunta ou da resposta, conforme o evento;
+- [x] A notificação deve conter título e conteúdo relevantes ao evento;
 
 ### RNFs (Requisitos Não-Funcionais)
 
@@ -142,7 +134,8 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] O JWT deve usar algoritmo RS256 para maior segurança;
 - [x] As chaves JWT devem ser assimétricas (privada e pública);
 - [x] A validação de dados deve ser feita com schemas Zod;
-- [x] O controle de acesso deve ser granular;
+- [ ] O controle de acesso deve ser granular;
+- [ ] O sistema deve implementar RBAC (Role-Based Access Control) para definir permissões de acordo com o papel do usuário;
 
 #### **Persistência**
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
@@ -154,14 +147,12 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] Todas as listas de dados precisam estar paginadas com 20 itens por página;
 - [x] As consultas devem ser otimizadas com índices;
 - [x] O cache Redis deve ser utilizado para consultas frequentes;
-- [x] O upload de arquivos deve ser otimizado;
 
 #### **Arquitetura**
 - [x] A aplicação deve seguir Clean Architecture;
 - [x] Os princípios SOLID devem ser aplicados;
 - [x] A separação de responsabilidades deve ser clara;
 - [x] A independência de frameworks deve ser mantida;
-- [x] Os testes devem ter cobertura superior a 95%;
 
 #### **Qualidade**
 - [x] O código deve ser padronizado com ESLint;
@@ -174,6 +165,12 @@ Este projeto implementa uma API completa de fórum educacional, demonstrando a a
 - [x] A aplicação deve ser containerizada com Docker;
 - [x] As variáveis de ambiente devem ser configuráveis;
 - [x] A aplicação deve ser escalável;
+
+#### **Regras de Arquivos**
+- [x] O arquivo não deve exceder 2MB de tamanho;
+- [x] O arquivo deve ser do tipo PNG, JPG, JPEG ou PDF;
+- [x] O tipo MIME do arquivo deve ser validado;
+- [x] O ID do anexo deve ser um UUID válido;
 
 ## 🏛️ Arquitetura
 
@@ -262,6 +259,22 @@ npm run test:cov
 - **Testes E2E**: Fluxos completos da API
 - **Factories**: Criação de dados de teste
 - **Mocks**: Simulação de dependências externas
+
+## Clean Code Aplicado
+
+### Princípios Aplicados
+- ✅ **Nomes significativos** para variáveis, funções e classes
+- ✅ **Funções pequenas** com responsabilidade única
+- ✅ **Comentários úteis** que explicam decisões de negócio
+- ✅ **Formatação consistente** com ferramentas automatizadas
+- ✅ **Tratamento de erros** funcional e previsível
+- ✅ **Estrutura organizada** que facilita navegação
+- ✅ **Testes descritivos** que documentam comportamento
+- ✅ **Validação robusta** com schemas tipados
+- ✅ **Estruturas de dados simples** e coesas
+- ✅ **Classes pequenas** com responsabilidade única
+- ✅ **Separação de responsabilidades** entre camadas
+- ✅ **Refatoração contínua** para melhorar design
 
 ## 🏛️ Princípios SOLID Aplicados
 
@@ -476,36 +489,43 @@ Content-Type: application/json
   "password": "123456"
 }
 ```
-### Endpoints Principais
+## 🔓 Rotas Públicas (Não precisam de autenticação)
 
-#### Usuários
-- `POST /accounts` - Criar conta
-- `POST /sessions` - Autenticar
+### Autenticação e Registro
+- [x] `POST /sessions` — Login (`AuthenticateController`)
+- [x] `POST /accounts` — Criar conta (`CreateAccountController`)
 
-#### Perguntas
-- `POST /questions` - Criar pergunta
-- `GET /questions` - Listar perguntas recentes
-- `GET /questions/:slug` - Buscar por slug
-- `PUT /questions/:id` - Editar pergunta
-- `DELETE /questions/:id` - Excluir pergunta
+### Leitura de Dados
+- [x] `GET /questions` — Listar perguntas recentes (`FetchRecentQuestionsController`)
+- [x] `GET /questions/:slug` — Buscar pergunta por slug (`GetQuestionBySlugController`)
+- [x] `GET /questions/:id/answers` — Listar respostas (`FetchQuestionAnswersController`)
+- [x] `GET /questions/:id/comments` — Listar comentários da pergunta (`FetchQuestionCommentsController`)
+- [x] `GET /answers/:id/comments` — Listar comentários da resposta (`FetchAnswerCommentsController`)
 
-#### Respostas
-- `POST /questions/:id/answers` - Responder pergunta
-- `GET /questions/:id/answers` - Listar respostas
-- `PUT /answers/:id` - Editar resposta
-- `DELETE /answers/:id` - Excluir resposta
+---
 
-#### Comentários
-- `POST /questions/:id/comments` - Comentar pergunta
-- `GET /questions/:id/comments` - Listar comentários
-- `POST /answers/:id/comments` - Comentar resposta
-- `GET /answers/:id/comments` - Listar comentários da resposta
+## 🔒 Rotas Autenticadas (JWT obrigatório)
 
-#### Anexos
-- `POST /attachments` - Upload de arquivo
+### Gestão de Perguntas
+- [x] `POST /questions` — Criar pergunta (`CreateQuestionController`)
+- [x] `PUT /questions/:id` — Editar pergunta (`EditQuestionController`)
+- [x] `DELETE /questions/:id` — Excluir pergunta (`DeleteQuestionController`)
 
-#### Notificações
-- `PATCH /notifications/:id/read` - Marcar como lida
+### Gestão de Respostas
+- [x] `POST /questions/:id/answers` — Responder pergunta (`AnswerQuestionController`)
+- [x] `PUT /answers/:id` — Editar resposta (`EditAnswerController`)
+- [x] `DELETE /answers/:id` — Excluir resposta (`DeleteAnswerController`)
+
+### Gestão de Comentários
+- [x] `POST /questions/:id/comments` — Comentar em pergunta (`CommentOnQuestionController`)
+- [x] `POST /answers/:id/comments` — Comentar em resposta (`CommentOnAnswerController`)
+- [x] `DELETE /questions/:id/comments/:commentId` — Excluir comentário de pergunta (`DeleteQuestionCommentController`)
+- [x] `DELETE /answers/:id/comments/:commentId` — Excluir comentário de resposta (`DeleteAnswerCommentController`)
+
+### Ações Especiais
+- [x] `PATCH /answers/:id/choose-as-best` — Marcar melhor resposta (`ChooseQuestionBestAnswerController`)
+- [x] `POST /attachments` — Upload de arquivo (`UploadAttachmentController`)
+- [x] `PATCH /notifications/:id/read` — Marcar notificação como lida (`ReadNotificationController`)
 
 ## 🔧 Scripts Disponíveis
 
@@ -589,10 +609,6 @@ Este projeto está sob a licença **UNLICENSED**.
 - ✅ **Upload otimizado** para arquivos
 
 Este projeto demonstra conhecimento sólido em arquitetura de software, boas práticas de desenvolvimento e tecnologias modernas do ecossistema Node.js/TypeScript, servindo como portfólio técnico para oportunidades profissionais.
-
-
-
-
 
 
 
