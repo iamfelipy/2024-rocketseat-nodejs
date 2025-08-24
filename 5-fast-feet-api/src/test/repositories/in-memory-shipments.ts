@@ -63,5 +63,21 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
   async create(shipment: Shipment) {
     this.items.push(shipment)
   }
+
+  async findById(id: string) {
+    const shipment = this.items.find(item => item.id.toString() === id)
+
+    if(!shipment) {
+      return null
+    }
+
+    return shipment
+  }
+
+  async delete(shipment: Shipment) {
+    const index = this.items.findIndex(item => item.id.toString() === shipment.id.toString())
+
+    this.items.splice(index, 1)
+  }
 }
  
