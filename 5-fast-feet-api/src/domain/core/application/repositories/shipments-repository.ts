@@ -10,6 +10,7 @@ export interface ShipmentsRepository {
     params: PaginationParams,
   ): Promise<Shipment[]>
   findById(id: string): Promise<Shipment | null>
+  findMany(params: PaginationParams): Promise<Shipment[]>
   create(shipment: Shipment): Promise<void>
   save(shipment: Shipment): Promise<void>
   delete(shipment: Shipment): Promise<void>

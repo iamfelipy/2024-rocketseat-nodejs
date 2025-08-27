@@ -62,6 +62,12 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     return filteredShipments
   }
 
+  async findMany({page}: PaginationParams): Promise<Shipment[]> {
+    const shipments = this.items.slice((page - 1) * 20, page * 20)
+
+    return shipments
+  }
+
   async create(shipment: Shipment) {
     this.items.push(shipment)
   }
