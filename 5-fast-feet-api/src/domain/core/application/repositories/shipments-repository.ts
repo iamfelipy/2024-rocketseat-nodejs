@@ -11,5 +11,6 @@ export interface ShipmentsRepository {
   ): Promise<Shipment[]>
   findById(id: string): Promise<Shipment | null>
   create(shipment: Shipment): Promise<void>
+  save(shipment: Shipment): Promise<void>
   delete(shipment: Shipment): Promise<void>
 }

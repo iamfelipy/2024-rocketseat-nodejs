@@ -6,12 +6,14 @@ import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coor
 import { InMemoryRecipientsRepository } from './in-memory-recipients'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
+import { InMemoryShipmentAttachmentsRepository } from './in-memory-shipment-attachments-repository'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
 
   constructor(
     private inMemoryRecipientsRepository: InMemoryRecipientsRepository,
+    private inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository
   ) {}
 
   async findManyNearbyAssignedShipmentsForCourier(
@@ -48,7 +50,7 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
 
       if (
         distance <= MAX_DISTANCE_IN_KILOMETERS &&
-        item.assignedCourierId?.toString() === courierId &&
+        item.courierId?.toString() === courierId &&
         item.statusShipment === ShipmentStatus.PICKED_UP
       ) {
         filteredShipments.push(item)
@@ -78,6 +80,15 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     const index = this.items.findIndex(item => item.id.toString() === shipment.id.toString())
 
     this.items.splice(index, 1)
+  }
+
+  async save(shipment: Shipment) {
+    const itemIndex = this.items.findIndex(item => item.id.toString() === shipment.id.toString())
+
+    this.items[itemIndex] = shipment
+
+    await this.inMemoryShipmentAttachmentsRepository.createMany(shipment.attachments.getNewItems())
+    await this.inMemoryShipmentAttachmentsRepository.deleteMany(shipment.attachments.getRemovedItems())
   }
 }
  

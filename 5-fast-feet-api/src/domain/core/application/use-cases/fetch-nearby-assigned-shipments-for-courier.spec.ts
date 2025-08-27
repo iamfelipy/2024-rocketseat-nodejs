@@ -36,7 +36,7 @@ describe('Fetch nearby shipments for courier use case', () => {
     await inMemoryRecipientsRepository.create(recipient)
     
     const shipment = makeShipment({
-      assignedCourierId: courier.id,
+      courierId: courier.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
       statusShipment: ShipmentStatus.PICKED_UP
@@ -53,7 +53,7 @@ describe('Fetch nearby shipments for courier use case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value?.shipments).toHaveLength(1)
-    expect(result.value?.shipments[0].assignedCourierId).toEqual(courier.id)
+    expect(result.value?.shipments[0].courierId).toEqual(courier.id)
   })
 
   it('should not be able to fetch shipments assigned to other couriers', async () => {
@@ -73,7 +73,7 @@ describe('Fetch nearby shipments for courier use case', () => {
     
     // Shipment assigned to courier1
     const shipment1 = makeShipment({
-      assignedCourierId: courier1.id,
+      courierId: courier1.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
       statusShipment: ShipmentStatus.PICKED_UP
@@ -82,7 +82,7 @@ describe('Fetch nearby shipments for courier use case', () => {
 
     // Shipment assigned to courier2
     const shipment2 = makeShipment({
-      assignedCourierId: courier2.id,
+      courierId: courier2.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
       statusShipment: ShipmentStatus.PICKED_UP
@@ -100,7 +100,7 @@ describe('Fetch nearby shipments for courier use case', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value?.shipments).toHaveLength(1)
-    expect(result.value?.shipments[0].assignedCourierId).toEqual(courier1.id)
+    expect(result.value?.shipments[0].courierId).toEqual(courier1.id)
   })
   it('should be able to fetch paginated nearby assigned shipments for courier', async () => {
     const courier = makeCourier({}, new UniqueEntityID('courier-1'))
@@ -118,7 +118,7 @@ describe('Fetch nearby shipments for courier use case', () => {
     // Create 22 shipments assigned to the same courier and recipient
     for (let i = 1; i <= 22; i++) {
       const shipment = makeShipment({
-        assignedCourierId: courier.id,
+        courierId: courier.id,
         recipientId: recipient.id,
         pickupDate: new Date(),
         statusShipment: ShipmentStatus.PICKED_UP

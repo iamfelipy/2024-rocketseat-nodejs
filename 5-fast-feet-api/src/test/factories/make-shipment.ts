@@ -7,7 +7,7 @@ export function makeShipment(
 ) {
   const shipment = Shipment.create({
     recipientId: new UniqueEntityID(),
-    assignedCourierId: new UniqueEntityID(),
+    courierId: new UniqueEntityID(),
     ...override,
   }, id)
 

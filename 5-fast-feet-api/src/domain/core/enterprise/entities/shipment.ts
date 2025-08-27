@@ -4,9 +4,9 @@ import { ShipmentStatus } from '@/core/enums/shipment-status'
 import { Optional } from '@/core/types/optional'
 import { ShipmentNotAssignedToCourierError } from '../../application/use-cases/erros/shipment-not-assigned-to-courier-error'
 import { ShipmentNotInCorrectStatusError } from '../../application/use-cases/erros/shipment-not-in-correct-status-error'
-import { ShipmentPhotoAttachmentList } from './shipment-photo-attachment-list'
 import { PhotoRequiredForDeliveryError } from '../../application/use-cases/erros/photo-required-for-delivery-error'
 import { left, right } from '@/core/either'
+import { ShipmentAttachmentList } from './shipment-attachment-list'
 
 
 export interface ShipmentProps {
@@ -15,8 +15,8 @@ export interface ShipmentProps {
   pickupDate?: Date | null
   deliveryDate?: Date | null
   returnedDate?: Date | null
-  photos: ShipmentPhotoAttachmentList
-  assignedCourierId?: UniqueEntityID | null
+  attachments: ShipmentAttachmentList
+  courierId?: UniqueEntityID | null
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -34,6 +34,11 @@ export class Shipment extends Entity<ShipmentProps> {
 
   get recipientId() {
     return this.props.recipientId
+  }
+
+  set recipientId(recipientId) {
+    this.props.recipientId = recipientId
+    this.touch()
   }
 
   get pickupDate() {
@@ -63,21 +68,21 @@ export class Shipment extends Entity<ShipmentProps> {
     this.touch()
   }
 
-  get photos() {
-    return this.props.photos
+  get attachments() {
+    return this.props.attachments
   }
 
-  set photos(photos) {
-    this.props.photos = photos
+  set attachments(attachments) {
+    this.props.attachments = attachments
     this.touch()
   }
 
-  get assignedCourierId() {
-    return this.props.assignedCourierId
+  get courierId() {
+    return this.props.courierId
   }
 
-  set assignedCourierId(id) {
-    this.props.assignedCourierId = id
+  set courierId(id) {
+    this.props.courierId = id
     this.touch()
   }
 
@@ -106,23 +111,23 @@ export class Shipment extends Entity<ShipmentProps> {
       return left(new ShipmentNotInCorrectStatusError())
     }
 
-    this.assignedCourierId = courierId
+    this.courierId = courierId
     this.statusShipment = ShipmentStatus.PICKED_UP
     this.pickupDate = new Date()
     return right(null)
   }
 
-  markAsDelivered(photos: ShipmentPhotoAttachmentList, courierId: UniqueEntityID) {
+  markAsDelivered(attachments: ShipmentAttachmentList, courierId: UniqueEntityID) {
     if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
       return left(new ShipmentNotInCorrectStatusError())
     }
-    if (!this.assignedCourierId || this.assignedCourierId.toString() !== courierId.toString()) {
+    if (!this.courierId || this.courierId.toString() !== courierId.toString()) {
       return left(new ShipmentNotAssignedToCourierError())
     }
-    if (!photos || photos?.currentItems?.length === 0) {
+    if (!attachments || attachments?.currentItems?.length === 0) {
       return left(new PhotoRequiredForDeliveryError())
     }
-    this.photos = photos
+    this.attachments = attachments
     this.statusShipment = ShipmentStatus.DELIVERED
     this.deliveryDate = new Date()
     return right(null)
@@ -132,7 +137,7 @@ export class Shipment extends Entity<ShipmentProps> {
     if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
       return left(new ShipmentNotInCorrectStatusError())
     }
-    if (!this.assignedCourierId || this.assignedCourierId.toString() !== courierId.toString()) {
+    if (!this.courierId || this.courierId.toString() !== courierId.toString()) {
       return left(new ShipmentNotAssignedToCourierError())
     }
     this.statusShipment = ShipmentStatus.RETURNED
@@ -141,14 +146,14 @@ export class Shipment extends Entity<ShipmentProps> {
   }
 
   static create(
-    props: Optional<ShipmentProps, 'createdAt' | 'statusShipment' | 'photos'>,
+    props: Optional<ShipmentProps, 'createdAt' | 'statusShipment' | 'attachments'>,
     id?: UniqueEntityID,
   ) {
     const shipment = new Shipment(
       {
         ...props,
         statusShipment: props.statusShipment ?? ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
-        photos: props.photos ?? new ShipmentPhotoAttachmentList(),
+        attachments: props.attachments ?? new ShipmentAttachmentList(),
         createdAt: new Date(),
       },
       id,
