@@ -14,4 +14,5 @@ export interface ShipmentsRepository {
   create(shipment: Shipment): Promise<void>
   save(shipment: Shipment): Promise<void>
   delete(shipment: Shipment): Promise<void>
+  findAssignedShipmentForCourier(courierId: string,shipmentId: string): Promise<Shipment | null>
 }

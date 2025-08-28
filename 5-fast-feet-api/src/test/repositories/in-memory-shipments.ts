@@ -68,6 +68,15 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     return shipments
   }
 
+  async findAssignedShipmentForCourier(courierId: string, shipmentId: string) {
+    const shipment = this.items.find(item => item.courierId?.toString() === courierId && item.id.toString() === shipmentId)
+    if(!shipment) {
+      return null
+    }
+
+    return shipment
+  }
+
   async create(shipment: Shipment) {
     this.items.push(shipment)
   }
