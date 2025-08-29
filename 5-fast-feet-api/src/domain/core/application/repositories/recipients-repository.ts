@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Recipient } from '../../enterprise/entities/recipient'
 
 export interface RecipientsRepository {
@@ -5,4 +6,5 @@ export interface RecipientsRepository {
   findByCPF(cpf: string): Promise<Recipient | null>
   create(recipient: Recipient): Promise<void>
   save(recipient: Recipient): Promise<void>
+  findMany(params: PaginationParams): Promise<Recipient[]>
 }
