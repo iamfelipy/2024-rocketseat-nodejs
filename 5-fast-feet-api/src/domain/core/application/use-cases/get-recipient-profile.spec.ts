@@ -2,7 +2,7 @@ import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-reci
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetRecipientProfileUseCase } from "./get-recipient-profile";
 import { makeRecipient } from "@/test/factories/make-recipient";
-import { NotAllowedError } from "@/core/erros/errors/not-allowed-error";
+import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let sut: GetRecipientProfileUseCase
@@ -33,6 +33,6 @@ describe('Get Recipient Profile', () => {
     })
 
     expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(NotAllowedError)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 })
