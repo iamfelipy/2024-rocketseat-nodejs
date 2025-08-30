@@ -1,16 +1,16 @@
 import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
-import { GetCourierByIdUseCase } from "./get-courier"
 import { makeCourier } from "@/test/factories/make-courier"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { GetCourierProfileUseCase } from "./get-courier-profile"
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
-let sut: GetCourierByIdUseCase
+let sut: GetCourierProfileUseCase
 
 describe('Get Courier', () => {
   beforeEach(() => {
     inMemoryCouriersRepository = new InMemoryCouriersRepository()
-    sut = new GetCourierByIdUseCase(inMemoryCouriersRepository)
+    sut = new GetCourierProfileUseCase(inMemoryCouriersRepository)
   })
   it('should be able to get a courier by Id', async () => {
     const courier = makeCourier({name: 'john doe'}, new UniqueEntityID('courier-1'))

@@ -3,18 +3,18 @@ import { CouriersRepository } from "../repositories/courier-repository";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 import { Courier } from "../../enterprise/entities/courier";
 
-interface GetCourierByIdUseCaseRequest {
+interface GetCourierProfileUseCaseRequest {
   courierId: string
 }
-type GetCourierByIdUseCaseResponse = Either<ResourceNotFoundError, {
+type GetCourierProfileUseCaseResponse = Either<ResourceNotFoundError, {
   courier: Courier
 }>
 
-export class GetCourierByIdUseCase {
+export class GetCourierProfileUseCase {
   constructor(private couriersRepository: CouriersRepository) {}
   async execute({
     courierId
-  }: GetCourierByIdUseCaseRequest): Promise<GetCourierByIdUseCaseResponse>  {
+  }: GetCourierProfileUseCaseRequest): Promise<GetCourierProfileUseCaseResponse>  {
     const courier = await this.couriersRepository.findById(courierId)
 
     if(!courier) {
