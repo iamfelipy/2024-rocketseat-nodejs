@@ -1,22 +1,22 @@
 import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins"
 import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
-import { EditCourierUseCase } from "./edit-courier"
 import { makeCourier } from "@/test/factories/make-courier"
 import { Location } from "../../enterprise/entities/value-objects/location"
 import { UserRole } from "@/core/enums/enum-user-role"
 import { makeAdmin } from "@/test/factories/make-admin"
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error"
+import { EditCourierByAdminUseCase } from "./edit-courier-by-admin"
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let inMemoryAdminRepository: InMemoryAdminsRepository
-let sut: EditCourierUseCase
+let sut: EditCourierByAdminUseCase
 
-describe("Edit Courier", () => {
+describe("Edit Courier by Admin", () => {
   beforeEach(() => {
     inMemoryCouriersRepository = new InMemoryCouriersRepository
     inMemoryAdminRepository = new InMemoryAdminsRepository
-    sut = new EditCourierUseCase(inMemoryCouriersRepository, inMemoryAdminRepository)
+    sut = new EditCourierByAdminUseCase(inMemoryCouriersRepository, inMemoryAdminRepository)
   })
   it('should be able to edit a courier', async () => {
     const courier = makeCourier({
@@ -62,7 +62,6 @@ describe("Edit Courier", () => {
     })
   })
 
-  // should return NotAuthorizedError if user is not admin
   it('should not allow editing a courier if user is not admin', async () => {
     const courier = makeCourier({
       cpf: "12345678900",

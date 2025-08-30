@@ -8,7 +8,7 @@ import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-er
 import { NotAllowedError } from "@/core/erros/errors/not-allowed-error";
 import { Location } from "../../enterprise/entities/value-objects/location";
 
-interface EditCourierUseCaseRequest {
+interface EditCourierByCourierUseCaseRequest {
   courierId: string
   cpf: string
   password: string
@@ -17,13 +17,12 @@ interface EditCourierUseCaseRequest {
   address: string
   latitude: number
   longitude: number
-  adminId: string
 }
-type EditCourierUseCaseResponse = Either<NotAuthorizedError | NotAllowedError,  
+type EditCourierByCourierUseCaseResponse = Either<NotAuthorizedError | NotAllowedError,  
   {courier: Courier} 
 >
 
-export class EditCourierUseCase {
+export class EditCourierByCourierUseCase {
   constructor(private couriersRepository: CouriersRepository, private adminsRepository: AdminsRepository){}
 
   async execute({
@@ -35,22 +34,12 @@ export class EditCourierUseCase {
     address,
     latitude,
     longitude,
-    adminId,
-  }:EditCourierUseCaseRequest): Promise<EditCourierUseCaseResponse> {
-    const admin = await this.adminsRepository.findById(adminId)
-    
-    if (!admin || !admin.isAdmin()) {
-      return left(new NotAuthorizedError())
-    }
+  }:EditCourierByCourierUseCaseRequest): Promise<EditCourierByCourierUseCaseResponse> {
 
     const courier = await this.couriersRepository.findById(courierId)
 
     if(!courier) {
       return left(new ResourceNotFoundError())
-    }
-
-    if(courierId !== courier?.id.toString()) {
-      return left(new NotAllowedError())
     }
 
     if(!Courier.areRolesValid(roles)) {
