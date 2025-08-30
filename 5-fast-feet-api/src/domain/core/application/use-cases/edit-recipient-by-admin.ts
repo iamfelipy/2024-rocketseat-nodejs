@@ -7,7 +7,7 @@ import { AdminsRepository } from "../repositories/admins-repository";
 import { UserRole } from "@/core/enums/enum-user-role";
 import {Location} from '@/domain/core/enterprise/entities/value-objects/location'
 
-interface RecipientUseCaseRequest {
+interface EditRecipientByAdminUseCaseRequest {
   recipientId: string
   cpf: string
   password: string
@@ -18,11 +18,11 @@ interface RecipientUseCaseRequest {
   longitude: number
   adminId: string
 }
-type RecipientUseCaseResponse = Either<NotAuthorizedError | ResourceNotFoundError, {
+type EditRecipientByAdminUseCaseResponse = Either<NotAuthorizedError | ResourceNotFoundError, {
   recipient: Recipient
 }>
 
-export class EditRecipientUseCase {
+export class EditRecipientByAdminUseCase {
   constructor(private recipientsRepository: RecipientsRepository, private adminsRepository: AdminsRepository){}
   async execute({
     adminId,
@@ -34,7 +34,7 @@ export class EditRecipientUseCase {
     address,
     latitude,
     longitude,
-  }:RecipientUseCaseRequest): Promise<RecipientUseCaseResponse> {
+  }:EditRecipientByAdminUseCaseRequest): Promise<EditRecipientByAdminUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
     if(!admin) {
       return left(new NotAuthorizedError())

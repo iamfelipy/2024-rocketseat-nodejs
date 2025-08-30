@@ -1,24 +1,24 @@
 import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
 import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
-import { EditRecipientUseCase } from "./edit-recipient";
 import { makeRecipient } from "@/test/factories/make-recipient";
 import { makeAdmin } from "@/test/factories/make-admin";
 import { Location } from "../../enterprise/entities/value-objects/location"
 import { UserRole } from "@/core/enums/enum-user-role";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
+import { EditRecipientByAdminUseCase } from "./edit-recipient-by-admin";
 
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository
-let sut: EditRecipientUseCase
+let sut: EditRecipientByAdminUseCase
 
 describe('Edit Recipient', () => {
   beforeEach(() => {
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
     inMemoryAdminsRepository = new InMemoryAdminsRepository()
-    sut = new EditRecipientUseCase(inMemoryRecipientsRepository, inMemoryAdminsRepository)
+    sut = new EditRecipientByAdminUseCase(inMemoryRecipientsRepository, inMemoryAdminsRepository)
   })
   it('should allow to edit a recipient', async () => {
     const recipient = makeRecipient({
