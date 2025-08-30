@@ -7,4 +7,5 @@ export interface RecipientsRepository {
   create(recipient: Recipient): Promise<void>
   save(recipient: Recipient): Promise<void>
   findMany(params: PaginationParams): Promise<Recipient[]>
+  delete(recipient: Recipient): Promise<void>
 }

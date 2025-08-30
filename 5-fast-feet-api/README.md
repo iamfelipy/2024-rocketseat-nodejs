@@ -12,7 +12,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [ ] Deve ser possível realizar login com CPF e Senha
 - [x] Deve ser possível realizar o CRUD dos entregadores
 - [x] Deve ser possível realizar o CRUD das encomendas
-- [ ] Deve ser possível realizar o CRUD dos destinatários
+- [x] Deve ser possível realizar o CRUD dos destinatários
 - [ ] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 - [ ] Deve ser possível retirar uma encomenda
 - [ ] Deve ser possível marcar uma encomenda como entregue
@@ -26,7 +26,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 - [x] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
-- [ ] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
+- [x] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 - [ ] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [ ] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [ ] Somente o admin pode alterar a senha de um usuário

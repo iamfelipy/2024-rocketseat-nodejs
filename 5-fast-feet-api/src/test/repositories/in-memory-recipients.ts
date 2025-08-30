@@ -40,4 +40,10 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
 
     return recipients
   }
+
+  async delete(recipient: Recipient) {
+    const updatedItems = this.items.filter(item => !item.id.equals(recipient.id))
+
+    this.items = [...updatedItems]
+  }
 }
