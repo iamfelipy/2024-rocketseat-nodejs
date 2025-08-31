@@ -6,6 +6,7 @@ import { ShipmentsRepository } from "../repositories/shipments-repository";
 import { AdminsRepository } from "../repositories/admins-repository";
 import { CouriersRepository } from "../repositories/courier-repository";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { ShipmentStatus } from "@/core/enums/shipment-status";
 
 interface MarkShipmentAsPickedUpRequest {
   adminId: string
@@ -41,7 +42,9 @@ export class MarkShipmentAsPickedUp {
       return left(new ResourceNotFoundError())
     }
 
-    shipment.markAsPickedUp(new UniqueEntityID(courierId))
+    shipment.courierId = courier.id
+    shipment.statusShipment = ShipmentStatus.PICKED_UP
+    shipment.pickupDate = new Date()
 
     await this.shipmentsRepository.save(shipment)
 

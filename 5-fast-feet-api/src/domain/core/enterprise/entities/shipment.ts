@@ -98,17 +98,6 @@ export class Shipment extends Entity<ShipmentProps> {
     this.props.updatedAt = new Date()
   }
 
-  markAsPickedUp(courierId: UniqueEntityID) {
-    if (this.statusShipment !== ShipmentStatus.AWAITING_PICKUP) {
-      return left(new ShipmentNotInCorrectStatusError())
-    }
-
-    this.courierId = courierId
-    this.statusShipment = ShipmentStatus.PICKED_UP
-    this.pickupDate = new Date()
-    return right(null)
-  }
-
   markAsReturned(courierId: UniqueEntityID) {
     if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
       return left(new ShipmentNotInCorrectStatusError())
