@@ -4,6 +4,7 @@ import { ShipmentsRepository } from "../repositories/shipments-repository";
 import { AdminsRepository } from "../repositories/admins-repository";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 import { Shipment } from "../../enterprise/entities/shipment";
+import { ShipmentStatus } from "@/core/enums/shipment-status";
 
 interface MarkAsAwaitingPickupUseCaseUseCaseRequest {
   adminId: string
@@ -28,7 +29,7 @@ export class MarkAsAwaitingPickupUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    shipment.markAsAwaitingPickup()
+    shipment.statusShipment = ShipmentStatus.AWAITING_PICKUP
 
     await this.shipmentsRepository.save(shipment)
 
