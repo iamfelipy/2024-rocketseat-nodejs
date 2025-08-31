@@ -117,22 +117,6 @@ export class Shipment extends Entity<ShipmentProps> {
     return right(null)
   }
 
-  markAsDelivered(attachments: ShipmentAttachmentList, courierId: UniqueEntityID) {
-    if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
-      return left(new ShipmentNotInCorrectStatusError())
-    }
-    if (!this.courierId || this.courierId.toString() !== courierId.toString()) {
-      return left(new ShipmentNotAssignedToCourierError())
-    }
-    if (!attachments || attachments?.currentItems?.length === 0) {
-      return left(new PhotoRequiredForDeliveryError())
-    }
-    this.attachments = attachments
-    this.statusShipment = ShipmentStatus.DELIVERED
-    this.deliveryDate = new Date()
-    return right(null)
-    }
-
   markAsReturned(courierId: UniqueEntityID) {
     if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
       return left(new ShipmentNotInCorrectStatusError())
