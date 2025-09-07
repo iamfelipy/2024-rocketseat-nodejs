@@ -7,6 +7,7 @@ import { InMemoryRecipientsRepository } from './in-memory-recipients'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
 import { InMemoryShipmentAttachmentsRepository } from './in-memory-shipment-attachments-repository'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
@@ -104,6 +105,8 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
 
     await this.inMemoryShipmentAttachmentsRepository.createMany(shipment.attachments.getNewItems())
     await this.inMemoryShipmentAttachmentsRepository.deleteMany(shipment.attachments.getRemovedItems())
+
+    DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 }
  

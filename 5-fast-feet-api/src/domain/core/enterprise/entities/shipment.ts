@@ -7,6 +7,8 @@ import { ShipmentNotInCorrectStatusError } from '../../application/use-cases/err
 import { PhotoRequiredForDeliveryError } from '../../application/use-cases/erros/photo-required-for-delivery-error'
 import { left, right } from '@/core/either'
 import { ShipmentAttachmentList } from './shipment-attachment-list'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
+import { ShipmentStatusChangedEvent } from '../events/shipment-status-changed-event'
 
 
 export interface ShipmentProps {
@@ -22,12 +24,13 @@ export interface ShipmentProps {
 }
 
 // shipment → mais usado para remessas, transporte de mercadorias.
-export class Shipment extends Entity<ShipmentProps> {
+export class Shipment extends AggregateRoot<ShipmentProps> {
   get statusShipment() {
     return this.props.statusShipment
   }
 
   set statusShipment(statusShipment) {
+    this.addDomainEvent(new ShipmentStatusChangedEvent(this, this.recipientId))
     this.props.statusShipment = statusShipment
     this.touch()
   }
