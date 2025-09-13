@@ -30,9 +30,9 @@ dist-ssr
 */db/*.db
 
 # Enviroment
-# .env
-# .env.test
-# build
+.env
+.env.test
+build
 
 # Build
 build

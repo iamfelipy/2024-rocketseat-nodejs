@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  cpf       String  @unique
+  name      String
+  address   String
+  latitude  Decimal
+  longitude Decimal
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  shipmentsAsRecipient Shipment[] @relation("recipient")
+  shipmentAsCourier    Shipment[] @relation("courier")
+
+  @@map("users")
+}
+
+enum ShipmentStatus {
+  RECEIVED_FIRST_TIME_AT_CARRIER
+  AWAITING_PICKUP
+  PICKED_UP
+  DELIVERED
+  RETURNED
+}
+
+model Shipment {
+  id          String         @id @default(uuid())
+  status      ShipmentStatus @default(RECEIVED_FIRST_TIME_AT_CARRIER)
+  recipientId String         @map("recipient_id")
+  recipient   User           @relation("recipient", fields: [recipientId], references: [id])
+  courierId   String?        @map("courier_id")
+  courier     User?          @relation("courier", fields: [courierId], references: [id])
+
+  pickupDate   DateTime? @map("pickup_date")
+  deliveryDate DateTime? @map("delivery_date")
+  returnedDate DateTime? @map("returned_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  attachments Attachment[]
+
+  @@map("shipments")
+}
+
+model Attachment {
+  id         String   @id @default(uuid())
+  title      String
+  url        String
+  shipmentId String   @map("shipment_id")
+  shipment   Shipment @relation(fields: [shipmentId], references: [id])
+
+  @@map("attachments")
+}
