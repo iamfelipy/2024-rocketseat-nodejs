@@ -5,6 +5,7 @@ import {
   HttpCode,
   Post,
 } from '@nestjs/common'
+import { hash } from 'bcryptjs'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Controller('/accounts')
@@ -14,7 +15,7 @@ export class CreateAccountController {
   @Post()
   @HttpCode(201)
   async handle(@Body() body: any) {
-    const { name, cpf, address, latitude, longitude } = body
+    const { name, cpf, address, latitude, longitude, password } = body
 
     const userWithSameCpf = await this.prisma.user.findUnique({
       where: {
@@ -26,6 +27,8 @@ export class CreateAccountController {
       throw new ConflictException('User with same cpf already exists.')
     }
 
+    const hashedPassword = await hash(password, 8)
+
     await this.prisma.user.create({
       data: {
         name,
@@ -33,6 +36,7 @@ export class CreateAccountController {
         address,
         latitude,
         longitude,
+        password: hashedPassword,
       },
     })
   }
