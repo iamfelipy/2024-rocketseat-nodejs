@@ -12,3 +12,14 @@ Content-type: application/json
   "longitude": 23312,
   "password": "adawdawdawd"
 }
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "cpg": "12345678955",
+  "password": "adawdawdawd"
+}
