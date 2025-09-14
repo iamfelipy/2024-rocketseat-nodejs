@@ -5,6 +5,7 @@ import { envSchema } from './env'
 import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
+import { CreateRecipientController } from './controllers/create-recipient.controller'
 
 @Module({
   imports: [
@@ -14,7 +15,11 @@ import { AuthenticateController } from './controllers/authenticate.controller'
     }),
     AuthModule,
   ],
-  controllers: [CreateAccountController, AuthenticateController],
+  controllers: [
+    CreateAccountController,
+    AuthenticateController,
+    CreateRecipientController,
+  ],
   providers: [PrismaService],
 })
 export class AppModule {}
