@@ -20,6 +20,6 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "cpg": "12345678955",
+  "cpf": "12345678955",
   "password": "adawdawdawd"
 }
