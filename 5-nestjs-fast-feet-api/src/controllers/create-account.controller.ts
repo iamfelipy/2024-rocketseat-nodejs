@@ -52,6 +52,7 @@ export class CreateAccountController {
         latitude,
         longitude,
         password: hashedPassword,
+        roles: ['ADMIN'],
       },
     })
   }

@@ -7,7 +7,7 @@ Content-type: application/json
 
 {
   "name": "felipy",
-  "cpf": "12345678955",
+  "cpf": "12345678911",
   "address": "sera fina",
   "latitude": 12345,
   "longitude": 23312,
@@ -21,7 +21,7 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "cpf": "12345678955",
+  "cpf": "12345678911",
   "password": "adawdawdawd"
 }
 
@@ -29,5 +29,14 @@ Content-Type: application/json
 
 # @name create_recipient
 POST {{baseUrl}}/recipients
-Content-Type: applciation/json
+Content-Type: application/json
 Authorization: Bearer {{authToken}}
+
+{
+  "cpf": "12345678922",
+  "password": "adawdawdawd",
+  "name": "felipy",
+  "address": "sera fina",
+  "latitude": 12345,
+  "longitude": 23312
+}
