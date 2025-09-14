@@ -10,14 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  COURIER
+  RECIPIENT
+}
+
 model User {
-  id        String  @id @default(uuid())
-  cpf       String  @unique
+  id        String     @id @default(uuid())
+  cpf       String     @unique
   name      String
   address   String
   latitude  Decimal
   longitude Decimal
   password  String
+  roles     UserRole[]
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
