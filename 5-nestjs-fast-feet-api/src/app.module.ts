@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from './auth/auth.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
 import { CreateRecipientController } from './controllers/create-recipient.controller'
+import { FetchRecipientsController } from './controllers/fetch-recipients.controller'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CreateRecipientController } from './controllers/create-recipient.contro
     CreateAccountController,
     AuthenticateController,
     CreateRecipientController,
+    FetchRecipientsController,
   ],
   providers: [PrismaService],
 })

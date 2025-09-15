@@ -40,3 +40,9 @@ Authorization: Bearer {{authToken}}
   "latitude": 12345,
   "longitude": 23312
 }
+
+###
+# @name fetch_recent_questions
+GET {{baseUrl}}/recipients
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
