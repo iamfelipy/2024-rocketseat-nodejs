@@ -8,7 +8,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: fast_feet_db
-      PGDATA: /data/postgres
     volumes: 
-      - ./data/pg:/data/postgres
+      - pgdata:/data/postgres
 
+volumes:
+  pgdata:
