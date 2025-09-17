@@ -39,7 +39,7 @@ export class FetchRecipientsController {
       where: { id: loggedUserId },
     })
 
-    if (!admin?.roles.includes('ADMIN')) {
+    if (!admin || !admin?.roles.includes('ADMIN')) {
       throw new ForbiddenException('Only admins can create recipients.')
     }
 
