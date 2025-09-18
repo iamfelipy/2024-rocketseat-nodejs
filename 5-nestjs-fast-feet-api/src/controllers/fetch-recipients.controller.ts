@@ -43,9 +43,14 @@ export class FetchRecipientsController {
       throw new ForbiddenException('Only admins can create recipients.')
     }
 
-    const perPage = 1
+    const perPage = 20
 
     const recipients = await this.prisma.user.findMany({
+      where: {
+        roles: {
+          has: 'RECIPIENT',
+        },
+      },
       take: perPage,
       skip: (page - 1) * perPage,
       orderBy: {
