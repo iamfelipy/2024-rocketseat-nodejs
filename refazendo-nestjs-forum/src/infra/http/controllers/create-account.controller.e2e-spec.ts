@@ -1,8 +1,8 @@
 import { test, expect, describe, beforeAll } from 'vitest'
 import { Test } from '@nestjs/testing'
-import { AppModule } from '@/app.module'
+import { AppModule } from '@/infra/app.module'
 import { INestApplication } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 import request from 'supertest'
 
 describe('Create Account (E2E)', () => {
