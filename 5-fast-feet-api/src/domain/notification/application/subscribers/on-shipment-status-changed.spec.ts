@@ -1,14 +1,14 @@
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
 import { describe, expect, it, vi, beforeEach, MockInstance } from "vitest";
 import { SendNotificationUseCase, SendNotificationUseCaseRequest, SendNotificationUseCaseResponse } from "../use-cases/send-notification";
-import { InMemoryNotificationsRepository } from "@/test/repositories/in-memory-notifications-repository";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
+import { InMemoryNotificationsRepository } from "test/repositories/in-memory-notifications-repository";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
 import { OnShipmentStatusChanged } from "./on-shipment-status-changed";
-import { makeShipment } from "@/test/factories/make-shipment";
-import { makeRecipient } from "@/test/factories/make-recipient";
+import { makeShipment } from "test/factories/make-shipment";
+import { makeRecipient } from "test/factories/make-recipient";
 import { ShipmentStatus } from "@/core/enums/shipment-status";
-import { waitFor } from "@/test/utils/wait-for";
+import { waitFor } from "test/utils/wait-for";
 import { DomainEvents } from "@/core/events/domain-events";
 
 

@@ -1,9 +1,9 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FetchRecipientsUseCase } from "./fetch-recipients";
-import { makeRecipient } from "@/test/factories/make-recipient";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { makeRecipient } from "test/factories/make-recipient";
+import { makeAdmin } from "test/factories/make-admin";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository

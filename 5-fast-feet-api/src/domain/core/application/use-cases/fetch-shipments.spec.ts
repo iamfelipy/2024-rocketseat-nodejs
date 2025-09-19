@@ -1,11 +1,11 @@
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FetchShipmentsUseCase } from "./fetch-shipments";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
-import { makeShipment } from "@/test/factories/make-shipment";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
+import { makeShipment } from "test/factories/make-shipment";
+import { makeAdmin } from "test/factories/make-admin";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository

@@ -1,7 +1,6 @@
 import { Either, left, right } from "@/core/either";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
 import { CouriersRepository } from "../repositories/courier-repository";
 import { AdminsRepository } from "../repositories/admins-repository";
 

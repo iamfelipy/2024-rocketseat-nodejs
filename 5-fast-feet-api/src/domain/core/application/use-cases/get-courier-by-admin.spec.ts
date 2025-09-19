@@ -1,9 +1,9 @@
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
-import { makeCourier } from "@/test/factories/make-courier"
+import { makeCourier } from "test/factories/make-courier"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins"
-import { makeAdmin } from "@/test/factories/make-admin"
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins"
+import { makeAdmin } from "test/factories/make-admin"
 import { GetCourierByAdminUseCase } from "./get-courier-by-admin"
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository

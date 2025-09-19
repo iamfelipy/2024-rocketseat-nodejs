@@ -1,10 +1,10 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins"
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins"
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
 import { ChangeCourierPasswordUseCase } from "./change-courier-password"
-import { FakeHasher } from "@/test/cryptography/fake-hasher"
-import { makeAdmin } from "@/test/factories/make-admin"
-import { makeCourier } from "@/test/factories/make-courier"
+import { FakeHasher } from "test/cryptography/fake-hasher"
+import { makeAdmin } from "test/factories/make-admin"
+import { makeCourier } from "test/factories/make-courier"
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository

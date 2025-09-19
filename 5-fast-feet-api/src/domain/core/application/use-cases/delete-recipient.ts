@@ -3,7 +3,6 @@ import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-er
 import { RecipientsRepository } from "../repositories/recipients-repository";
 import { AdminsRepository } from "../repositories/admins-repository";
 import { Either, left, right } from "@/core/either";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
 
 interface DeleteRecipientUseCaseRequest {
   recipientId: string

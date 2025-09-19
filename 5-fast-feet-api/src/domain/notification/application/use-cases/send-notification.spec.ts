@@ -1,4 +1,4 @@
-import { InMemoryNotificationsRepository } from "@/test/repositories/in-memory-notifications-repository"
+import { InMemoryNotificationsRepository } from "test/repositories/in-memory-notifications-repository"
 import { it, beforeEach, describe, expect } from "vitest"
 import { SendNotificationUseCase } from "./send-notification"
 

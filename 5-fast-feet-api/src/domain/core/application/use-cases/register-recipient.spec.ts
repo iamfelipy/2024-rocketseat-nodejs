@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { RegisterRecipientUsecase } from "./register-recipient";
-import { FakeHasher } from "@/test/cryptography/fake-hasher";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { FakeHasher } from "test/cryptography/fake-hasher";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { makeAdmin } from "test/factories/make-admin";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository

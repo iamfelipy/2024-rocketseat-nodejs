@@ -1,12 +1,12 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetShipmentForCourierUseCase } from "./get-shipment-for-courier";
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { makeCourier } from "@/test/factories/make-courier";
-import { makeShipment } from "@/test/factories/make-shipment";
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { makeCourier } from "test/factories/make-courier";
+import { makeShipment } from "test/factories/make-shipment";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository

@@ -1,6 +1,6 @@
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
-import { makeCourier } from "@/test/factories/make-courier"
+import { makeCourier } from "test/factories/make-courier"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { GetCourierProfileUseCase } from "./get-courier-profile"
 

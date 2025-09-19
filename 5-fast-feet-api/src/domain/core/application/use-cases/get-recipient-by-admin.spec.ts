@@ -1,9 +1,9 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetRecipientByAdminUseCase } from "./get-recipient-by-admin";
-import { makeRecipient } from "@/test/factories/make-recipient";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { makeRecipient } from "test/factories/make-recipient";
+import { makeAdmin } from "test/factories/make-admin";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 

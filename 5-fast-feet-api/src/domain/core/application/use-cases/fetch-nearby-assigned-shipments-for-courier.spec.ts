@@ -1,14 +1,14 @@
-import { InMemoryRecipientsRepository } from '@/test/repositories/in-memory-recipients'
-import { InMemoryShipmentsRepository } from '@/test/repositories/in-memory-shipments'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients'
+import { InMemoryShipmentsRepository } from 'test/repositories/in-memory-shipments'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { FetchNearbyAssignedShipmentsForCourierUseCase } from './fetch-nearby-assigned-shipments-for-courier'
-import { InMemoryCouriersRepository } from '@/test/repositories/in-memory-couriers'
+import { InMemoryCouriersRepository } from 'test/repositories/in-memory-couriers'
 import { Location } from '../../enterprise/entities/value-objects/location'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { makeRecipient } from '@/test/factories/make-recipient'
+import { makeRecipient } from 'test/factories/make-recipient'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
-import { makeShipment } from '@/test/factories/make-shipment'
-import { makeCourier } from '@/test/factories/make-courier'
+import { makeShipment } from 'test/factories/make-shipment'
+import { makeCourier } from 'test/factories/make-courier'
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository

@@ -1,8 +1,8 @@
-import { makeAdmin } from "@/test/factories/make-admin";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
+import { makeAdmin } from "test/factories/make-admin";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
 import { beforeEach, describe, expect, it } from "vitest";
-import { FakeHasher } from "@/test/cryptography/fake-hasher";
-import { FakeEncrypter } from "@/test/cryptography/fake-encrypter";
+import { FakeHasher } from "test/cryptography/fake-hasher";
+import { FakeEncrypter } from "test/cryptography/fake-encrypter";
 import { AuthenticateAdminUseCase } from "./authenticate-admin";
 import { WrongCredentialsError } from "./erros/wrong-credentials-error";
 

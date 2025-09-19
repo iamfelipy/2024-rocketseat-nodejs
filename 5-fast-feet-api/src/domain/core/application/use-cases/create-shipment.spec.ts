@@ -1,10 +1,10 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins"
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients"
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments"
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins"
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients"
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments"
 import { beforeEach, describe, expect, it } from "vitest"
 import { CreateShipmentUseCase } from "./create-shipment"
-import { makeAdmin } from "@/test/factories/make-admin"
-import { makeRecipient } from "@/test/factories/make-recipient"
+import { makeAdmin } from "test/factories/make-admin"
+import { makeRecipient } from "test/factories/make-recipient"
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error"
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository

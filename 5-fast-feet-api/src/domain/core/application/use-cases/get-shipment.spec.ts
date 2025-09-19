@@ -1,11 +1,11 @@
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetShipmentUseCase } from "./get-shipment";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { makeShipment } from "@/test/factories/make-shipment";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { makeShipment } from "test/factories/make-shipment";
+import { makeAdmin } from "test/factories/make-admin";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 

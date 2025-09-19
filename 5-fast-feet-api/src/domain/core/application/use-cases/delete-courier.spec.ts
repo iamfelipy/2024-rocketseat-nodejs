@@ -1,9 +1,9 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins"
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers"
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins"
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers"
 import { beforeEach, describe, expect, it } from "vitest"
 import { DeleteCourierUseCase } from "./delete-courier"
-import { makeAdmin } from "@/test/factories/make-admin"
-import { makeCourier } from "@/test/factories/make-courier"
+import { makeAdmin } from "test/factories/make-admin"
+import { makeCourier } from "test/factories/make-courier"
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error"
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository

@@ -1,9 +1,9 @@
-import { FakeEncrypter } from "@/test/cryptography/fake-encrypter";
-import { FakeHasher } from "@/test/cryptography/fake-hasher";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { FakeEncrypter } from "test/cryptography/fake-encrypter";
+import { FakeHasher } from "test/cryptography/fake-hasher";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
 import { AuthenticateRecipientUseCase } from "./authenticate-recipient";
-import { makeRecipient } from "@/test/factories/make-recipient";
+import { makeRecipient } from "test/factories/make-recipient";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let fakeHasher: FakeHasher

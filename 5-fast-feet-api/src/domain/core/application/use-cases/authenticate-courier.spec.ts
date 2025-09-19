@@ -1,9 +1,9 @@
-import { FakeEncrypter } from "@/test/cryptography/fake-encrypter";
-import { FakeHasher } from "@/test/cryptography/fake-hasher";
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers";
+import { FakeEncrypter } from "test/cryptography/fake-encrypter";
+import { FakeHasher } from "test/cryptography/fake-hasher";
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers";
 import { beforeEach, describe, expect, it } from "vitest";
 import { AuthenticateCourierUseCase } from "./authenticate-courier";
-import { makeCourier } from "@/test/factories/make-courier";
+import { makeCourier } from "test/factories/make-courier";
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let fakeHasher: FakeHasher

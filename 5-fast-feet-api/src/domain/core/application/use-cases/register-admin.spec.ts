@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { FakeHasher } from "@/test/cryptography/fake-hasher";
+import { FakeHasher } from "test/cryptography/fake-hasher";
 import { RegisterAdminUseCase } from "./register-admin";
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository
 let fakeHasher: FakeHasher

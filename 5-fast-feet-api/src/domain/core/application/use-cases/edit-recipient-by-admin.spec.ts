@@ -1,8 +1,8 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
-import { makeRecipient } from "@/test/factories/make-recipient";
-import { makeAdmin } from "@/test/factories/make-admin";
+import { makeRecipient } from "test/factories/make-recipient";
+import { makeAdmin } from "test/factories/make-admin";
 import { Location } from "../../enterprise/entities/value-objects/location"
 import { UserRole } from "@/core/enums/enum-user-role";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";

@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
-import { InMemoryCouriersRepository } from "@/test/repositories/in-memory-couriers";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
+import { InMemoryCouriersRepository } from "test/repositories/in-memory-couriers";
 import { MarkShipmentAsPickedUp } from "./mark-as-picked-up";
-import { makeAdmin } from "@/test/factories/make-admin";
-import { makeCourier } from "@/test/factories/make-courier";
-import { makeShipment } from "@/test/factories/make-shipment";
+import { makeAdmin } from "test/factories/make-admin";
+import { makeCourier } from "test/factories/make-courier";
+import { makeShipment } from "test/factories/make-shipment";
 import { ShipmentStatus } from "@/core/enums/shipment-status";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";

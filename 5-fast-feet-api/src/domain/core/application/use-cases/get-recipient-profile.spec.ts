@@ -1,7 +1,7 @@
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
 import { beforeEach, describe, expect, it } from "vitest";
 import { GetRecipientProfileUseCase } from "./get-recipient-profile";
-import { makeRecipient } from "@/test/factories/make-recipient";
+import { makeRecipient } from "test/factories/make-recipient";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository

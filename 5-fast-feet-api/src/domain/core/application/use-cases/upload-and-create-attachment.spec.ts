@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryAttachmentsRepository } from "@/test/repositories/in-memory-attachments";
+import { InMemoryAttachmentsRepository } from "test/repositories/in-memory-attachments";
 import { UploadAndCreateAttachmentUseCase } from "./upload-and-create-attachment";
-import { FakeUploader } from "@/test/storage/fake-uploader";
+import { FakeUploader } from "test/storage/fake-uploader";
 import { InvalidAttachmentTypeError } from "./erros/invalid-attachment-type-error";
 
 let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository

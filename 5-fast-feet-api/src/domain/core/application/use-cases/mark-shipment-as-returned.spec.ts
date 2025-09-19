@@ -1,11 +1,11 @@
-import { InMemoryAdminsRepository } from "@/test/repositories/in-memory-admins";
-import { InMemoryShipmentsRepository } from "@/test/repositories/in-memory-shipments";
+import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
+import { InMemoryShipmentsRepository } from "test/repositories/in-memory-shipments";
 import { beforeEach, describe, expect, it } from "vitest";
 import { MarkShipmentAsReturned } from "./mark-shipment-as-returned";
-import { InMemoryRecipientsRepository } from "@/test/repositories/in-memory-recipients";
-import { InMemoryShipmentAttachmentsRepository } from "@/test/repositories/in-memory-shipment-attachments-repository";
-import { makeAdmin } from "@/test/factories/make-admin";
-import { makeShipment } from "@/test/factories/make-shipment";
+import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
+import { InMemoryShipmentAttachmentsRepository } from "test/repositories/in-memory-shipment-attachments-repository";
+import { makeAdmin } from "test/factories/make-admin";
+import { makeShipment } from "test/factories/make-shipment";
 import { ShipmentStatus } from "@/core/enums/shipment-status";
 import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
