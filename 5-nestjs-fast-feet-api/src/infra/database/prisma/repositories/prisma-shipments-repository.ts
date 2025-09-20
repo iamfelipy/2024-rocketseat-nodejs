@@ -1,7 +1,9 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { ShipmentsRepository } from '@/domain/core/application/repositories/shipments-repository'
 import { Shipment } from '@/domain/core/enterprise/entities/shipment'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaShipmentsRepository implements ShipmentsRepository {
   findManyNearbyAssignedShipmentsForCourier(
     courierId: string,

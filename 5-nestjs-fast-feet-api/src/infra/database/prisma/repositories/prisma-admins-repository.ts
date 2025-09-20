@@ -1,6 +1,8 @@
 import { AdminsRepository } from '@/domain/core/application/repositories/admins-repository'
 import { Admin } from '@/domain/core/enterprise/entities/admin'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaAdminsRepository implements AdminsRepository {
   findById(id: string): Promise<Admin | null> {
     throw new Error('Method not implemented.')

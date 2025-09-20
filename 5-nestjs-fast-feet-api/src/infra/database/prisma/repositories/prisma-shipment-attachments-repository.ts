@@ -1,6 +1,8 @@
 import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
 import { ShipmentAttachment } from '@/domain/core/enterprise/entities/shipment-attachment'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class PrismaShipmentAttachmentsRepository
   implements ShipmentAttachmentsRepository
 {
