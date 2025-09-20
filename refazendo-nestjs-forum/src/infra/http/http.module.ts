@@ -4,6 +4,7 @@ import { AuthenticateController } from '@/infra/http/controllers/authenticate.co
 import { CreateQuestionController } from '@/infra/http/controllers/create-question.controller'
 import { FetchRecentQuestionsController } from '@/infra/http/controllers/fetch-recent-questions.controller'
 import { DatabaseModule } from '../database/database.module'
+import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
 
 @Module({
   imports: [DatabaseModule],
@@ -13,5 +14,6 @@ import { DatabaseModule } from '../database/database.module'
     AuthenticateController,
     FetchRecentQuestionsController,
   ],
+  providers: [CreateQuestionUseCase],
 })
 export class HttpModule {}
