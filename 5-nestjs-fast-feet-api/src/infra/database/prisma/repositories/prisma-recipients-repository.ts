@@ -21,23 +21,54 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     return PrismaRecipientMapper.toDomain(recipient)
   }
 
-  findByCPF(cpf: string): Promise<Recipient | null> {
-    throw new Error('Method not implemented.')
+  async findByCPF(cpf: string): Promise<Recipient | null> {
+    const recipient = await this.prisma.user.findUnique({
+      where: {
+        cpf,
+      },
+    })
+
+    if (!recipient) {
+      return null
+    }
+
+    return PrismaRecipientMapper.toDomain(recipient)
   }
 
-  create(recipient: Recipient): Promise<void> {
-    throw new Error('Method not implemented.')
+  async create(recipient: Recipient): Promise<void> {
+    const data = PrismaRecipientMapper.toPrisma(recipient)
+
+    await this.prisma.user.create({
+      data,
+    })
   }
 
-  save(recipient: Recipient): Promise<void> {
-    throw new Error('Method not implemented.')
+  async save(recipient: Recipient): Promise<void> {
+    const data = PrismaRecipientMapper.toPrisma(recipient)
+
+    await this.prisma.user.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
   }
 
-  findMany(params: PaginationParams): Promise<Recipient[]> {
-    throw new Error('Method not implemented.')
+  async findMany({ page }: PaginationParams): Promise<Recipient[]> {
+    const recipients = await this.prisma.user.findMany({
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return recipients.map(PrismaRecipientMapper.toDomain)
   }
 
-  delete(recipient: Recipient): Promise<void> {
-    throw new Error('Method not implemented.')
+  async delete(recipient: Recipient): Promise<void> {
+    const data = PrismaRecipientMapper.toPrisma(recipient)
+    await this.prisma.user.delete({
+      where: {
+        id: data.id,
+      },
+    })
   }
 }
