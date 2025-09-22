@@ -25,7 +25,10 @@ export class AuthenticateStudentUseCase {
     private encrypter: Encrypter,
   ) {}
 
-  async execute({ email, password }: AuthenticateUseCaseRequest) {
+  async execute({
+    email,
+    password,
+  }: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
     const student = await this.studentsRepository.findByEmail(email)
 
     if (!student) {
