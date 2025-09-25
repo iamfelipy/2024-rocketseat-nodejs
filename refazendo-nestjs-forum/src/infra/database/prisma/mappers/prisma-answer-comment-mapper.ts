@@ -1,0 +1,18 @@
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
+import { Comment as PrismaComment } from '@prisma/client'
+
+export class PrismaAnswerCommentMapper {
+  static toDomain(raw: PrismaComment): AnswerComment {
+    return AnswerComment.create(
+      {
+        content: raw.content,
+        answerId: new UniqueEntityID(raw.answerId),
+        authorId: new UniqueEntityID(raw.authorId),
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
+      },
+      new UniqueEntityID(raw.id),
+    )
+  }
+}
