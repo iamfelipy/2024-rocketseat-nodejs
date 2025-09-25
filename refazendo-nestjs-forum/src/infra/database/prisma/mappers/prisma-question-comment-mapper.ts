@@ -2,8 +2,8 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
 import { Comment as PrismaComment, Prisma } from '@prisma/client'
 
-export class PrsmaQuestionCommentMapper {
-  toDomain(raw: PrismaComment): QuestionComment {
+export class PrismaQuestionCommentMapper {
+  static toDomain(raw: PrismaComment): QuestionComment {
     if (!raw.questionId) {
       throw new Error('Invalid comment type.')
     }
