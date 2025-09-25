@@ -4,6 +4,9 @@ import { Comment as PrismaComment, Prisma } from '@prisma/client'
 
 export class PrsmaQuestionCommentMapper {
   toDomain(raw: PrismaComment): QuestionComment {
+    if (!raw.questionId) {
+      throw new Error('Invalid comment type.')
+    }
     return QuestionComment.create(
       {
         content: raw.content,
