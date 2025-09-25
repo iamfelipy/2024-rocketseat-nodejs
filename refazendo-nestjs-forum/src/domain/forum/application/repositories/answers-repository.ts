@@ -7,7 +7,7 @@ export interface AnswersRepository {
     questionId: string,
     params: PaginationParams,
   ): Promise<Answer[]>
-  save(question: Answer): Promise<void>
+  save(answer: Answer): Promise<void>
   delete(answer: Answer): Promise<void>
   create(answer: Answer): Promise<void>
 }
