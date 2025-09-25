@@ -76,10 +76,10 @@ model Comment {
   authorId String @map("author_id")
   author   User   @relation(fields: [authorId], references: [id])
 
-  questionId String    @map("question_id")
+  questionId String?   @map("question_id")
   question   Question? @relation(fields: [questionId], references: [id])
 
-  answerId String  @map("answer_id")
+  answerId String? @map("answer_id")
   answer   Answer? @relation(fields: [answerId], references: [id])
 
   createdAt DateTime  @default(now()) @map("created_at")
