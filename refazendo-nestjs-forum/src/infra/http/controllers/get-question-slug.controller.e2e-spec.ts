@@ -11,7 +11,6 @@ import { StudentFactory } from 'test/factories/make-student'
 
 describe('Get question by slug (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
   let studentFactory: StudentFactory
   let questionFactory: QuestionFactory
   let jwt: JwtService
@@ -24,7 +23,6 @@ describe('Get question by slug (E2E)', () => {
 
     app = moduleRef.createNestApplication()
 
-    prisma = moduleRef.get(PrismaService)
     studentFactory = moduleRef.get(StudentFactory)
     questionFactory = moduleRef.get(QuestionFactory)
     jwt = moduleRef.get(JwtService)
@@ -46,8 +44,6 @@ describe('Get question by slug (E2E)', () => {
       .get('/questions/question-01')
       .set('Authorization', `Bearer ${accessToken}`)
       .send()
-
-    console.log(response.body)
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
