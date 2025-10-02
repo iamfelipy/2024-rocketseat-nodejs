@@ -8,7 +8,6 @@ import { DatabaseModule } from '../database/database.module'
 @Module({
   imports: [DatabaseModule],
   controllers: [
-    CreateAccountController,
     AuthenticateController,
     CreateRecipientController,
     FetchRecipientsController,

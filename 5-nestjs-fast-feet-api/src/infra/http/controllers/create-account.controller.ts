@@ -23,6 +23,7 @@ const createAccountBodySchema = z.object({
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
 @Controller('/accounts')
+// preciso refatorar isso para ser um create account generico que pode ser usado para diferentes papeis que tem um body similar
 export class CreateAccountController {
   constructor(private prisma: PrismaService) {}
 

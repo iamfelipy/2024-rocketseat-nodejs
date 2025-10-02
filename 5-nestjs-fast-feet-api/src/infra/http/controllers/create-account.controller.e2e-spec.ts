@@ -5,6 +5,7 @@ import request from 'supertest'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 
+// preciso refatorar isso para ser um create account generico que pode ser usado para diferentes papeis que tem um body similar
 describe('Create Account (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
