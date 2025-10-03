@@ -6,11 +6,15 @@ import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipie
 import { PrismaShipmentsRepository } from './prisma/repositories/prisma-shipments-repository'
 import { PrismaAttachmentsRepository } from './prisma/repositories/prisma-attachments-repository'
 import { PrismaShipmentAttachmentsRepository } from './prisma/repositories/prisma-shipment-attachments-repository'
+import { AdminsRepository } from '@/domain/core/application/repositories/admins-repository'
 
 @Module({
   providers: [
     PrismaService,
-    PrismaAdminsRepository,
+    {
+      provide: AdminsRepository,
+      useClass: PrismaAdminsRepository,
+    },
     PrismaCouriersRepository,
     PrismaRecipientsRepository,
     PrismaShipmentsRepository,
@@ -19,7 +23,7 @@ import { PrismaShipmentAttachmentsRepository } from './prisma/repositories/prism
   ],
   exports: [
     PrismaService,
-    PrismaAdminsRepository,
+    AdminsRepository,
     PrismaCouriersRepository,
     PrismaRecipientsRepository,
     PrismaShipmentsRepository,

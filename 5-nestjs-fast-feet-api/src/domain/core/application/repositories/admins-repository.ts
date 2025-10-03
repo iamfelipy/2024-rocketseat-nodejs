@@ -1,7 +1,7 @@
 import { Admin } from '../../enterprise/entities/admin'
 
-export interface AdminsRepository {
-  findById(id: string): Promise<Admin | null>
-  findByCPF(cpf: string): Promise<Admin | null>
-  create(admin: Admin): Promise<void>
+export abstract class AdminsRepository {
+  abstract findById(id: string): Promise<Admin | null>
+  abstract findByCPF(cpf: string): Promise<Admin | null>
+  abstract create(admin: Admin): Promise<void>
 }

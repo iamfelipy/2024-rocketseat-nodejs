@@ -1,9 +1,10 @@
-import { Either, left, right } from "@/core/either";
-import { AdminsRepository } from "../repositories/admins-repository";
-import { Admin } from "../../enterprise/entities/admin";
-import { Location } from "../../enterprise/entities/value-objects/location";
-import { HashGenerator } from "../cryptography/hash-generator";
-import { AdminAlreadyExistsError } from "./erros/admin-already-exists-error";
+import { Either, left, right } from '@/core/either'
+import { AdminAlreadyExistsError } from './erros/admin-already-exists-error'
+import { Admin } from '../../enterprise/entities/admin'
+import { AdminsRepository } from '../repositories/admins-repository'
+import { HashGenerator } from '../cryptography/hash-generator'
+import { Location } from '../../enterprise/entities/value-objects/location'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterAdminUseCaseRequest {
   name: string
@@ -13,12 +14,20 @@ interface RegisterAdminUseCaseRequest {
   latitude: number
   longitude: number
 }
-type RegisterAdminUseCaseResponse = Either<AdminAlreadyExistsError, {
-  admin: Admin
-}>
+type RegisterAdminUseCaseResponse = Either<
+  AdminAlreadyExistsError,
+  {
+    admin: Admin
+  }
+>
 
+@Injectable()
 export class RegisterAdminUseCase {
-  constructor(private adminsRepository: AdminsRepository, private hashGenerator: HashGenerator) {}
+  constructor(
+    private adminsRepository: AdminsRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
+
   async execute({
     name,
     cpf,
@@ -26,10 +35,10 @@ export class RegisterAdminUseCase {
     address,
     latitude,
     longitude,
-  }:RegisterAdminUseCaseRequest): Promise<RegisterAdminUseCaseResponse> {
+  }: RegisterAdminUseCaseRequest): Promise<RegisterAdminUseCaseResponse> {
     const adminWithSameCpf = await this.adminsRepository.findByCPF(cpf)
 
-    if(adminWithSameCpf) {
+    if (adminWithSameCpf) {
       return left(new AdminAlreadyExistsError(cpf))
     }
 
@@ -43,13 +52,13 @@ export class RegisterAdminUseCase {
         address,
         latitude,
         longitude,
-      })
+      }),
     })
 
     await this.adminsRepository.create(admin)
 
     return right({
-      admin
+      admin,
     })
   }
 }
