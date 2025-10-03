@@ -30,6 +30,7 @@ export class PrismaRecipientMapper {
 
   static toPrisma(recipient: Recipient): Prisma.UserUncheckedCreateInput {
     return {
+      id: recipient.id.toString(),
       cpf: recipient.cpf,
       password: recipient.password,
       name: recipient.name,
