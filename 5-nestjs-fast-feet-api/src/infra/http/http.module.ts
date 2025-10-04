@@ -6,6 +6,7 @@ import { DatabaseModule } from '../database/database.module'
 import { CreateAdminController } from './controllers/create-admin.controller'
 import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/register-admin'
 import { CryptographyModule } from '../cryptography/cryptography.module'
+import { RegisterRecipientUsecase } from '@/domain/core/application/use-cases/register-recipient'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -14,7 +15,8 @@ import { CryptographyModule } from '../cryptography/cryptography.module'
     CreateRecipientController,
     FetchRecipientsController,
     CreateAdminController,
+    CreateRecipientController,
   ],
-  providers: [RegisterAdminUseCase],
+  providers: [RegisterAdminUseCase, RegisterRecipientUsecase],
 })
 export class HttpModule {}
