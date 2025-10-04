@@ -5,9 +5,10 @@ import { FetchRecipientsController } from './controllers/fetch-recipients.contro
 import { DatabaseModule } from '../database/database.module'
 import { CreateAdminController } from './controllers/create-admin.controller'
 import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/register-admin'
+import { CryptographyModule } from '../cryptography/cryptography.module'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, CryptographyModule],
   controllers: [
     AuthenticateController,
     CreateRecipientController,
