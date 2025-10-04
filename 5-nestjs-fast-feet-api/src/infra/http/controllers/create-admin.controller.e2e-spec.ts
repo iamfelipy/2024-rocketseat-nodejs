@@ -4,7 +4,6 @@ import request from 'supertest'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 
-// preciso rescrever isso para que o teste com criptgrafia passe
 describe('Create Admin (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
