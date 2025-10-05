@@ -4,6 +4,7 @@ import { Recipient } from '@/domain/core/enterprise/entities/recipient'
 import { PrismaService } from '../prisma.service'
 import { PrismaRecipientMapper } from '../mappers/prisma-recipient-mapper'
 import { Injectable } from '@nestjs/common'
+import { UserRole } from '@/core/enums/enum-user-role'
 
 @Injectable()
 export class PrismaRecipientsRepository implements RecipientsRepository {
@@ -62,7 +63,7 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
       skip: (page - 1) * 20,
       where: {
         roles: {
-          has: 'RECIPIENT',
+          has: UserRole.RECIPIENT,
         },
       },
     })
