@@ -8,6 +8,7 @@ import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/regist
 import { CryptographyModule } from '../cryptography/cryptography.module'
 import { RegisterRecipientUsecase } from '@/domain/core/application/use-cases/register-recipient'
 import { FetchRecipientsUseCase } from '@/domain/core/application/use-cases/fetch-recipients'
+import { CreateAccountController } from './controllers/create-account.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -15,6 +16,7 @@ import { FetchRecipientsUseCase } from '@/domain/core/application/use-cases/fetc
     AuthenticateController,
     CreateRecipientController,
     FetchRecipientsController,
+    CreateAccountController,
     CreateAdminController,
     CreateRecipientController,
   ],

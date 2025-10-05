@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -10,6 +11,8 @@ import { hash } from 'bcryptjs'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { z } from 'zod'
+import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/register-admin'
+import { AdminAlreadyExistsError } from '@/domain/core/application/use-cases/erros/admin-already-exists-error'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -22,10 +25,10 @@ const createAccountBodySchema = z.object({
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
+// TODO: criar caso de uso generico para criação de usuario generico e não usar o admin
 @Controller('/accounts')
-// preciso refatorar isso para ser um create account generico que pode ser usado para diferentes papeis que tem um body similar
 export class CreateAccountController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private registerAdmin: RegisterAdminUseCase) {}
 
   @Post()
   @HttpCode(201)
@@ -33,28 +36,23 @@ export class CreateAccountController {
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, cpf, address, latitude, longitude, password } = body
 
-    const userWithSameCpf = await this.prisma.user.findUnique({
-      where: {
-        cpf,
-      },
+    const result = await this.registerAdmin.execute({
+      name,
+      cpf,
+      password,
+      address,
+      latitude,
+      longitude,
     })
 
-    if (userWithSameCpf) {
-      throw new ConflictException('User with same cpf already exists.')
+    if (result.isLeft()) {
+      const error = result.value
+      switch (error.constructor) {
+        case AdminAlreadyExistsError:
+          throw new ConflictException('User with same cpf already exists.')
+        default:
+          throw new BadRequestException()
+      }
     }
-
-    const hashedPassword = await hash(password, 8)
-
-    await this.prisma.user.create({
-      data: {
-        name,
-        cpf,
-        address,
-        latitude,
-        longitude,
-        password: hashedPassword,
-        roles: ['ADMIN'],
-      },
-    })
   }
 }

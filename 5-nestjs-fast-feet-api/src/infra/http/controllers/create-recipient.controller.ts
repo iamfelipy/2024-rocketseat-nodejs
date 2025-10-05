@@ -70,9 +70,5 @@ export class CreateRecipientController {
           throw new BadRequestException()
       }
     }
-
-    return {
-      recipient: result.value.recipient,
-    }
   }
 }
