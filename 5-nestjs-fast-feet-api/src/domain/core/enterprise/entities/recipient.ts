@@ -3,10 +3,9 @@ import { User, UserProps } from './user'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-export interface RecipientProps extends UserProps {}
+export type RecipientProps = UserProps
 
 export class Recipient extends User<RecipientProps> {
-
   isRecipient() {
     return this.props.roles.includes(UserRole.RECIPIENT)
   }
@@ -18,7 +17,7 @@ export class Recipient extends User<RecipientProps> {
     const recipient = new Recipient(
       {
         ...props,
-        roles: [UserRole.RECIPIENT],
+        roles: props.roles ?? [UserRole.RECIPIENT],
         createdAt: props.createdAt ?? new Date(),
       },
       id,

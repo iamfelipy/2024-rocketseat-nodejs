@@ -3,7 +3,7 @@ import { User, UserProps } from './user'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { UserRole } from '@/core/enums/enum-user-role'
 
-export interface AdminProps extends UserProps {}
+export type AdminProps = UserProps
 
 export class Admin extends User<AdminProps> {
   isAdmin() {
@@ -17,7 +17,7 @@ export class Admin extends User<AdminProps> {
     const admin = new Admin(
       {
         ...props,
-        roles: [UserRole.ADMIN],
+        roles: props.roles ?? [UserRole.ADMIN],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
