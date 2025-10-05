@@ -60,6 +60,11 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     const recipients = await this.prisma.user.findMany({
       take: 20,
       skip: (page - 1) * 20,
+      where: {
+        roles: {
+          has: 'RECIPIENT',
+        },
+      },
     })
 
     return recipients.map(PrismaRecipientMapper.toDomain)

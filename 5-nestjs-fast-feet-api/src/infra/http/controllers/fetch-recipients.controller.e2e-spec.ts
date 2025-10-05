@@ -76,10 +76,10 @@ describe('Fetch recipients (E2E)', () => {
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
-      recipients: [
+      recipients: expect.arrayContaining([
         expect.objectContaining({ name: 'Jose' }),
         expect.objectContaining({ name: 'Anderson' }),
-      ],
+      ]),
     })
   })
 

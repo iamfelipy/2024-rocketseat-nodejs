@@ -1,16 +1,22 @@
 import {
+  BadRequestException,
   Controller,
   ForbiddenException,
   Get,
   Query,
   UseGuards,
 } from '@nestjs/common'
-import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
-import { UserPayload } from '@/infra/auth/jwt.strategy'
+import { RolesGuard } from '@/infra/auth/roles.guard'
+import { Roles } from '@/infra/auth/roles.decorator'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { z } from 'zod'
+import { UserRole } from '@/core/enums/enum-user-role'
+import { FetchRecipientsUseCase } from '@/domain/core/application/use-cases/fetch-recipients'
+import { CurrentUser } from '@/infra/auth/current-user-decorator'
+import { UserPayload } from '@/infra/auth/jwt.strategy'
+import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
+import { RecipientPresenter } from '../presenters/recipient-presenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -24,42 +30,37 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
 @Controller('/recipients')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(UserRole.ADMIN)
 export class FetchRecipientsController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private fetchRecipients: FetchRecipientsUseCase) {}
 
   @Get()
   async handle(
-    @CurrentUser() loggedUser: UserPayload,
+    @CurrentUser() userLogged: UserPayload,
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
   ) {
-    const loggedUserId = loggedUser.sub
+    const userId = userLogged.sub
 
-    const admin = await this.prisma.user.findUnique({
-      where: { id: loggedUserId },
+    const result = await this.fetchRecipients.execute({
+      adminId: userId,
+      page,
     })
 
-    if (!admin || !admin?.roles.includes('ADMIN')) {
-      throw new ForbiddenException('Only admins can create recipients.')
+    if (result.isLeft()) {
+      const error = result.value
+      switch (error.constructor) {
+        case NotAuthorizedError:
+          throw new ForbiddenException('Only admins can create recipients.')
+        default:
+          throw new BadRequestException()
+      }
     }
 
-    const perPage = 20
-
-    const recipients = await this.prisma.user.findMany({
-      where: {
-        roles: {
-          has: 'RECIPIENT',
-        },
-      },
-      take: perPage,
-      skip: (page - 1) * perPage,
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
+    const recipients = result.value.recipients
 
     return {
-      recipients,
+      recipients: recipients.map(RecipientPresenter.toHTTP),
     }
   }
 }
