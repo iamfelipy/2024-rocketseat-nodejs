@@ -1,7 +1,7 @@
 import { HashComparer } from '@/domain/core/application/cryptography/hash-comparer'
 import { HashGenerator } from '@/domain/core/application/cryptography/hash-generator'
 import { Injectable } from '@nestjs/common'
-import { hash } from 'bcryptjs'
+import { compare, hash } from 'bcryptjs'
 
 @Injectable()
 export class BcryptHasher implements HashGenerator, HashComparer {
@@ -12,6 +12,6 @@ export class BcryptHasher implements HashGenerator, HashComparer {
   }
 
   compare(plain: string, hash: string): Promise<boolean> {
-    return this.compare(plain, hash)
+    return compare(plain, hash)
   }
 }
