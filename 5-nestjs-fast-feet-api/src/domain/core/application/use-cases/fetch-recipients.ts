@@ -28,7 +28,7 @@ export class FetchRecipientsUseCase {
     page,
   }: FetchRecipientsUseCaseRequest): Promise<FetchRecipientsUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
-    if (!admin) {
+    if (!admin || !admin.isAdmin()) {
       return left(new NotAuthorizedError())
     }
     const recipients = await this.recipientsRepository.findMany({ page })
