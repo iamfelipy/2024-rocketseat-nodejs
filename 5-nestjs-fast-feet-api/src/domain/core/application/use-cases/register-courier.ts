@@ -1,11 +1,12 @@
-import { Either, left, right } from "@/core/either";
-import { CouriersRepository } from "../repositories/courier-repository";
-import { CourierAlreadyExistsError } from "./erros/courier-already-exists-error";
-import { Courier } from "../../enterprise/entities/courier";
-import { Location } from "../../enterprise/entities/value-objects/location";
-import { HashGenerator } from "../cryptography/hash-generator";
-import { AdminsRepository } from "../repositories/admins-repository";
-import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
+import { Either, left, right } from '@/core/either'
+import { CouriersRepository } from '../repositories/courier-repository'
+import { CourierAlreadyExistsError } from './erros/courier-already-exists-error'
+import { Courier } from '../../enterprise/entities/courier'
+import { Location } from '../../enterprise/entities/value-objects/location'
+import { HashGenerator } from '../cryptography/hash-generator'
+import { AdminsRepository } from '../repositories/admins-repository'
+import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterCourierUseCaseRequest {
   name: string
@@ -16,12 +17,21 @@ interface RegisterCourierUseCaseRequest {
   longitude: number
   adminId: string
 }
-type RegisterCourierUseCaseResponse = Either<NotAuthorizedError | CourierAlreadyExistsError, {
-  courier: Courier
-}>
+type RegisterCourierUseCaseResponse = Either<
+  NotAuthorizedError | CourierAlreadyExistsError,
+  {
+    courier: Courier
+  }
+>
 
+@Injectable()
 export class RegisterCourierUseCase {
-  constructor(private couriersRepository: CouriersRepository,private adminsRepository: AdminsRepository, private hashGenerator: HashGenerator) {}
+  constructor(
+    private couriersRepository: CouriersRepository,
+    private adminsRepository: AdminsRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
+
   async execute({
     name,
     cpf,
@@ -29,17 +39,17 @@ export class RegisterCourierUseCase {
     address,
     latitude,
     longitude,
-    adminId
-  }:RegisterCourierUseCaseRequest): Promise<RegisterCourierUseCaseResponse> {
+    adminId,
+  }: RegisterCourierUseCaseRequest): Promise<RegisterCourierUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
-    
+
     if (!admin || !admin.isAdmin()) {
       return left(new NotAuthorizedError())
     }
 
     const courierWithSameCpf = await this.couriersRepository.findByCPF(cpf)
 
-    if(courierWithSameCpf) {
+    if (courierWithSameCpf) {
       return left(new CourierAlreadyExistsError(cpf))
     }
 
@@ -53,13 +63,13 @@ export class RegisterCourierUseCase {
         address,
         latitude,
         longitude,
-      })
+      }),
     })
 
     await this.couriersRepository.create(courier)
 
     return right({
-      courier
+      courier,
     })
   }
 }
