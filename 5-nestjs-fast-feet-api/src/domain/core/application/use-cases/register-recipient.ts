@@ -1,11 +1,12 @@
-import { Either, left, right } from "@/core/either";
-import { RecipientsRepository } from "../repositories/recipients-repository";
-import { Recipient } from "../../enterprise/entities/recipient";
-import { Location } from "../../enterprise/entities/value-objects/location";
-import { RecipientAlreadyExistsError } from "./erros/recipient-already-exists-error";
-import { HashGenerator } from "../cryptography/hash-generator";
-import { AdminsRepository } from "../repositories/admins-repository";
-import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
+import { Either, left, right } from '@/core/either'
+import { RecipientsRepository } from '../repositories/recipients-repository'
+import { Recipient } from '../../enterprise/entities/recipient'
+import { Location } from '../../enterprise/entities/value-objects/location'
+import { RecipientAlreadyExistsError } from './erros/recipient-already-exists-error'
+import { HashGenerator } from '../cryptography/hash-generator'
+import { AdminsRepository } from '../repositories/admins-repository'
+import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterRecipientUseCaseRequest {
   name: string
@@ -16,12 +17,21 @@ interface RegisterRecipientUseCaseRequest {
   longitude: number
   adminId: string
 }
-type RegisterRecipientUseCaseResponse = Either<NotAuthorizedError | RecipientAlreadyExistsError, {
-  recipient: Recipient
-}>
+type RegisterRecipientUseCaseResponse = Either<
+  NotAuthorizedError | RecipientAlreadyExistsError,
+  {
+    recipient: Recipient
+  }
+>
 
+@Injectable()
 export class RegisterRecipientUsecase {
-  constructor(private recipientsRepository: RecipientsRepository,private adminsRepository: AdminsRepository, private hashGenerator: HashGenerator){}
+  constructor(
+    private recipientsRepository: RecipientsRepository,
+    private adminsRepository: AdminsRepository,
+    private hashGenerator: HashGenerator,
+  ) {}
+
   async execute({
     name,
     cpf,
@@ -29,17 +39,17 @@ export class RegisterRecipientUsecase {
     address,
     latitude,
     longitude,
-    adminId
-  }:RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse>{
+    adminId,
+  }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
-    
+
     if (!admin || !admin.isAdmin()) {
       return left(new NotAuthorizedError())
     }
-    
+
     const recipientWithSameCpf = await this.recipientsRepository.findByCPF(cpf)
 
-    if(recipientWithSameCpf) {
+    if (recipientWithSameCpf) {
       return left(new RecipientAlreadyExistsError(cpf))
     }
 
@@ -52,14 +62,14 @@ export class RegisterRecipientUsecase {
       location: Location.create({
         address,
         latitude,
-        longitude
-      })
+        longitude,
+      }),
     })
 
     await this.recipientsRepository.create(recipient)
 
     return right({
-      recipient
+      recipient,
     })
   }
 }

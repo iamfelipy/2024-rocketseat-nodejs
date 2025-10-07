@@ -19,6 +19,7 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
 import { CourierAlreadyExistsError } from '@/domain/core/application/use-cases/erros/courier-already-exists-error'
+import { Public } from '@/infra/auth/public'
 
 const createCourierBodySchema = z.object({
   cpf: z.string(),
@@ -34,7 +35,7 @@ const bodyValidationPipe = new ZodValidationPipe(createCourierBodySchema)
 type CreateCourierBodySchema = z.infer<typeof createCourierBodySchema>
 
 @Controller('/couriers')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 @Roles(UserRole.ADMIN)
 export class CreateCourierController {
   constructor(private registerCourier: RegisterCourierUseCase) {}

@@ -13,6 +13,7 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { z } from 'zod'
 import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/register-admin'
 import { AdminAlreadyExistsError } from '@/domain/core/application/use-cases/erros/admin-already-exists-error'
+import { Public } from '@/infra/auth/public'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -27,6 +28,7 @@ type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
 // TODO: criar caso de uso generico para criação de usuario generico e não usar o admin
 @Controller('/accounts')
+@Public()
 export class CreateAccountController {
   constructor(private registerAdmin: RegisterAdminUseCase) {}
 

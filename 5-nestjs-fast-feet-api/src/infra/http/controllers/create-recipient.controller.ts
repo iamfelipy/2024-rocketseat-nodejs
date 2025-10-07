@@ -19,6 +19,7 @@ import { RecipientAlreadyExistsError } from '@/domain/core/application/use-cases
 import { Roles } from '@/infra/auth/roles.decorator'
 import { UserRole } from '@/core/enums/enum-user-role'
 import { RolesGuard } from '@/infra/auth/roles.guard'
+import { Public } from '@/infra/auth/public'
 
 const createRecipientBodySchema = z.object({
   cpf: z.string(),
@@ -34,7 +35,7 @@ const bodyValidationPipe = new ZodValidationPipe(createRecipientBodySchema)
 type CreateRecipientBodySchema = z.infer<typeof createRecipientBodySchema>
 
 @Controller('/recipients')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 @Roles(UserRole.ADMIN)
 export class CreateRecipientController {
   constructor(private registerRecipient: RegisterRecipientUsecase) {}

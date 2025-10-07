@@ -10,6 +10,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { RegisterAdminUseCase } from '@/domain/core/application/use-cases/register-admin'
 import { AdminAlreadyExistsError } from '@/domain/core/application/use-cases/erros/admin-already-exists-error'
+import { Public } from '@/infra/auth/public'
 
 const createAdminBodySchema = z.object({
   name: z.string(),
@@ -25,6 +26,7 @@ const bodyValidationPipe = new ZodValidationPipe(createAdminBodySchema)
 type CreateAdminBodySchema = z.infer<typeof createAdminBodySchema>
 
 @Controller('/admins')
+@Public()
 export class CreateAdminController {
   constructor(private registerAdmin: RegisterAdminUseCase) {}
 

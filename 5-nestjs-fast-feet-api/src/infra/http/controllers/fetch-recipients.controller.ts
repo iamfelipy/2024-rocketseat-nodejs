@@ -17,6 +17,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
 import { RecipientPresenter } from '../presenters/recipient-presenter'
+import { Public } from '@/infra/auth/public'
 
 const pageQueryParamSchema = z
   .string()
@@ -30,7 +31,7 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 
 @Controller('/recipients')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 @Roles(UserRole.ADMIN)
 export class FetchRecipientsController {
   constructor(private fetchRecipients: FetchRecipientsUseCase) {}
