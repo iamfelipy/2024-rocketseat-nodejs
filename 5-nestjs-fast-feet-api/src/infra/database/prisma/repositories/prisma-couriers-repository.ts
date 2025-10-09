@@ -3,7 +3,7 @@ import { CouriersRepository } from '@/domain/core/application/repositories/couri
 import { Courier } from '@/domain/core/enterprise/entities/courier'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
-import { PrismaCourierMapper } from '../mappers/prisma-courier.mapper'
+import { PrismaCourierMapper } from '../mappers/prisma-courier-mapper'
 
 @Injectable()
 export class PrismaCouriersRepository implements CouriersRepository {
