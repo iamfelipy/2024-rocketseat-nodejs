@@ -55,8 +55,8 @@ model Shipment {
   deliveryDate DateTime? @map("delivery_date")
   returnedDate DateTime? @map("returned_date")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   attachments Attachment[]
 
