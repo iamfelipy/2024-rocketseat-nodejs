@@ -9,8 +9,18 @@ import { PrismaCourierMapper } from '../mappers/prisma-courier-mapper'
 export class PrismaCouriersRepository implements CouriersRepository {
   constructor(private prisma: PrismaService) {}
 
-  findById(id: string): Promise<Courier | null> {
-    throw new Error('Method not implemented.')
+  async findById(id: string): Promise<Courier | null> {
+    const courier = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!courier) {
+      return null
+    }
+
+    return PrismaCourierMapper.toDomain(courier)
   }
 
   async findByCPF(cpf: string): Promise<Courier | null> {
@@ -27,8 +37,18 @@ export class PrismaCouriersRepository implements CouriersRepository {
     return PrismaCourierMapper.toDomain(courier)
   }
 
-  findMany(params: PaginationParams): Promise<Courier[]> {
-    throw new Error('Method not implemented.')
+  async findMany({ page }: PaginationParams): Promise<Courier[]> {
+    const couriers = await this.prisma.user.findMany({
+      where: {
+        roles: {
+          has: 'COURIER',
+        },
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return couriers.map(PrismaCourierMapper.toDomain)
   }
 
   async create(courier: Courier): Promise<void> {
@@ -39,11 +59,22 @@ export class PrismaCouriersRepository implements CouriersRepository {
     })
   }
 
-  save(courier: Courier): Promise<void> {
-    throw new Error('Method not implemented.')
+  async save(courier: Courier): Promise<void> {
+    const data = PrismaCourierMapper.toPrisma(courier)
+
+    await this.prisma.user.update({
+      where: {
+        id: courier.id.toString(),
+      },
+      data,
+    })
   }
 
-  delete(courier: Courier): Promise<void> {
-    throw new Error('Method not implemented.')
+  async delete(courier: Courier): Promise<void> {
+    await this.prisma.user.delete({
+      where: {
+        id: courier.id.toString(),
+      },
+    })
   }
 }
