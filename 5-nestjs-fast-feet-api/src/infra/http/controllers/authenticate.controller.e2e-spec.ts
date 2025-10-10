@@ -5,32 +5,31 @@ import { Test } from '@nestjs/testing'
 import { hash } from 'bcryptjs'
 import { beforeAll, describe, expect, test } from 'vitest'
 import request from 'supertest'
+import { AdminFactory } from 'test/factories/make-admin'
+import { DatabaseModule } from '@/infra/database/database.module'
 
 describe('Authenticate (E2E)', () => {
   let app: INestApplication
+  let adminFactory: AdminFactory
   let prisma: PrismaService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [AdminFactory],
     }).compile()
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
+    adminFactory = moduleRef.get(AdminFactory)
 
     await app.init()
   })
 
   test('[POST] /sessions', async () => {
-    await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        cpf: '12345678900',
-        address: '123 Main St',
-        latitude: 40.7128,
-        longitude: -74.006,
-        password: await hash('123456', 8),
-      },
+    await adminFactory.makePrismaAdmin({
+      cpf: '12345678900',
+      password: await hash('123456', 8),
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({

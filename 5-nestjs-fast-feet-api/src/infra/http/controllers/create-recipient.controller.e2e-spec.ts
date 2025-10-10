@@ -5,20 +5,29 @@ import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import { beforeAll, describe, expect, test } from 'vitest'
 import request from 'supertest'
+import { AdminFactory } from 'test/factories/make-admin'
+import { RecipientFactory } from 'test/factories/make-recipient'
+import { DatabaseModule } from '@/infra/database/database.module'
+import { UserRole } from '@/core/enums/enum-user-role'
 
 describe('Create recipient (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
+  let adminFactory: AdminFactory
+  let recipientFactory: RecipientFactory
   let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [AdminFactory, RecipientFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
+    adminFactory = moduleRef.get(AdminFactory)
+    recipientFactory = moduleRef.get(RecipientFactory)
     jwt = moduleRef.get(JwtService)
 
     await app.init()
@@ -26,20 +35,10 @@ describe('Create recipient (E2E)', () => {
 
   test('[POST] /recipients', async () => {
     // Test for successful recipient creation by admin
-    const admin = await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        cpf: '12345678900',
-        address: '123 Main St',
-        latitude: 40.7128,
-        longitude: -74.006,
-        password: '123456789',
-        roles: ['ADMIN'],
-      },
-    })
+    const admin = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({
-      sub: admin.id,
+      sub: admin.id.toString(),
     })
 
     const response = await request(app.getHttpServer())
@@ -66,20 +65,12 @@ describe('Create recipient (E2E)', () => {
   })
 
   test('[POST] /recipients - should return 403 if user is not admin', async () => {
-    const nonAdmin = await prisma.user.create({
-      data: {
-        name: 'Jane Doe',
-        cpf: '12345678901',
-        address: '456 Main St',
-        latitude: 41.7128,
-        longitude: -75.006,
-        password: '987654321',
-        roles: ['COURIER'],
-      },
+    const nonAdmin = await adminFactory.makePrismaAdmin({
+      roles: [UserRole.COURIER],
     })
 
     const accessToken = jwt.sign({
-      sub: nonAdmin.id,
+      sub: nonAdmin.id.toString(),
     })
 
     const response = await request(app.getHttpServer())
@@ -106,33 +97,15 @@ describe('Create recipient (E2E)', () => {
   })
 
   test('[POST] /recipients - should return 409 if recipient already exists', async () => {
-    const admin = await prisma.user.create({
-      data: {
-        name: 'Admin User',
-        cpf: '12345678902',
-        address: '999 Main St',
-        latitude: 44.7128,
-        longitude: -71.006,
-        password: 'adminpassword',
-        roles: ['ADMIN'],
-      },
-    })
+    const admin = await adminFactory.makePrismaAdmin()
 
     // Create recipient with cpf that will be duplicated
-    await prisma.user.create({
-      data: {
-        name: 'Existing Recipient',
-        cpf: '12345678216',
-        address: '1000 Main St',
-        latitude: 45.7128,
-        longitude: -70.006,
-        password: 'recipientpassword',
-        roles: ['RECIPIENT'],
-      },
+    await recipientFactory.makePrismaRecipient({
+      cpf: '12345678216',
     })
 
     const accessToken = jwt.sign({
-      sub: admin.id,
+      sub: admin.id.toString(),
     })
 
     const response = await request(app.getHttpServer())
