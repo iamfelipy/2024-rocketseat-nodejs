@@ -16,6 +16,8 @@ import { GetRecipientByAdminController } from './controllers/get-recipient-by-ad
 import { GetRecipientByAdminUseCase } from '@/domain/core/application/use-cases/get-recipient-by-admin'
 import { EditRecipientProfileController } from './controllers/edit-recipient-profile.controller'
 import { EditRecipientProfileUseCase } from '@/domain/core/application/use-cases/edit-recipient-profile'
+import { EditRecipientUseCase } from '@/domain/core/application/use-cases/edit-recipient'
+import { EditRecipientController } from './controllers/edit-recipient.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -29,6 +31,7 @@ import { EditRecipientProfileUseCase } from '@/domain/core/application/use-cases
     CreateCourierController,
     GetRecipientByAdminController,
     EditRecipientProfileController,
+    EditRecipientController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -38,6 +41,7 @@ import { EditRecipientProfileUseCase } from '@/domain/core/application/use-cases
     RegisterCourierUseCase,
     GetRecipientByAdminUseCase,
     EditRecipientProfileUseCase,
+    EditRecipientUseCase,
   ],
 })
 export class HttpModule {}
