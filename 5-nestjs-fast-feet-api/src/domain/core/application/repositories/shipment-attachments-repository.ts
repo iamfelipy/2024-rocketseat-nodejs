@@ -1,8 +1,11 @@
 import { ShipmentAttachment } from '../../enterprise/entities/shipment-attachment'
 
-export interface ShipmentAttachmentsRepository {
-  createMany(attachments: ShipmentAttachment[]): Promise<void>
-  deleteMany(attachments: ShipmentAttachment[]): Promise<void>
-  findManyByShipmentId(shipmentId: string): Promise<ShipmentAttachment[]>
-  deleteManyByShipmentId(shipmentId: string): Promise<void>
+export abstract class ShipmentAttachmentsRepository {
+  abstract createMany(attachments: ShipmentAttachment[]): Promise<void>
+  abstract deleteMany(attachments: ShipmentAttachment[]): Promise<void>
+  abstract findManyByShipmentId(
+    shipmentId: string,
+  ): Promise<ShipmentAttachment[]>
+
+  abstract deleteManyByShipmentId(shipmentId: string): Promise<void>
 }

@@ -6,9 +6,11 @@ import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipie
 import { PrismaShipmentsRepository } from './prisma/repositories/prisma-shipments-repository'
 import { PrismaAttachmentsRepository } from './prisma/repositories/prisma-attachments-repository'
 import { PrismaShipmentAttachmentsRepository } from './prisma/repositories/prisma-shipment-attachments-repository'
+import { ShipmentsRepository } from '@/domain/core/application/repositories/shipments-repository'
 import { AdminsRepository } from '@/domain/core/application/repositories/admins-repository'
 import { RecipientsRepository } from '@/domain/core/application/repositories/recipients-repository'
 import { CouriersRepository } from '@/domain/core/application/repositories/courier-repository'
+import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
 
 @Module({
   providers: [
@@ -17,27 +19,32 @@ import { CouriersRepository } from '@/domain/core/application/repositories/couri
       provide: AdminsRepository,
       useClass: PrismaAdminsRepository,
     },
-    PrismaCouriersRepository,
+    {
+      provide: CouriersRepository,
+      useClass: PrismaCouriersRepository,
+    },
     {
       provide: RecipientsRepository,
       useClass: PrismaRecipientsRepository,
     },
     {
-      provide: CouriersRepository,
-      useClass: PrismaCouriersRepository,
+      provide: ShipmentsRepository,
+      useClass: PrismaShipmentsRepository,
     },
-    PrismaShipmentsRepository,
+    {
+      provide: ShipmentAttachmentsRepository,
+      useClass: PrismaShipmentAttachmentsRepository,
+    },
     PrismaAttachmentsRepository,
-    PrismaShipmentAttachmentsRepository,
   ],
   exports: [
     PrismaService,
     AdminsRepository,
     CouriersRepository,
     RecipientsRepository,
-    PrismaShipmentsRepository,
+    ShipmentsRepository,
+    ShipmentAttachmentsRepository,
     PrismaAttachmentsRepository,
-    PrismaShipmentAttachmentsRepository,
   ],
 })
 export class DatabaseModule {}

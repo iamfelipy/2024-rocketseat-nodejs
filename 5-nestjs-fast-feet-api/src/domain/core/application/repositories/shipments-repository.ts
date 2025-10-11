@@ -1,18 +1,22 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Shipment } from '../../enterprise/entities/shipment'
 
-export interface ShipmentsRepository {
-  findManyNearbyAssignedShipmentsForCourier(
+export abstract class ShipmentsRepository {
+  abstract findManyNearbyAssignedShipmentsForCourier(
     courierId: string,
     maxDistanceInKm: number,
     courierLatitude: number,
     courierLongitude: number,
     params: PaginationParams,
   ): Promise<Shipment[]>
-  findById(id: string): Promise<Shipment | null>
-  findMany(params: PaginationParams): Promise<Shipment[]>
-  create(shipment: Shipment): Promise<void>
-  save(shipment: Shipment): Promise<void>
-  delete(shipment: Shipment): Promise<void>
-  findAssignedShipmentForCourier(courierId: string,shipmentId: string): Promise<Shipment | null>
+
+  abstract findById(id: string): Promise<Shipment | null>
+  abstract findMany(params: PaginationParams): Promise<Shipment[]>
+  abstract create(shipment: Shipment): Promise<void>
+  abstract save(shipment: Shipment): Promise<void>
+  abstract delete(shipment: Shipment): Promise<void>
+  abstract findAssignedShipmentForCourier(
+    courierId: string,
+    shipmentId: string,
+  ): Promise<Shipment | null>
 }
