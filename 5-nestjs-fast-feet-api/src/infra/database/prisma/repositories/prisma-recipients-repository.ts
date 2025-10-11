@@ -4,7 +4,7 @@ import { Recipient } from '@/domain/core/enterprise/entities/recipient'
 import { PrismaService } from '../prisma.service'
 import { PrismaRecipientMapper } from '../mappers/prisma-recipient-mapper'
 import { Injectable } from '@nestjs/common'
-import { UserRole } from '@/core/enums/enum-user-role'
+import { UserRole } from '@prisma/client'
 
 @Injectable()
 export class PrismaRecipientsRepository implements RecipientsRepository {
@@ -14,6 +14,9 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     const recipient = await this.prisma.user.findUnique({
       where: {
         id,
+        roles: {
+          has: UserRole.RECIPIENT,
+        },
       },
     })
 
