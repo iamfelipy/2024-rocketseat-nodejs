@@ -18,6 +18,8 @@ import { EditRecipientProfileController } from './controllers/edit-recipient-pro
 import { EditRecipientProfileUseCase } from '@/domain/core/application/use-cases/edit-recipient-profile'
 import { EditRecipientUseCase } from '@/domain/core/application/use-cases/edit-recipient'
 import { EditRecipientController } from './controllers/edit-recipient.controller'
+import { DeleteRecipientController } from './controllers/delete-recipient.controller'
+import { DeleteRecipientUseCase } from '@/domain/core/application/use-cases/delete-recipient'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -32,6 +34,7 @@ import { EditRecipientController } from './controllers/edit-recipient.controller
     GetRecipientByAdminController,
     EditRecipientProfileController,
     EditRecipientController,
+    DeleteRecipientController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -42,6 +45,7 @@ import { EditRecipientController } from './controllers/edit-recipient.controller
     GetRecipientByAdminUseCase,
     EditRecipientProfileUseCase,
     EditRecipientUseCase,
+    DeleteRecipientUseCase,
   ],
 })
 export class HttpModule {}
