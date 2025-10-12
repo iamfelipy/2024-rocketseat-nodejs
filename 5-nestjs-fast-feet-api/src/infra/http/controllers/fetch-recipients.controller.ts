@@ -52,7 +52,7 @@ export class FetchRecipientsController {
       const error = result.value
       switch (error.constructor) {
         case NotAuthorizedError:
-          throw new ForbiddenException('Only admins can create recipients.')
+          throw new ForbiddenException()
         default:
           throw new BadRequestException()
       }
