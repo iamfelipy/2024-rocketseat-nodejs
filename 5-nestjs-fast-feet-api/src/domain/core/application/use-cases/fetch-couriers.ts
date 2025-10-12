@@ -1,32 +1,41 @@
-import { Either, left, right } from "@/core/either";
-import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
-import { Courier } from "../../enterprise/entities/courier";
-import { CouriersRepository } from "../repositories/courier-repository";
-import { AdminsRepository } from "../repositories/admins-repository";
+import { Either, left, right } from '@/core/either'
+import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
+import { Courier } from '../../enterprise/entities/courier'
+import { CouriersRepository } from '../repositories/courier-repository'
+import { AdminsRepository } from '../repositories/admins-repository'
+import { Injectable } from '@nestjs/common'
 
 interface FetchCouriersUseCaseRequest {
   adminId: string
   page: number
 }
-type FetchCouriersUseCaseResponse = Either<NotAuthorizedError, {
-  couriers: Courier[]
-}>
+type FetchCouriersUseCaseResponse = Either<
+  NotAuthorizedError,
+  {
+    couriers: Courier[]
+  }
+>
 
+@Injectable()
 export class FetchCouriersUseCase {
-  constructor(private couriersRepository: CouriersRepository, private adminsRepository: AdminsRepository){}
+  constructor(
+    private couriersRepository: CouriersRepository,
+    private adminsRepository: AdminsRepository,
+  ) {}
+
   async execute({
     adminId,
     page,
-  }:FetchCouriersUseCaseRequest): Promise<FetchCouriersUseCaseResponse>{
+  }: FetchCouriersUseCaseRequest): Promise<FetchCouriersUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
-    if(!admin) {
+    if (!admin) {
       return left(new NotAuthorizedError())
     }
 
-    const couriers = await this.couriersRepository.findMany({page})
+    const couriers = await this.couriersRepository.findMany({ page })
 
     return right({
-      couriers
+      couriers,
     })
   }
 }

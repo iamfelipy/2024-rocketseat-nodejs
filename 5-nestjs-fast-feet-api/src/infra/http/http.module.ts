@@ -30,6 +30,8 @@ import { EditCourierProfileController } from './controllers/edit-courier-profile
 import { EditCourierProfileUseCase } from '@/domain/core/application/use-cases/edit-courier-profile'
 import { EditCourierController } from './controllers/edit-courier.controller'
 import { EditCourierUseCase } from '@/domain/core/application/use-cases/edit-courier'
+import { FetchCouriersController } from './controllers/fetch-couriers.controller'
+import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-couriers'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -39,6 +41,7 @@ import { EditCourierUseCase } from '@/domain/core/application/use-cases/edit-cou
     CreateAdminController,
 
     CreateCourierController,
+    FetchCouriersController,
     GetCourierProfileController,
     GetCourierController,
     EditCourierProfileController,
@@ -57,6 +60,7 @@ import { EditCourierUseCase } from '@/domain/core/application/use-cases/edit-cou
     AuthenticateRecipientUseCase,
 
     RegisterCourierUseCase,
+    FetchCouriersUseCase,
     GetCourierUseCase,
     GetCourierProfileUseCase,
     EditCourierProfileUseCase,
