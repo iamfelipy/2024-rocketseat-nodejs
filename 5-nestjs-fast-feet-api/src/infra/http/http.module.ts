@@ -28,20 +28,25 @@ import { DeleteCourierController } from './controllers/delete-courier.controller
 import { DeleteCourierUseCase } from '@/domain/core/application/use-cases/delete-courier'
 import { EditCourierProfileController } from './controllers/edit-courier-profile.controller'
 import { EditCourierProfileUseCase } from '@/domain/core/application/use-cases/edit-courier-profile'
+import { EditCourierController } from './controllers/edit-courier.controller'
+import { EditCourierUseCase } from '@/domain/core/application/use-cases/edit-courier'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     AuthenticateController,
-    FetchRecipientsController,
     CreateAccountController,
     CreateAdminController,
-    CreateRecipientController,
+
     CreateCourierController,
     GetCourierProfileController,
     GetCourierController,
     EditCourierProfileController,
+    EditCourierController,
     DeleteCourierController,
+
+    CreateRecipientController,
+    FetchRecipientsController,
     GetRecipientByAdminController,
     EditRecipientProfileController,
     EditRecipientController,
@@ -49,14 +54,17 @@ import { EditCourierProfileUseCase } from '@/domain/core/application/use-cases/e
   ],
   providers: [
     RegisterAdminUseCase,
-    RegisterRecipientUsecase,
     AuthenticateRecipientUseCase,
-    FetchRecipientsUseCase,
+
     RegisterCourierUseCase,
     GetCourierUseCase,
     GetCourierProfileUseCase,
     EditCourierProfileUseCase,
+    EditCourierUseCase,
     DeleteCourierUseCase,
+
+    RegisterRecipientUsecase,
+    FetchRecipientsUseCase,
     GetRecipientByAdminUseCase,
     EditRecipientProfileUseCase,
     EditRecipientUseCase,
