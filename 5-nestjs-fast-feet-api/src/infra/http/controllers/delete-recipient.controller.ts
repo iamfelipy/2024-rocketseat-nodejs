@@ -23,8 +23,8 @@ export class DeleteRecipientController {
 
   @Delete()
   @HttpCode(204)
-  // @UseGuards(RolesGuard)
-  // @Roles(UserRole.ADMIN)
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
   async handle(
     @CurrentUser() userLogged: UserPayload,
     @Param('id') id: string,
