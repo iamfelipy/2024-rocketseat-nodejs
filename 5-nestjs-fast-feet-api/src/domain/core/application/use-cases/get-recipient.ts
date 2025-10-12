@@ -7,11 +7,11 @@ import { AdminsRepository } from '../repositories/admins-repository'
 import { ResourceNotFoundError } from '@/core/erros/errors/resource-not-found-error'
 import { Injectable } from '@nestjs/common'
 
-interface GetRecipientByAdminUseCaseRequest {
+interface GetRecipientUseCaseRequest {
   recipientId: string
   adminId: string
 }
-type GetRecipientByAdminUseCaseResponse = Either<
+type GetRecipientUseCaseResponse = Either<
   NotAuthorizedError | NotAllowedError,
   {
     recipient: Recipient
@@ -19,7 +19,7 @@ type GetRecipientByAdminUseCaseResponse = Either<
 >
 
 @Injectable()
-export class GetRecipientByAdminUseCase {
+export class GetRecipientUseCase {
   constructor(
     private recipientsRepository: RecipientsRepository,
     private adminsRepository: AdminsRepository,
@@ -28,7 +28,7 @@ export class GetRecipientByAdminUseCase {
   async execute({
     recipientId,
     adminId,
-  }: GetRecipientByAdminUseCaseRequest): Promise<GetRecipientByAdminUseCaseResponse> {
+  }: GetRecipientUseCaseRequest): Promise<GetRecipientUseCaseResponse> {
     const admin = await this.adminsRepository.findById(adminId)
     if (!admin) {
       return left(new NotAuthorizedError())

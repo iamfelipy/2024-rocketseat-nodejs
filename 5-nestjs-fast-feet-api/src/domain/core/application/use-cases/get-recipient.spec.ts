@@ -1,21 +1,24 @@
-import { InMemoryAdminsRepository } from "test/repositories/in-memory-admins";
-import { InMemoryRecipientsRepository } from "test/repositories/in-memory-recipients";
-import { beforeEach, describe, expect, it } from "vitest";
-import { GetRecipientByAdminUseCase } from "./get-recipient-by-admin";
-import { makeRecipient } from "test/factories/make-recipient";
-import { makeAdmin } from "test/factories/make-admin";
-import { NotAuthorizedError } from "@/core/erros/errors/not-authorized-error";
-import { ResourceNotFoundError } from "@/core/erros/errors/resource-not-found-error";
+import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { makeRecipient } from 'test/factories/make-recipient'
+import { makeAdmin } from 'test/factories/make-admin'
+import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
+import { ResourceNotFoundError } from '@/core/erros/errors/resource-not-found-error'
+import { GetRecipientUseCase } from './get-recipient'
 
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository
-let sut: GetRecipientByAdminUseCase
+let sut: GetRecipientUseCase
 
 describe('Get Recipient By Admin', () => {
   beforeEach(() => {
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
     inMemoryAdminsRepository = new InMemoryAdminsRepository()
-    sut = new GetRecipientByAdminUseCase(inMemoryRecipientsRepository, inMemoryAdminsRepository)
+    sut = new GetRecipientUseCase(
+      inMemoryRecipientsRepository,
+      inMemoryAdminsRepository,
+    )
   })
   it('should allow admin to get a recipient', async () => {
     const recipient = makeRecipient()
@@ -26,14 +29,14 @@ describe('Get Recipient By Admin', () => {
 
     const result = await sut.execute({
       adminId: admin.id.toString(),
-      recipientId: recipient.id.toString()
+      recipientId: recipient.id.toString(),
     })
-    
+
     expect(result.isRight()).toBe(true)
     expect(result.value).toMatchObject({
       recipient: expect.objectContaining({
-        id: recipient.id
-      })
+        id: recipient.id,
+      }),
     })
   })
   it('should not allow a non-admin user to get a recipient', async () => {
@@ -42,7 +45,7 @@ describe('Get Recipient By Admin', () => {
 
     const result = await sut.execute({
       adminId: 'non-admin-id',
-      recipientId: recipient.id.toString()
+      recipientId: recipient.id.toString(),
     })
 
     expect(result.isLeft()).toBe(true)
@@ -54,7 +57,7 @@ describe('Get Recipient By Admin', () => {
 
     const result = await sut.execute({
       adminId: admin.id.toString(),
-      recipientId: 'invalid-recipient-id'
+      recipientId: 'invalid-recipient-id',
     })
 
     expect(result.isLeft()).toBe(true)

@@ -12,8 +12,8 @@ import { CreateAccountController } from './controllers/create-account.controller
 import { AuthenticateRecipientUseCase } from '@/domain/core/application/use-cases/authenticate-recipient'
 import { CreateCourierController } from './controllers/create-courier.controller'
 import { RegisterCourierUseCase } from '@/domain/core/application/use-cases/register-courier'
-import { GetRecipientByAdminController } from './controllers/get-recipient-by-admin.controller'
-import { GetRecipientByAdminUseCase } from '@/domain/core/application/use-cases/get-recipient-by-admin'
+import { GetRecipientController } from './controllers/get-recipient.controller'
+import { GetRecipientUseCase } from '@/domain/core/application/use-cases/get-recipient'
 import { EditRecipientProfileController } from './controllers/edit-recipient-profile.controller'
 import { EditRecipientProfileUseCase } from '@/domain/core/application/use-cases/edit-recipient-profile'
 import { EditRecipientUseCase } from '@/domain/core/application/use-cases/edit-recipient'
@@ -50,7 +50,7 @@ import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-
 
     CreateRecipientController,
     FetchRecipientsController,
-    GetRecipientByAdminController,
+    GetRecipientController,
     EditRecipientProfileController,
     EditRecipientController,
     DeleteRecipientController,
@@ -69,7 +69,7 @@ import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-
 
     RegisterRecipientUsecase,
     FetchRecipientsUseCase,
-    GetRecipientByAdminUseCase,
+    GetRecipientUseCase,
     EditRecipientProfileUseCase,
     EditRecipientUseCase,
     DeleteRecipientUseCase,
