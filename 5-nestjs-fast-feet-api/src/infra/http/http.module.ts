@@ -32,6 +32,8 @@ import { EditCourierController } from './controllers/edit-courier.controller'
 import { EditCourierUseCase } from '@/domain/core/application/use-cases/edit-courier'
 import { FetchCouriersController } from './controllers/fetch-couriers.controller'
 import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-couriers'
+import { GetRecipientProfileController } from './controllers/get-recipient-profile.controller'
+import { GetRecipientProfileUseCase } from '@/domain/core/application/use-cases/get-recipient-profile'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -50,6 +52,7 @@ import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-
 
     CreateRecipientController,
     FetchRecipientsController,
+    GetRecipientProfileController,
     GetRecipientController,
     EditRecipientProfileController,
     EditRecipientController,
@@ -69,6 +72,7 @@ import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-
 
     RegisterRecipientUsecase,
     FetchRecipientsUseCase,
+    GetRecipientProfileUseCase,
     GetRecipientUseCase,
     EditRecipientProfileUseCase,
     EditRecipientUseCase,
