@@ -34,6 +34,8 @@ import { FetchCouriersController } from './controllers/fetch-couriers.controller
 import { FetchCouriersUseCase } from '@/domain/core/application/use-cases/fetch-couriers'
 import { GetRecipientProfileController } from './controllers/get-recipient-profile.controller'
 import { GetRecipientProfileUseCase } from '@/domain/core/application/use-cases/get-recipient-profile'
+import { CreateShipmentController } from './controllers/create-shipment.controller'
+import { CreateShipmentUseCase } from '@/domain/core/application/use-cases/create-shipment'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -57,6 +59,8 @@ import { GetRecipientProfileUseCase } from '@/domain/core/application/use-cases/
     EditRecipientProfileController,
     EditRecipientController,
     DeleteRecipientController,
+
+    CreateShipmentController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -77,6 +81,8 @@ import { GetRecipientProfileUseCase } from '@/domain/core/application/use-cases/
     EditRecipientProfileUseCase,
     EditRecipientUseCase,
     DeleteRecipientUseCase,
+
+    CreateShipmentUseCase,
   ],
 })
 export class HttpModule {}
