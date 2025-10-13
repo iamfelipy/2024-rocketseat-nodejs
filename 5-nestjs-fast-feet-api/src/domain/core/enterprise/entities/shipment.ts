@@ -10,7 +10,6 @@ import { ShipmentAttachmentList } from './shipment-attachment-list'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { ShipmentStatusChangedEvent } from '../events/shipment-status-changed-event'
 
-
 export interface ShipmentProps {
   statusShipment: ShipmentStatus
   recipientId: UniqueEntityID
@@ -25,6 +24,10 @@ export interface ShipmentProps {
 
 // shipment → mais usado para remessas, transporte de mercadorias.
 export class Shipment extends AggregateRoot<ShipmentProps> {
+  static isShipmentStatus(status: string): status is ShipmentStatus {
+    return Object.values(ShipmentStatus).includes(status as ShipmentStatus)
+  }
+
   get statusShipment() {
     return this.props.statusShipment
   }
@@ -114,13 +117,17 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
   }
 
   static create(
-    props: Optional<ShipmentProps, 'createdAt' | 'statusShipment' | 'attachments'>,
+    props: Optional<
+      ShipmentProps,
+      'createdAt' | 'statusShipment' | 'attachments'
+    >,
     id?: UniqueEntityID,
   ) {
     const shipment = new Shipment(
       {
         ...props,
-        statusShipment: props.statusShipment ?? ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
+        statusShipment:
+          props.statusShipment ?? ShipmentStatus.RECEIVED_FIRST_TIME_AT_CARRIER,
         attachments: props.attachments ?? new ShipmentAttachmentList(),
         createdAt: new Date(),
       },
