@@ -38,6 +38,8 @@ import { CreateShipmentController } from './controllers/create-shipment.controll
 import { CreateShipmentUseCase } from '@/domain/core/application/use-cases/create-shipment'
 import { EditShipmentController } from './controllers/edit-shipment.controller'
 import { EditShipmentUseCase } from '@/domain/core/application/use-cases/edit-shipment'
+import { DeleteShipmentUseCase } from '@/domain/core/application/use-cases/delete-shipment'
+import { DeleteShipmentController } from './controllers/delete-shipment.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -64,6 +66,7 @@ import { EditShipmentUseCase } from '@/domain/core/application/use-cases/edit-sh
 
     CreateShipmentController,
     EditShipmentController,
+    DeleteShipmentController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -87,6 +90,7 @@ import { EditShipmentUseCase } from '@/domain/core/application/use-cases/edit-sh
 
     CreateShipmentUseCase,
     EditShipmentUseCase,
+    DeleteShipmentUseCase,
   ],
 })
 export class HttpModule {}
