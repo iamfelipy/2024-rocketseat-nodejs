@@ -42,6 +42,8 @@ import { DeleteShipmentUseCase } from '@/domain/core/application/use-cases/delet
 import { DeleteShipmentController } from './controllers/delete-shipment.controller'
 import { MarkAsAwaitingPickupController } from './controllers/mark-as-awaiting-pickup.controller'
 import { MarkAsAwaitingPickupUseCase } from '@/domain/core/application/use-cases/mark-as-awaiting-pickup'
+import { MarkShipmentAsPickedUpUseCase } from '@/domain/core/application/use-cases/mark-shipment-as-picked-up'
+import { MarkShipmentAsPickedUpController } from './controllers/mark-shipment-as-picked-up.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -70,6 +72,7 @@ import { MarkAsAwaitingPickupUseCase } from '@/domain/core/application/use-cases
     EditShipmentController,
     DeleteShipmentController,
     MarkAsAwaitingPickupController,
+    MarkShipmentAsPickedUpController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -95,6 +98,7 @@ import { MarkAsAwaitingPickupUseCase } from '@/domain/core/application/use-cases
     EditShipmentUseCase,
     DeleteShipmentUseCase,
     MarkAsAwaitingPickupUseCase,
+    MarkShipmentAsPickedUpUseCase,
   ],
 })
 export class HttpModule {}
