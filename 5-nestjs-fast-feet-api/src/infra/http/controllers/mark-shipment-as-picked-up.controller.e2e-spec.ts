@@ -10,7 +10,7 @@ import { AdminFactory } from 'test/factories/make-admin'
 import { CourierFactory } from 'test/factories/make-courier'
 import { ShipmentFactory } from 'test/factories/make-shipment'
 
-describe('mark as awaiting pickup (E2E)', () => {
+describe('mark shipment as mark-as-picked-up (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let shipmentFactory: ShipmentFactory
@@ -34,7 +34,7 @@ describe('mark as awaiting pickup (E2E)', () => {
     await app.init()
   })
 
-  test('[PATCH] /shipments/:id/mark-as-awaiting-pickup', async () => {
+  test('[PATCH] /shipments/:id/mark-as-picked-up', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: admin.id.toString() })
