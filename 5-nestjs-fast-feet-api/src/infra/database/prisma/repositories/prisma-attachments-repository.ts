@@ -1,10 +1,18 @@
 import { AttachmentsRepository } from '@/domain/core/application/repositories/attachments-repository'
 import { Attachment } from '@/domain/core/enterprise/entities/attachment'
 import { Injectable } from '@nestjs/common'
+import { PrismaAttachmentMapper } from '../mappers/prisma-attachment-mapper'
+import { PrismaService } from '../prisma.service'
 
 @Injectable()
 export class PrismaAttachmentsRepository implements AttachmentsRepository {
-  create(attachment: Attachment): Promise<void> {
-    throw new Error('Method not implemented.')
+  constructor(private prisma: PrismaService) {}
+
+  async create(attachment: Attachment): Promise<void> {
+    const data = PrismaAttachmentMapper.toPrisma(attachment)
+
+    await this.prisma.attachment.create({
+      data,
+    })
   }
 }

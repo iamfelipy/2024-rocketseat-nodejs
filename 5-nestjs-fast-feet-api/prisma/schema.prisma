@@ -64,11 +64,11 @@ model Shipment {
 }
 
 model Attachment {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   title      String
   url        String
-  shipmentId String   @map("shipment_id")
-  shipment   Shipment @relation(fields: [shipmentId], references: [id])
+  shipmentId String?   @map("shipment_id")
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id])
 
   @@map("attachments")
 }

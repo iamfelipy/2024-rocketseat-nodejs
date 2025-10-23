@@ -44,9 +44,12 @@ import { MarkAsAwaitingPickupController } from './controllers/mark-as-awaiting-p
 import { MarkAsAwaitingPickupUseCase } from '@/domain/core/application/use-cases/mark-as-awaiting-pickup'
 import { MarkShipmentAsPickedUpUseCase } from '@/domain/core/application/use-cases/mark-shipment-as-picked-up'
 import { MarkShipmentAsPickedUpController } from './controllers/mark-shipment-as-picked-up.controller'
+import { StorageModule } from '../storage/storage.module'
+import { UploadAttachmentController } from './controllers/upload-attachment.controller'
+import { UploadAndCreateAttachmentUseCase } from '@/domain/core/application/use-cases/upload-and-create-attachment'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     AuthenticateController,
     CreateAccountController,
@@ -73,6 +76,8 @@ import { MarkShipmentAsPickedUpController } from './controllers/mark-shipment-as
     DeleteShipmentController,
     MarkAsAwaitingPickupController,
     MarkShipmentAsPickedUpController,
+
+    UploadAttachmentController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -99,6 +104,8 @@ import { MarkShipmentAsPickedUpController } from './controllers/mark-shipment-as
     DeleteShipmentUseCase,
     MarkAsAwaitingPickupUseCase,
     MarkShipmentAsPickedUpUseCase,
+
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}

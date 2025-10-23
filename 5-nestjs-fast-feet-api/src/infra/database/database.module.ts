@@ -11,6 +11,7 @@ import { AdminsRepository } from '@/domain/core/application/repositories/admins-
 import { RecipientsRepository } from '@/domain/core/application/repositories/recipients-repository'
 import { CouriersRepository } from '@/domain/core/application/repositories/courier-repository'
 import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
+import { AttachmentsRepository } from '@/domain/core/application/repositories/attachments-repository'
 
 @Module({
   providers: [
@@ -35,7 +36,10 @@ import { ShipmentAttachmentsRepository } from '@/domain/core/application/reposit
       provide: ShipmentAttachmentsRepository,
       useClass: PrismaShipmentAttachmentsRepository,
     },
-    PrismaAttachmentsRepository,
+    {
+      provide: AttachmentsRepository,
+      useClass: PrismaAttachmentsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -43,8 +47,7 @@ import { ShipmentAttachmentsRepository } from '@/domain/core/application/reposit
     CouriersRepository,
     RecipientsRepository,
     ShipmentsRepository,
-    ShipmentAttachmentsRepository,
-    PrismaAttachmentsRepository,
+    AttachmentsRepository,
   ],
 })
 export class DatabaseModule {}
