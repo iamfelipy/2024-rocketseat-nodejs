@@ -6,11 +6,6 @@ import {
 import { PrismaShipmentMapper } from '@/infra/database/prisma/mappers/prisma-shipment-mapper'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
-import { makeRecipient } from './make-recipient'
-import { makeCourier } from './make-courier'
-import { PrismaRecipientMapper } from '@/infra/database/prisma/mappers/prisma-recipient-mapper'
-import { PrismaCourierMapper } from '@/infra/database/prisma/mappers/prisma-courier-mapper'
-import { Prisma } from '@prisma/client'
 
 export function makeShipment(
   override: Partial<ShipmentProps> = {},
@@ -35,21 +30,8 @@ export class ShipmentFactory {
   async makePrismaShipment(
     data: Partial<ShipmentProps> = {},
   ): Promise<Shipment> {
-    const recipient = await this.prisma.user.create({
-      data: PrismaRecipientMapper.toPrisma(makeRecipient()),
-    })
-
-    let courier: null | Prisma.UserUncheckedCreateInput = null
-    if (typeof data.courierId === 'undefined') {
-      courier = await this.prisma.user.create({
-        data: PrismaCourierMapper.toPrisma(makeCourier()),
-      })
-    }
-
     const shipment = makeShipment({
       ...data,
-      recipientId: data.recipientId ?? new UniqueEntityID(recipient.id),
-      courierId: data.courierId ?? new UniqueEntityID(courier?.id),
     })
 
     await this.prisma.shipment.create({
