@@ -47,6 +47,8 @@ import { MarkShipmentAsPickedUpController } from './controllers/mark-shipment-as
 import { StorageModule } from '../storage/storage.module'
 import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/core/application/use-cases/upload-and-create-attachment'
+import { MarkShipmentAsDeliveredUseCase } from '@/domain/core/application/use-cases/mark-shipment-as-delivered'
+import { MarkShipmentAsDeliveredController } from './controllers/mark-shipment-as-delivered.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -76,6 +78,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/core/application/use-
     DeleteShipmentController,
     MarkAsAwaitingPickupController,
     MarkShipmentAsPickedUpController,
+    MarkShipmentAsDeliveredController,
 
     UploadAttachmentController,
   ],
@@ -104,6 +107,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/core/application/use-
     DeleteShipmentUseCase,
     MarkAsAwaitingPickupUseCase,
     MarkShipmentAsPickedUpUseCase,
+    MarkShipmentAsDeliveredUseCase,
 
     UploadAndCreateAttachmentUseCase,
   ],

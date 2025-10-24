@@ -4,10 +4,14 @@ import { Shipment } from '@/domain/core/enterprise/entities/shipment'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaShipmentMapper } from '../mappers/prisma-shipment-mapper'
+import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
 
 @Injectable()
 export class PrismaShipmentsRepository implements ShipmentsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private shipmentAttachmentsRepository: ShipmentAttachmentsRepository,
+  ) {}
 
   findManyNearbyAssignedShipmentsForCourier(
     courierId: string,
@@ -56,12 +60,20 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
   async save(shipment: Shipment): Promise<void> {
     const data = PrismaShipmentMapper.toPrisma(shipment)
 
-    await this.prisma.shipment.update({
-      where: {
-        id: shipment.id.toString(),
-      },
-      data,
-    })
+    await Promise.all([
+      this.prisma.shipment.update({
+        where: {
+          id: shipment.id.toString(),
+        },
+        data,
+      }),
+      this.shipmentAttachmentsRepository.createMany(
+        shipment.attachments.getNewItems(),
+      ),
+      this.shipmentAttachmentsRepository.deleteMany(
+        shipment.attachments.getRemovedItems(),
+      ),
+    ])
   }
 
   async delete(shipment: Shipment): Promise<void> {

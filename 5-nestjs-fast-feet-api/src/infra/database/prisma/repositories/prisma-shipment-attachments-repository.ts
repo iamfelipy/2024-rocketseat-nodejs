@@ -10,12 +10,32 @@ export class PrismaShipmentAttachmentsRepository
 {
   constructor(private prisma: PrismaService) {}
 
-  createMany(attachments: ShipmentAttachment[]): Promise<void> {
-    throw new Error('Method not implemented.')
+  async createMany(attachments: ShipmentAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return
+    }
+
+    const data = PrismaShipmentAttachmentMapper.toPrismaUpdateMany(attachments)
+
+    await this.prisma.attachment.updateMany(data)
   }
 
-  deleteMany(attachments: ShipmentAttachment[]): Promise<void> {
-    throw new Error('Method not implemented.')
+  async deleteMany(attachments: ShipmentAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return
+    }
+
+    const attachmentsIds = attachments.map((attachment) =>
+      attachment.attachmentId.toString(),
+    )
+
+    await this.prisma.attachment.deleteMany({
+      where: {
+        id: {
+          in: attachmentsIds,
+        },
+      },
+    })
   }
 
   async findManyByShipmentId(

@@ -47,6 +47,7 @@ import { AttachmentsRepository } from '@/domain/core/application/repositories/at
     CouriersRepository,
     RecipientsRepository,
     ShipmentsRepository,
+    ShipmentAttachmentsRepository,
     AttachmentsRepository,
   ],
 })
