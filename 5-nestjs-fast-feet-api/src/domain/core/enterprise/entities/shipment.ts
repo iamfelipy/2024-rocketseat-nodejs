@@ -104,18 +104,6 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
     this.props.updatedAt = new Date()
   }
 
-  markAsReturned(courierId: UniqueEntityID) {
-    if (this.statusShipment !== ShipmentStatus.PICKED_UP) {
-      return left(new ShipmentNotInCorrectStatusError())
-    }
-    if (!this.courierId || this.courierId.toString() !== courierId.toString()) {
-      return left(new ShipmentNotAssignedToCourierError())
-    }
-    this.statusShipment = ShipmentStatus.RETURNED
-    this.returnedDate = new Date()
-    return right(null)
-  }
-
   static create(
     props: Optional<
       ShipmentProps,
