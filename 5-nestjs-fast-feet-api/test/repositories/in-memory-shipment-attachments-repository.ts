@@ -6,6 +6,14 @@ export class InMemoryShipmentAttachmentsRepository
 {
   public items: ShipmentAttachment[] = []
 
+  async deleteManyByShipmentId(shipmentId: string) {
+    const shipmentAttachments = this.items.filter(
+      (item) => item.shipmentId.toString() !== shipmentId,
+    )
+
+    this.items = shipmentAttachments
+  }
+
   async findManyByShipmentId(shipmentId: string) {
     const shipmentAttachments = this.items.filter(
       (item) => item.shipmentId.toString() === shipmentId,

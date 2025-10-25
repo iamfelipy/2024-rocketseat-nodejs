@@ -68,7 +68,7 @@ model Attachment {
   title      String
   url        String
   shipmentId String?   @map("shipment_id")
-  shipment   Shipment? @relation(fields: [shipmentId], references: [id])
+  shipment   Shipment? @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
 
   @@map("attachments")
 }

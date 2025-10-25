@@ -1,6 +1,4 @@
-import {
-  ShipmentsRepository,
-} from '@/domain/core/application/repositories/shipments-repository'
+import { ShipmentsRepository } from '@/domain/core/application/repositories/shipments-repository'
 import { Shipment } from '@/domain/core/enterprise/entities/shipment'
 import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinate'
 import { InMemoryRecipientsRepository } from './in-memory-recipients'
@@ -14,7 +12,7 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
 
   constructor(
     private inMemoryRecipientsRepository: InMemoryRecipientsRepository,
-    private inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository
+    private inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository,
   ) {}
 
   async findManyNearbyAssignedShipmentsForCourier(
@@ -22,9 +20,8 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     maxDistanceInKm: number,
     courierLatitude: number,
     courierLongitude: number,
-    {page}: PaginationParams,
+    { page }: PaginationParams,
   ) {
-
     const MAX_DISTANCE_IN_KILOMETERS = maxDistanceInKm
 
     let filteredShipments: Shipment[] = []
@@ -58,20 +55,24 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
       }
     }
 
-    filteredShipments = filteredShipments.slice((page - 1)  * 20, page * 20)
+    filteredShipments = filteredShipments.slice((page - 1) * 20, page * 20)
 
     return filteredShipments
   }
 
-  async findMany({page}: PaginationParams): Promise<Shipment[]> {
+  async findMany({ page }: PaginationParams): Promise<Shipment[]> {
     const shipments = this.items.slice((page - 1) * 20, page * 20)
 
     return shipments
   }
 
   async findAssignedShipmentForCourier(courierId: string, shipmentId: string) {
-    const shipment = this.items.find(item => item.courierId?.toString() === courierId && item.id.toString() === shipmentId)
-    if(!shipment) {
+    const shipment = this.items.find(
+      (item) =>
+        item.courierId?.toString() === courierId &&
+        item.id.toString() === shipmentId,
+    )
+    if (!shipment) {
       return null
     }
 
@@ -83,9 +84,9 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
   }
 
   async findById(id: string) {
-    const shipment = this.items.find(item => item.id.toString() === id)
+    const shipment = this.items.find((item) => item.id.toString() === id)
 
-    if(!shipment) {
+    if (!shipment) {
       return null
     }
 
@@ -93,20 +94,31 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
   }
 
   async delete(shipment: Shipment) {
-    const index = this.items.findIndex(item => item.id.toString() === shipment.id.toString())
+    const index = this.items.findIndex(
+      (item) => item.id.toString() === shipment.id.toString(),
+    )
 
     this.items.splice(index, 1)
+
+    await this.inMemoryShipmentAttachmentsRepository.deleteManyByShipmentId(
+      shipment.id.toString(),
+    )
   }
 
   async save(shipment: Shipment) {
-    const itemIndex = this.items.findIndex(item => item.id.toString() === shipment.id.toString())
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === shipment.id.toString(),
+    )
 
     this.items[itemIndex] = shipment
 
-    await this.inMemoryShipmentAttachmentsRepository.createMany(shipment.attachments.getNewItems())
-    await this.inMemoryShipmentAttachmentsRepository.deleteMany(shipment.attachments.getRemovedItems())
+    await this.inMemoryShipmentAttachmentsRepository.createMany(
+      shipment.attachments.getNewItems(),
+    )
+    await this.inMemoryShipmentAttachmentsRepository.deleteMany(
+      shipment.attachments.getRemovedItems(),
+    )
 
     DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 }
- 

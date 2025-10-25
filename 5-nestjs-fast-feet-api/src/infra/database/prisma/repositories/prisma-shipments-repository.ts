@@ -82,6 +82,10 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
         id: shipment.id.toString(),
       },
     })
+
+    await this.shipmentAttachmentsRepository.deleteManyByShipmentId(
+      shipment.id.toString(),
+    )
   }
 
   async findAssignedShipmentForCourier(
