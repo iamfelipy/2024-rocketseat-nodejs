@@ -53,6 +53,8 @@ import { MarkShipmentAsReturnedController } from './controllers/mark-shipment-as
 import { MarkShipmentAsReturnedUseCase } from '@/domain/core/application/use-cases/mark-shipment-as-returned'
 import { FetchShipmentsController } from './controllers/fetch-shipments.controller'
 import { FetchShipmentsUseCase } from '@/domain/core/application/use-cases/fetch-shipments'
+import { FetchOwnShipmentsController } from './controllers/fetch-own-shipments.controller'
+import { FetchOwnShipmentsUseCase } from '@/domain/core/application/use-cases/fetch-own-shipments'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -81,6 +83,7 @@ import { FetchShipmentsUseCase } from '@/domain/core/application/use-cases/fetch
     EditShipmentController,
     DeleteShipmentController,
     FetchShipmentsController,
+    FetchOwnShipmentsController,
     MarkAsAwaitingPickupController,
     MarkShipmentAsPickedUpController,
     MarkShipmentAsDeliveredController,
@@ -112,6 +115,7 @@ import { FetchShipmentsUseCase } from '@/domain/core/application/use-cases/fetch
     EditShipmentUseCase,
     DeleteShipmentUseCase,
     FetchShipmentsUseCase,
+    FetchOwnShipmentsUseCase,
     MarkAsAwaitingPickupUseCase,
     MarkShipmentAsPickedUpUseCase,
     MarkShipmentAsDeliveredUseCase,

@@ -14,9 +14,6 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     const recipient = await this.prisma.user.findUnique({
       where: {
         id,
-        roles: {
-          has: UserRole.RECIPIENT,
-        },
       },
     })
 

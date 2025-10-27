@@ -15,6 +15,10 @@ export abstract class ShipmentsRepository {
     params: PaginationParams,
   ): Promise<ShipmentWithCourierAndRecipient[]>
 
+  abstract findManyOwn(
+    userId: string,
+    params: PaginationParams,
+  ): Promise<Shipment[]>
 
   abstract findById(id: string): Promise<Shipment | null>
   abstract findMany(params: PaginationParams): Promise<Shipment[]>

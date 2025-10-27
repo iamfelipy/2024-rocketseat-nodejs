@@ -15,6 +15,24 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     private shipmentAttachmentsRepository: ShipmentAttachmentsRepository,
   ) {}
 
+  async findManyOwn(
+    userId: string,
+    { page }: PaginationParams,
+  ): Promise<Shipment[]> {
+    const shipments = await this.prisma.shipment.findMany({
+      where: {
+        OR: [{ courierId: userId }, { recipientId: userId }],
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return shipments.map(PrismaShipmentMapper.toDomain)
+  }
+
   async findManyWithCourierAndRecipient({
     page,
   }: PaginationParams): Promise<ShipmentWithCourierAndRecipient[]> {
@@ -41,6 +59,24 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     params: PaginationParams,
   ): Promise<Shipment[]> {
     throw new Error('Method not implemented.')
+  }
+
+  async findAssignedShipmentForCourier(
+    courierId: string,
+    shipmentId: string,
+  ): Promise<Shipment | null> {
+    const courierShipment = await this.prisma.shipment.findFirst({
+      where: {
+        courierId,
+        id: shipmentId,
+      },
+    })
+
+    if (!courierShipment) {
+      return null
+    }
+
+    return PrismaShipmentMapper.toDomain(courierShipment)
   }
 
   async findById(id: string): Promise<Shipment | null> {
@@ -106,23 +142,5 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     await this.shipmentAttachmentsRepository.deleteManyByShipmentId(
       shipment.id.toString(),
     )
-  }
-
-  async findAssignedShipmentForCourier(
-    courierId: string,
-    shipmentId: string,
-  ): Promise<Shipment | null> {
-    const courierShipment = await this.prisma.shipment.findFirst({
-      where: {
-        courierId,
-        id: shipmentId,
-      },
-    })
-
-    if (!courierShipment) {
-      return null
-    }
-
-    return PrismaShipmentMapper.toDomain(courierShipment)
   }
 }
