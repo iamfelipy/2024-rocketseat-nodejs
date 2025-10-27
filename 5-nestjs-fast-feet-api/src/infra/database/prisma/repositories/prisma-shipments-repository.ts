@@ -5,6 +5,8 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaShipmentMapper } from '../mappers/prisma-shipment-mapper'
 import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
+import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { PrismaShipmentWithCourierAndRecipientMapper } from '../mappers/prisma-shipment-with-courier-and-recipient-mapper'
 
 @Injectable()
 export class PrismaShipmentsRepository implements ShipmentsRepository {
@@ -12,6 +14,24 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     private prisma: PrismaService,
     private shipmentAttachmentsRepository: ShipmentAttachmentsRepository,
   ) {}
+
+  async findManyWithCourierAndRecipient({
+    page,
+  }: PaginationParams): Promise<ShipmentWithCourierAndRecipient[]> {
+    const shipments = await this.prisma.shipment.findMany({
+      include: {
+        courier: true,
+        recipient: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return shipments.map(PrismaShipmentWithCourierAndRecipientMapper.toDomain)
+  }
 
   findManyNearbyAssignedShipmentsForCourier(
     courierId: string,

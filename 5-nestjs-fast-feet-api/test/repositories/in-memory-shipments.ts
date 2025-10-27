@@ -6,14 +6,56 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
 import { InMemoryShipmentAttachmentsRepository } from './in-memory-shipment-attachments-repository'
 import { DomainEvents } from '@/core/events/domain-events'
+import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { InMemoryCouriersRepository } from './in-memory-couriers'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
 
   constructor(
     private inMemoryRecipientsRepository: InMemoryRecipientsRepository,
+    private inMemoryCouriersRepositoty: InMemoryCouriersRepository,
     private inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository,
   ) {}
+
+  async findManyWithCourierAndRecipient({
+    page,
+  }: PaginationParams): Promise<ShipmentWithCourierAndRecipient[]> {
+    const shipments = this.items
+      .slice((page - 1) * 20, page * 20)
+      .map((shipment) => {
+        const courier = this.inMemoryCouriersRepositoty.items.find(
+          (courier) => courier.id.toString() === shipment.courierId?.toString(),
+        )
+
+        const recipient = this.inMemoryRecipientsRepository.items.find(
+          (recipient) =>
+            recipient.id.toString() === shipment.recipientId.toString(),
+        )
+
+        if (!recipient) {
+          throw new Error(
+            `Recipient with ID ${shipment.recipientId.toString()} does not exist`,
+          )
+        }
+
+        return ShipmentWithCourierAndRecipient.create({
+          id: shipment.id,
+          statusShipment: shipment.statusShipment,
+          pickupDate: shipment.pickupDate,
+          deliveryDate: shipment.deliveryDate,
+          returnedDate: shipment.returnedDate,
+          recipientId: shipment.recipientId,
+          recipientName: recipient.name,
+          courierId: shipment.courierId,
+          courierName: courier?.name,
+          createdAt: shipment.createdAt,
+          updatedAt: shipment.updatedAt,
+        })
+      })
+
+    return shipments
+  }
 
   async findManyNearbyAssignedShipmentsForCourier(
     courierId: string,
@@ -58,6 +100,18 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     filteredShipments = filteredShipments.slice((page - 1) * 20, page * 20)
 
     return filteredShipments
+  }
+
+  async findManyOwn(userId, { page }: PaginationParams) {
+    const shipments = this.items
+      .filter(
+        (item) =>
+          item.courierId?.toString() === userId ||
+          item.recipientId?.toString() === userId,
+      )
+      .slice((page - 1) * 20, page * 20)
+
+    return shipments
   }
 
   async findMany({ page }: PaginationParams): Promise<Shipment[]> {
