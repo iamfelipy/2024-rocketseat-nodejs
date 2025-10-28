@@ -8,6 +8,8 @@ import { InMemoryShipmentAttachmentsRepository } from './in-memory-shipment-atta
 import { DomainEvents } from '@/core/events/domain-events'
 import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
 import { InMemoryCouriersRepository } from './in-memory-couriers'
+import { ShipmentDetails } from '@/domain/core/enterprise/entities/value-objects/shipment-details'
+import { InMemoryAttachmentsRepository } from './in-memory-attachments'
 
 export class InMemoryShipmentsRepository implements ShipmentsRepository {
   public items: Shipment[] = []
@@ -16,6 +18,7 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     private inMemoryRecipientsRepository: InMemoryRecipientsRepository,
     private inMemoryCouriersRepositoty: InMemoryCouriersRepository,
     private inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository,
+    private attachmentsRepositry: InMemoryAttachmentsRepository,
   ) {}
 
   async findManyWithCourierAndRecipient({
@@ -145,6 +148,64 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     }
 
     return shipment
+  }
+
+  async findDetailsById(id: string) {
+    const shipment = this.items.find((item) => item.id.toString() === id)
+
+    if (!shipment) {
+      return null
+    }
+
+    const courier = this.inMemoryCouriersRepositoty.items.find(
+      (courier) => courier.id.toString() === shipment.courierId?.toString(),
+    )
+
+    const recipient = this.inMemoryRecipientsRepository.items.find(
+      (recipient) =>
+        recipient.id.toString() === shipment.recipientId.toString(),
+    )
+
+    if (!recipient) {
+      throw new Error(
+        `Recipient with ID ${shipment.recipientId.toString()} does not exist`,
+      )
+    }
+
+    const shipmentAttachments =
+      this.inMemoryShipmentAttachmentsRepository.items.filter(
+        (shipmentAttachment) =>
+          shipmentAttachment.shipmentId.equals(shipment.id),
+      )
+
+    const attachments = shipmentAttachments.map((shipmentAttachment) => {
+      const attachment = this.attachmentsRepositry.items.find((attachment) =>
+        attachment.id.equals(shipmentAttachment.attachmentId),
+      )
+
+      if (!attachment) {
+        throw new Error(
+          `Attachment with ID ${shipmentAttachment.attachmentId.toString()} does not exist.`,
+        )
+      }
+
+      return attachment
+    })
+
+    return ShipmentDetails.create({
+      shipmentId: shipment.id,
+      statusShipment: shipment.statusShipment,
+      pickupDate: shipment.pickupDate,
+      deliveryDate: shipment.deliveryDate,
+      returnedDate: shipment.returnedDate,
+      recipientId: shipment.recipientId,
+      recipientName: recipient.name,
+      courierId: shipment.courierId,
+      courierName: courier?.name,
+      attachments,
+      createdAt: shipment.createdAt,
+      updatedAt: shipment.updatedAt,
+    })
   }
 
   async delete(shipment: Shipment) {

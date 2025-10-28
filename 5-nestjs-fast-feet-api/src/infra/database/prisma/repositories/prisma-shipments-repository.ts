@@ -7,6 +7,8 @@ import { PrismaShipmentMapper } from '../mappers/prisma-shipment-mapper'
 import { ShipmentAttachmentsRepository } from '@/domain/core/application/repositories/shipment-attachments-repository'
 import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
 import { PrismaShipmentWithCourierAndRecipientMapper } from '../mappers/prisma-shipment-with-courier-and-recipient-mapper'
+import { ShipmentDetails } from '@/domain/core/enterprise/entities/value-objects/shipment-details'
+import { PrismaShipmentDetailsMapper } from '../mappers/prisma-shipment-details-mapper'
 
 @Injectable()
 export class PrismaShipmentsRepository implements ShipmentsRepository {
@@ -77,6 +79,25 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     }
 
     return PrismaShipmentMapper.toDomain(courierShipment)
+  }
+
+  async findDetailsById(id: string): Promise<ShipmentDetails | null> {
+    const shipment = await this.prisma.shipment.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        recipient: true,
+        courier: true,
+        attachments: true,
+      },
+    })
+
+    if (!shipment) {
+      return null
+    }
+
+    return PrismaShipmentDetailsMapper.toDomain(shipment)
   }
 
   async findById(id: string): Promise<Shipment | null> {
