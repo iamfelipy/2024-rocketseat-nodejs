@@ -12,7 +12,7 @@ import { RecipientFactory } from 'test/factories/make-recipient'
 import { ShipmentFactory } from 'test/factories/make-shipment'
 import { ShipmentAttachmentFactory } from 'test/factories/make-shipment-attachment'
 
-describe('get recipient by admin (E2E)', () => {
+describe('get shipment by admin (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let adminFactory: AdminFactory
@@ -86,6 +86,12 @@ describe('get recipient by admin (E2E)', () => {
         shipmentId: shipment.id.toString(),
         courierName: 'pedro',
         recipientName: 'joana',
+        attachments: [
+          expect.objectContaining({
+            id: attachment.id.toString(),
+            url: attachment.url,
+          }),
+        ],
       }),
     })
   })
