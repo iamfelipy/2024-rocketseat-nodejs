@@ -27,8 +27,8 @@ export abstract class ShipmentsRepository {
   abstract create(shipment: Shipment): Promise<void>
   abstract save(shipment: Shipment): Promise<void>
   abstract delete(shipment: Shipment): Promise<void>
-  abstract findAssignedShipmentForCourier(
+  abstract findAssignedForCourier(
     courierId: string,
     shipmentId: string,
-  ): Promise<Shipment | null>
+  ): Promise<ShipmentDetails | null>
 }

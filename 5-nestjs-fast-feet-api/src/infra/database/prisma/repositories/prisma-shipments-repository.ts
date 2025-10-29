@@ -63,14 +63,19 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     throw new Error('Method not implemented.')
   }
 
-  async findAssignedShipmentForCourier(
+  async findAssignedForCourier(
     courierId: string,
     shipmentId: string,
-  ): Promise<Shipment | null> {
+  ): Promise<ShipmentDetails | null> {
     const courierShipment = await this.prisma.shipment.findFirst({
       where: {
         courierId,
         id: shipmentId,
+      },
+      include: {
+        recipient: true,
+        courier: true,
+        attachments: true,
       },
     })
 
@@ -78,7 +83,7 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
       return null
     }
 
-    return PrismaShipmentMapper.toDomain(courierShipment)
+    return PrismaShipmentDetailsMapper.toDomain(courierShipment)
   }
 
   async findDetailsById(id: string): Promise<ShipmentDetails | null> {

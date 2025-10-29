@@ -123,17 +123,64 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     return shipments
   }
 
-  async findAssignedShipmentForCourier(courierId: string, shipmentId: string) {
+  async findAssignedForCourier(courierId: string, shipmentId: string) {
     const shipment = this.items.find(
-      (item) =>
-        item.courierId?.toString() === courierId &&
-        item.id.toString() === shipmentId,
+      (item) => item.id.toString() === shipmentId,
     )
+
     if (!shipment) {
       return null
     }
 
-    return shipment
+    const courier = this.inMemoryCouriersRepositoty.items.find(
+      (courier) => courier.id.toString() === courierId?.toString(),
+    )
+
+    const recipient = this.inMemoryRecipientsRepository.items.find(
+      (recipient) =>
+        recipient.id.toString() === shipment.recipientId.toString(),
+    )
+
+    if (!recipient) {
+      throw new Error(
+        `Recipient with ID ${shipment.recipientId.toString()} does not exist`,
+      )
+    }
+
+    const shipmentAttachments =
+      this.inMemoryShipmentAttachmentsRepository.items.filter(
+        (shipmentAttachment) =>
+          shipmentAttachment.shipmentId.equals(shipment.id),
+      )
+
+    const attachments = shipmentAttachments.map((shipmentAttachment) => {
+      const attachment = this.attachmentsRepositry.items.find((attachment) =>
+        attachment.id.equals(shipmentAttachment.attachmentId),
+      )
+
+      if (!attachment) {
+        throw new Error(
+          `Attachment with ID ${shipmentAttachment.attachmentId.toString()} does not exist.`,
+        )
+      }
+
+      return attachment
+    })
+
+    return ShipmentDetails.create({
+      shipmentId: shipment.id,
+      statusShipment: shipment.statusShipment,
+      pickupDate: shipment.pickupDate,
+      deliveryDate: shipment.deliveryDate,
+      returnedDate: shipment.returnedDate,
+      recipientId: shipment.recipientId,
+      recipientName: recipient.name,
+      courierId: shipment.courierId,
+      courierName: courier?.name,
+      attachments,
+      createdAt: shipment.createdAt,
+      updatedAt: shipment.updatedAt,
+    })
   }
 
   async create(shipment: Shipment) {
