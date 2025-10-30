@@ -50,6 +50,9 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
           returnedDate: shipment.returnedDate,
           recipientId: shipment.recipientId,
           recipientName: recipient.name,
+          recipientAddress: recipient.location.address,
+          recipientLatitude: recipient.location.latitude.toString(),
+          recipientLongitude: recipient.location.longitude.toString(),
           courierId: shipment.courierId,
           courierName: courier?.name,
           createdAt: shipment.createdAt,
@@ -60,7 +63,7 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
     return shipments
   }
 
-  async findManyNearbyAssignedShipmentsForCourier(
+  async findManyNearbyForCourier(
     courierId: string,
     maxDistanceInKm: number,
     courierLatitude: number,
@@ -69,16 +72,20 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
   ) {
     const MAX_DISTANCE_IN_KILOMETERS = maxDistanceInKm
 
-    let filteredShipments: Shipment[] = []
+    let filteredShipments: ShipmentWithCourierAndRecipient[] = []
 
-    for (const item of this.items) {
+    for (const shipment of this.items) {
       const recipient = await this.inMemoryRecipientsRepository.findById(
-        item.recipientId.toString(),
+        shipment.recipientId.toString(),
       )
 
       if (!recipient) {
         throw new Error('Recipient not found')
       }
+
+      const courier = this.inMemoryCouriersRepositoty.items.find(
+        (courier) => courier.id.toString() === shipment.courierId?.toString(),
+      )
 
       const distance = getDistanceBetweenCoordinates(
         {
@@ -93,10 +100,27 @@ export class InMemoryShipmentsRepository implements ShipmentsRepository {
 
       if (
         distance <= MAX_DISTANCE_IN_KILOMETERS &&
-        item.courierId?.toString() === courierId &&
-        item.statusShipment === ShipmentStatus.PICKED_UP
+        shipment.courierId?.toString() === courierId &&
+        shipment.statusShipment === ShipmentStatus.PICKED_UP
       ) {
-        filteredShipments.push(item)
+        filteredShipments.push(
+          ShipmentWithCourierAndRecipient.create({
+            id: shipment.id,
+            statusShipment: shipment.statusShipment,
+            pickupDate: shipment.pickupDate,
+            deliveryDate: shipment.deliveryDate,
+            returnedDate: shipment.returnedDate,
+            recipientId: shipment.recipientId,
+            recipientName: recipient.name,
+            recipientAddress: recipient.location.address,
+            recipientLatitude: recipient.location.latitude.toString(),
+            recipientLongitude: recipient.location.longitude.toString(),
+            courierId: shipment.courierId,
+            courierName: courier?.name,
+            createdAt: shipment.createdAt,
+            updatedAt: shipment.updatedAt,
+          }),
+        )
       }
     }
 

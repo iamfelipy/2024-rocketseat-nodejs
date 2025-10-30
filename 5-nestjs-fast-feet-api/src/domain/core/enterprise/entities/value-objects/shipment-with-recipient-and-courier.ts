@@ -12,6 +12,10 @@ export interface ShipmentWithCourierAndRecipientProps {
 
   recipientId: UniqueEntityID
   recipientName: string
+  recipientAddress: string
+  recipientLatitude: string
+  recipientLongitude: string
+
   courierId?: UniqueEntityID | null
   courierName?: string
 
@@ -33,8 +37,20 @@ export class ShipmentWithCourierAndRecipient extends ValueObject<ShipmentWithCou
     return this.props.recipientId
   }
 
-  get recipient() {
+  get recipientName() {
     return this.props.recipientName
+  }
+
+  get recipientAddress() {
+    return this.props.recipientAddress
+  }
+
+  get recipientLatitude() {
+    return this.props.recipientLatitude
+  }
+
+  get recipientLongitude() {
+    return this.props.recipientLongitude
   }
 
   get pickupDate() {

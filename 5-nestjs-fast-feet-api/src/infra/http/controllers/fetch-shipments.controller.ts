@@ -15,7 +15,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
 import { FetchShipmentsUseCase } from '@/domain/core/application/use-cases/fetch-shipments'
-import { ShipmentWithCourierAndRecipientPresenter } from '../presenters/shipment-with-courier-and-recipient'
+import { ShipmentWithCourierAndRecipientPresenter } from '../presenters/shipment-with-courier-and-recipient-presenter'
 
 const pageQueryParamSchema = z
   .string()

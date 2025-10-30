@@ -4,13 +4,13 @@ import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value
 import { ShipmentDetails } from '../../enterprise/entities/value-objects/shipment-details'
 
 export abstract class ShipmentsRepository {
-  abstract findManyNearbyAssignedShipmentsForCourier(
+  abstract findManyNearbyForCourier(
     courierId: string,
     maxDistanceInKm: number,
     courierLatitude: number,
     courierLongitude: number,
     params: PaginationParams,
-  ): Promise<Shipment[]>
+  ): Promise<ShipmentWithCourierAndRecipient[]>
 
   abstract findManyWithCourierAndRecipient(
     params: PaginationParams,

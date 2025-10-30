@@ -13,6 +13,7 @@ export interface ShipmentDetailsProps {
 
   recipientId: UniqueEntityID
   recipientName: string
+
   courierId?: UniqueEntityID | null
   courierName?: string | null
 

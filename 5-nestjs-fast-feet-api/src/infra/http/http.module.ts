@@ -59,6 +59,8 @@ import { GetShipmentUseCase } from '@/domain/core/application/use-cases/get-ship
 import { GetShipmentController } from './controllers/get-shipment.controller'
 import { GetShipmentForCourierUseCase } from '@/domain/core/application/use-cases/get-shipment-for-courier'
 import { GetShipmentForCourierController } from './controllers/get-shipment-for-courier.controller'
+import { FetchNearbyShipmentsForCourierController } from './controllers/fetch-nearby-shipments-for-courier.controller'
+import { FetchNearbyShipmentsForCourierUseCase } from '@/domain/core/application/use-cases/fetch-nearby-shipments-for-courier'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -88,6 +90,7 @@ import { GetShipmentForCourierController } from './controllers/get-shipment-for-
     DeleteShipmentController,
     FetchShipmentsController,
     FetchOwnShipmentsController,
+    FetchNearbyShipmentsForCourierController,
     GetShipmentController,
     GetShipmentForCourierController,
     MarkAsAwaitingPickupController,
@@ -122,6 +125,7 @@ import { GetShipmentForCourierController } from './controllers/get-shipment-for-
     DeleteShipmentUseCase,
     FetchShipmentsUseCase,
     FetchOwnShipmentsUseCase,
+    FetchNearbyShipmentsForCourierUseCase,
     GetShipmentUseCase,
     GetShipmentForCourierUseCase,
     MarkAsAwaitingPickupUseCase,

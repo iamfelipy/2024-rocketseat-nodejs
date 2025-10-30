@@ -1,7 +1,6 @@
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients'
 import { InMemoryShipmentsRepository } from 'test/repositories/in-memory-shipments'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { FetchNearbyAssignedShipmentsForCourierUseCase } from './fetch-nearby-assigned-shipments-for-courier'
 import { InMemoryCouriersRepository } from 'test/repositories/in-memory-couriers'
 import { Location } from '../../enterprise/entities/value-objects/location'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
@@ -9,46 +8,59 @@ import { makeRecipient } from 'test/factories/make-recipient'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
 import { makeShipment } from 'test/factories/make-shipment'
 import { makeCourier } from 'test/factories/make-courier'
+import { InMemoryShipmentAttachmentsRepository } from 'test/repositories/in-memory-shipment-attachments-repository'
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments'
+import { FetchNearbyShipmentsForCourierUseCase } from './fetch-nearby-shipments-for-courier'
 
 let inMemoryCouriersRepository: InMemoryCouriersRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryShipmentsRepository: InMemoryShipmentsRepository
-let sut: FetchNearbyAssignedShipmentsForCourierUseCase
+let inMemoryShipmentAttachmentsRepository: InMemoryShipmentAttachmentsRepository
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository
+let sut: FetchNearbyShipmentsForCourierUseCase
 
 describe('Fetch nearby shipments for courier use case', () => {
   beforeEach(() => {
-    inMemoryCouriersRepository = new InMemoryCouriersRepository()
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
-    inMemoryShipmentsRepository = new InMemoryShipmentsRepository(inMemoryRecipientsRepository)
-    sut = new FetchNearbyAssignedShipmentsForCourierUseCase(inMemoryShipmentsRepository)
+    inMemoryCouriersRepository = new InMemoryCouriersRepository()
+    inMemoryShipmentAttachmentsRepository =
+      new InMemoryShipmentAttachmentsRepository()
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository()
+    inMemoryShipmentsRepository = new InMemoryShipmentsRepository(
+      inMemoryRecipientsRepository,
+      inMemoryCouriersRepository,
+      inMemoryShipmentAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+    )
+    sut = new FetchNearbyShipmentsForCourierUseCase(inMemoryShipmentsRepository)
   })
   it('should be able to fetch nearby shipments for courier', async () => {
     const courier = makeCourier({}, new UniqueEntityID('courier-1'))
     await inMemoryCouriersRepository.create(courier)
-    
+
     const recipient = makeRecipient({
       location: Location.create({
         address: 'Avenida Interlagos, 2000',
         latitude: -23.64052,
-        longitude: -46.633308
-      })
+        longitude: -46.633308,
+      }),
     })
     await inMemoryRecipientsRepository.create(recipient)
-    
+
     const shipment = makeShipment({
       courierId: courier.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
-      statusShipment: ShipmentStatus.PICKED_UP
+      statusShipment: ShipmentStatus.PICKED_UP,
     })
     await inMemoryShipmentsRepository.create(shipment)
-    
+
     const result = await sut.execute({
       courierId: courier.id.toString(),
       maxDistanceInKm: 15,
       courierLatitude: -23.64052,
       courierLongitude: -46.633308,
-      page: 1
+      page: 1,
     })
 
     expect(result.isRight()).toBe(true)
@@ -61,22 +73,22 @@ describe('Fetch nearby shipments for courier use case', () => {
     const courier2 = makeCourier({}, new UniqueEntityID('courier-2'))
     await inMemoryCouriersRepository.create(courier1)
     await inMemoryCouriersRepository.create(courier2)
-    
+
     const recipient = makeRecipient({
       location: Location.create({
         address: 'Avenida Interlagos, 2000',
         latitude: -23.64052,
-        longitude: -46.633308
-      })
+        longitude: -46.633308,
+      }),
     })
     await inMemoryRecipientsRepository.create(recipient)
-    
+
     // Shipment assigned to courier1
     const shipment1 = makeShipment({
       courierId: courier1.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
-      statusShipment: ShipmentStatus.PICKED_UP
+      statusShipment: ShipmentStatus.PICKED_UP,
     })
     await inMemoryShipmentsRepository.create(shipment1)
 
@@ -85,17 +97,17 @@ describe('Fetch nearby shipments for courier use case', () => {
       courierId: courier2.id,
       recipientId: recipient.id,
       pickupDate: new Date(),
-      statusShipment: ShipmentStatus.PICKED_UP
+      statusShipment: ShipmentStatus.PICKED_UP,
     })
     await inMemoryShipmentsRepository.create(shipment2)
-    
+
     // Try to fetch shipments for courier1
     const result = await sut.execute({
       courierId: courier1.id.toString(),
       maxDistanceInKm: 15,
       courierLatitude: -23.64052,
       courierLongitude: -46.633308,
-      page: 1
+      page: 1,
     })
 
     expect(result.isRight()).toBe(true)
@@ -110,8 +122,8 @@ describe('Fetch nearby shipments for courier use case', () => {
       location: Location.create({
         address: 'Rua das Flores, 100',
         latitude: -23.64052,
-        longitude: -46.633308
-      })
+        longitude: -46.633308,
+      }),
     })
     await inMemoryRecipientsRepository.create(recipient)
 
@@ -121,7 +133,7 @@ describe('Fetch nearby shipments for courier use case', () => {
         courierId: courier.id,
         recipientId: recipient.id,
         pickupDate: new Date(),
-        statusShipment: ShipmentStatus.PICKED_UP
+        statusShipment: ShipmentStatus.PICKED_UP,
       })
       await inMemoryShipmentsRepository.create(shipment)
     }
@@ -132,11 +144,10 @@ describe('Fetch nearby shipments for courier use case', () => {
       maxDistanceInKm: 15,
       courierLatitude: -23.64052,
       courierLongitude: -46.633308,
-      page: 2
+      page: 2,
     })
 
     expect(result.isRight()).toBe(true)
     expect(result.value?.shipments).toHaveLength(2)
   })
-
-})  
+})
