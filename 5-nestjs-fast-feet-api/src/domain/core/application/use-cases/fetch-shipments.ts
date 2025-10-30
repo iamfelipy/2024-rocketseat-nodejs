@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { NotAuthorizedError } from '@/core/erros/errors/not-authorized-error'
 import { ShipmentsRepository } from '../repositories/shipments-repository'
 import { AdminsRepository } from '../repositories/admins-repository'
-import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-courier-recipient'
 import { Injectable } from '@nestjs/common'
 
 interface FetchShipmentsUseCaseRequest {

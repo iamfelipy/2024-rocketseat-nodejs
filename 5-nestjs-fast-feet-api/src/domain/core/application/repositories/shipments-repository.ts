@@ -1,6 +1,6 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Shipment } from '../../enterprise/entities/shipment'
-import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-courier-recipient'
 import { ShipmentDetails } from '../../enterprise/entities/value-objects/shipment-details'
 
 export abstract class ShipmentsRepository {

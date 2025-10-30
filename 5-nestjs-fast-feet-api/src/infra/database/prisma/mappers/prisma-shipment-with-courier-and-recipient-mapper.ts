@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ShipmentStatus } from '@/core/enums/shipment-status'
-import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-courier-recipient'
 import { Shipment as PrismaShipment, User as PrismaUSer } from '@prisma/client'
 
 type PrismaShipmentWithCourierAndRecipient = PrismaShipment & {

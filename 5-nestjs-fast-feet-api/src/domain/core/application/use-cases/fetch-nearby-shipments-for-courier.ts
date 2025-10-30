@@ -1,8 +1,7 @@
 import { Either, right } from '@/core/either'
-import { Shipment } from '../../enterprise/entities/shipment'
 import { ShipmentsRepository } from '../repositories/shipments-repository'
 import { Injectable } from '@nestjs/common'
-import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { ShipmentWithCourierAndRecipient } from '../../enterprise/entities/value-objects/shipment-with-courier-recipient'
 
 interface FetchNearbyShipmentsForCourierUseCaseRequest {
   courierId: string

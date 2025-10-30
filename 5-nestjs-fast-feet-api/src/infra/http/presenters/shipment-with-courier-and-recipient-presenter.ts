@@ -1,4 +1,4 @@
-import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-recipient-and-courier'
+import { ShipmentWithCourierAndRecipient } from '@/domain/core/enterprise/entities/value-objects/shipment-with-courier-recipient'
 
 export class ShipmentWithCourierAndRecipientPresenter {
   static toHTTP(
