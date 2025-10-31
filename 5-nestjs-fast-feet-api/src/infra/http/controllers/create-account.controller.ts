@@ -26,7 +26,6 @@ const createAccountBodySchema = z.object({
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
-// TODO: criar caso de uso generico para criação de usuario generico e não usar o admin
 @Controller('/accounts')
 @Public()
 export class CreateAccountController {
