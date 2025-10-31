@@ -1,10 +1,3 @@
-change-courier-password parece estranho
-
-
-fetch shipment do courier
-
-mark shipment as returned
-
 desafio:
 https://efficient-sloth-d85.notion.site/Desafio-04-a3a2ef9297ad47b1a94f89b197274ffd
 
@@ -27,7 +20,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [x] Deve ser possível alterar a senha de um usuário
 - [x] Deve ser possível listar as entregas de um usuário
-- [x] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
+- [x][ ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 
 ### Regras de negócio
