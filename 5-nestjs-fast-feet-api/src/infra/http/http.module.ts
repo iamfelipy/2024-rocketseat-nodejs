@@ -61,11 +61,14 @@ import { GetShipmentForCourierUseCase } from '@/domain/core/application/use-case
 import { GetShipmentForCourierController } from './controllers/get-shipment-for-courier.controller'
 import { FetchNearbyShipmentsForCourierController } from './controllers/fetch-nearby-shipments-for-courier.controller'
 import { FetchNearbyShipmentsForCourierUseCase } from '@/domain/core/application/use-cases/fetch-nearby-shipments-for-courier'
+import { ChangeCourierPasswordUseCase } from '@/domain/core/application/use-cases/change-courier-password'
+import { ChangePasswordController } from './controllers/change-password.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     AuthenticateController,
+    ChangePasswordController,
     CreateAccountController,
     CreateAdminController,
 
@@ -103,6 +106,7 @@ import { FetchNearbyShipmentsForCourierUseCase } from '@/domain/core/application
   providers: [
     RegisterAdminUseCase,
     AuthenticateRecipientUseCase,
+    ChangeCourierPasswordUseCase,
 
     RegisterCourierUseCase,
     FetchCouriersUseCase,
