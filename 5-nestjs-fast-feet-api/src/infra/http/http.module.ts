@@ -63,6 +63,8 @@ import { FetchNearbyShipmentsForCourierController } from './controllers/fetch-ne
 import { FetchNearbyShipmentsForCourierUseCase } from '@/domain/core/application/use-cases/fetch-nearby-shipments-for-courier'
 import { ChangeCourierPasswordUseCase } from '@/domain/core/application/use-cases/change-courier-password'
 import { ChangePasswordController } from './controllers/change-password.controller'
+import { ReadNotificationController } from './controllers/read-notification.controller'
+import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -102,6 +104,8 @@ import { ChangePasswordController } from './controllers/change-password.controll
     MarkShipmentAsReturnedController,
 
     UploadAttachmentController,
+
+    ReadNotificationController,
   ],
   providers: [
     RegisterAdminUseCase,
@@ -138,6 +142,8 @@ import { ChangePasswordController } from './controllers/change-password.controll
     MarkShipmentAsReturnedUseCase,
 
     UploadAndCreateAttachmentUseCase,
+
+    ReadNotificationUseCase,
   ],
 })
 export class HttpModule {}

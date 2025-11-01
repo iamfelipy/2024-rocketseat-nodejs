@@ -1,10 +1,16 @@
-desafio:
+Esse projeto foi desenvolvido por mim como solução para o desafio disponível em:  
 https://efficient-sloth-d85.notion.site/Desafio-04-a3a2ef9297ad47b1a94f89b197274ffd
 
-figma:
+O layout utilizado está disponível no Figma:  
 https://www.figma.com/design/dpfmRdV3J2GmZmAqFvHGM0/FastFeet--Copy-?node-id=0-1&p=f&t=QmL4ZaW6FjpYz6dC-0
 
-Nesse desafio desenvolveremos uma API para controle de encomendas de uma transportadora fictícia, a FastFeet.
+O objetivo foi criar uma API para controle de encomendas de uma transportadora fictícia, a FastFeet.
+
+### Cobertura de Testes
+
+- Testes unitários (use-cases): 30
+- Testes E2E (controllers): 32
+- **Total:** 62 testes
 
 ### Regras da aplicação
 
@@ -20,8 +26,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [x] Deve ser possível alterar a senha de um usuário
 - [x] Deve ser possível listar as entregas de um usuário
-- [x][ ] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
-
+- [x] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ### Regras de negócio
 
