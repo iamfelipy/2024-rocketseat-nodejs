@@ -122,6 +122,14 @@ export class Shipment extends AggregateRoot<ShipmentProps> {
       id,
     )
 
+    const isNewShipment = !id
+
+    if (isNewShipment) {
+      shipment.addDomainEvent(
+        new ShipmentStatusChangedEvent(shipment, shipment.recipientId),
+      )
+    }
+
     return shipment
   }
 }

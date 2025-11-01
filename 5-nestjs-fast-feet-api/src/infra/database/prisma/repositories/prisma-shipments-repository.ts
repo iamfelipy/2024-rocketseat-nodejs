@@ -17,6 +17,7 @@ import {
   UserRole,
 } from '@prisma/client'
 import { Decimal } from '@prisma/client/runtime/library'
+import { DomainEvents } from '@/core/events/domain-events'
 
 type PrismaShipmentWithCourierAndRecipient = PrismaShipment & {
   courier: PrismaUser | null
@@ -298,6 +299,8 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
     await this.prisma.shipment.create({
       data,
     })
+
+    DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 
   async save(shipment: Shipment): Promise<void> {
@@ -317,6 +320,8 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
         shipment.attachments.getRemovedItems(),
       ),
     ])
+
+    DomainEvents.dispatchEventsForAggregate(shipment.id)
   }
 
   async delete(shipment: Shipment): Promise<void> {

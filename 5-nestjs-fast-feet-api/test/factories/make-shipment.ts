@@ -29,10 +29,14 @@ export class ShipmentFactory {
 
   async makePrismaShipment(
     data: Partial<ShipmentProps> = {},
+    id?: UniqueEntityID,
   ): Promise<Shipment> {
-    const shipment = makeShipment({
-      ...data,
-    })
+    const shipment = makeShipment(
+      {
+        ...data,
+      },
+      id,
+    )
 
     await this.prisma.shipment.create({
       data: PrismaShipmentMapper.toPrisma(shipment),
