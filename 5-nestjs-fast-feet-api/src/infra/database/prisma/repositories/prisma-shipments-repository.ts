@@ -18,6 +18,7 @@ import {
 } from '@prisma/client'
 import { Decimal } from '@prisma/client/runtime/library'
 import { DomainEvents } from '@/core/events/domain-events'
+import { CacheRepository } from '@/infra/cache/cache-repository'
 
 type PrismaShipmentWithCourierAndRecipient = PrismaShipment & {
   courier: PrismaUser | null
@@ -66,6 +67,7 @@ type RawNearbyShipmentWithCourierAndRecipient = {
 export class PrismaShipmentsRepository implements ShipmentsRepository {
   constructor(
     private prisma: PrismaService,
+    private cache: CacheRepository,
     private shipmentAttachmentsRepository: ShipmentAttachmentsRepository,
   ) {}
 
@@ -249,6 +251,16 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
   }
 
   async findDetailsById(id: string): Promise<ShipmentDetails | null> {
+    const cacheKey = `shipment:${id}:details`
+
+    const cacheHit = await this.cache.get(cacheKey)
+
+    if (cacheHit) {
+      const cachedData = JSON.parse(cacheHit)
+
+      return cachedData
+    }
+
     const shipment = await this.prisma.shipment.findUnique({
       where: {
         id,
@@ -264,7 +276,11 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
       return null
     }
 
-    return PrismaShipmentDetailsMapper.toDomain(shipment)
+    const shipmentDetails = PrismaShipmentDetailsMapper.toDomain(shipment)
+
+    await this.cache.set(cacheKey, JSON.stringify(shipmentDetails))
+
+    return shipmentDetails
   }
 
   async findById(id: string): Promise<Shipment | null> {
@@ -319,6 +335,7 @@ export class PrismaShipmentsRepository implements ShipmentsRepository {
       this.shipmentAttachmentsRepository.deleteMany(
         shipment.attachments.getRemovedItems(),
       ),
+      this.cache.delete(`shipment:${shipment.id.toString()}:details`),
     ])
 
     DomainEvents.dispatchEventsForAggregate(shipment.id)
