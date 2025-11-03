@@ -6,6 +6,30 @@ https://www.figma.com/design/dpfmRdV3J2GmZmAqFvHGM0/FastFeet--Copy-?node-id=0-1&
 
 O objetivo foi criar uma API para controle de encomendas de uma transportadora fictícia, a FastFeet.
 
+### Conceitos aplicados:
+
+- DDD, Domain Events, Clean Architecture
+- Autenticação e Autorização (RBAC)
+- Testes unitários e e2e
+- Integração com serviços externos
+
+### Tecnologias utilizadas
+
+- **Node.js**  
+- **NestJS**  
+- **TypeScript**  
+- **Prisma ORM**  
+- **PostgreSQL**  
+- **Redis**  
+- **JWT para autenticação**
+- **Docker**  
+- **Vitest** (testes unitários e E2E)
+- **Zod** (validação de dados)
+- **Bcrypt.js** (hash de senhas)
+- **AWS SDK (S3)** (upload de imagens)
+- **EsLint + Prettier** (qualidade e formatação do código)
+- **Dotenv** (env vars)
+
 ### Cobertura de Testes
 
 - Testes unitários (use-cases): 30
@@ -37,10 +61,3 @@ O objetivo foi criar uma API para controle de encomendas de uma transportadora f
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [x] Somente o admin pode alterar a senha de um usuário
 - [x] Não deve ser possível um entregador listar as encomendas de outro entregador
-
-### Conceitos que pode praticar
-
-- DDD, Domain Events, Clean Architecture
-- Autenticação e Autorização (RBAC)
-- Testes unitários e e2e
-- Integração com serviços externos
