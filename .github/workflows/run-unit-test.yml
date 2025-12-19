@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-        # Definindo o diretório de trabalho para as próximas etapas
+          cache-dependency-path: ./3-implementando-o-solid/package-lock.json
+
       # Instala as dependências no diretório 3-implementando-o-solid
       - run: npm ci
         working-directory: ./3-implementando-o-solid
