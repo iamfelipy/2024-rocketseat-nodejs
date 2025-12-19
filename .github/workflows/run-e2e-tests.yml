@@ -30,6 +30,10 @@ jobs:
         with:
           node-version: 18
       
+      - name: Debug - Check if package-lock.json exists
+        run: |
+          pwd
+          ls -la ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass/ | grep package
       
       - run: npm ci
         working-directory: ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass
