@@ -32,11 +32,11 @@ jobs:
       
       
       - run: npm ci
-        working-directory: ./3-implementando-o-solid
+        working-directory: ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass
 
       
       - run: npm run test:e2e
-        working-directory: ./3-implementando-o-solid
+        working-directory: ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"

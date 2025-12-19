@@ -22,8 +22,8 @@ jobs:
 
       
       - run: npm ci
-        working-directory: ./3-implementando-o-solid
+        working-directory: ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass
 
       
       - run: npm run test
-        working-directory: ./3-implementando-o-solid
+        working-directory: ./3-implementando-o-solid/projeto-construido-em-aula-api-gym-pass
