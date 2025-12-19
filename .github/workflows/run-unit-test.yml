@@ -12,20 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Coloca o código do projeto no ambiente
+      
       - uses: actions/checkout@v3
 
-      # Instala o Node no ambiente
+      
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: ./3-implementando-o-solid/package-lock.json
 
-      # Instala as dependências no diretório 3-implementando-o-solid
+      
       - run: npm ci
         working-directory: ./3-implementando-o-solid
 
-      # Executa os testes no diretório 3-implementando-o-solid
+      
       - run: npm run test
         working-directory: ./3-implementando-o-solid
